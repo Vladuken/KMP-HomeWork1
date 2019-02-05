@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./gradlew assembleRelease crashlyticsUploadDistributionRelease
+./gradlew assembleDebug crashlyticsUploadDistributionRelease

@@ -18,8 +18,20 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+def keystorePropertiesFile = file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile rootProject.file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.vladuken.vladpetrushkevich"
@@ -33,6 +45,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.betaDistributionGroupAliases = 'vladpetrushkevichgroup'
+//            ext.betaDistributionApkFilePath = './app/build/outputs/apk/debug/app-debug.apk'
+            signingConfig signingConfigs.config
+        }
+        debug{
+            debuggable true
         }
     }
 }
@@ -47,4 +65,9 @@ dependencies {
 
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+
+    def appCenterSdkVersion = '1.11.2'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
 }
