@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
@@ -14,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     //private CardView mCardView;
     //private TextView mFullName;
-    private TextView mGitHubLink;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         //mCardView = findViewById(R.id.photo_card_view);
 
         //mFullName = findViewById(R.id.full_name_text_view);
-
-        mGitHubLink = findViewById(R.id.github_link_text_view);
-        mGitHubLink.setOnClickListener(new View.OnClickListener() {
+        TextView gitHubLink;
+        gitHubLink = findViewById(R.id.github_link_text_view);
+        gitHubLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String link = getResources().getString(R.string.github_link);
