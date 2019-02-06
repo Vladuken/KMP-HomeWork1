@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -19,10 +20,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        Fabric.with(this, new Crashlytics());
-        AppCenter.start(getApplication(), "77770b97-7fc5-4620-b874-95c26bb3e37c", Analytics.class, Crashes.class, Distribute.class);
         setContentView(R.layout.activity_main);
 
         TextView gitHubLink;
@@ -35,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Fabric.with(this, new Crashlytics());
+        AppCenter.start(getApplication(),
+                "77770b97-7fc5-4620-b874-95c26bb3e37c",
+                Analytics.class,
+                Crashes.class,
+                Distribute.class);
     }
-
-
 }
