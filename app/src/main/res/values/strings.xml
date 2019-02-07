@@ -1,6 +1,16 @@
 <resources>
-    <string name="app_name">Vlad Petrushkevich</string>
+    <string name="app_name">Vlad Launcher</string>
     <string name="full_name">Vlad Petrushkevich</string>
     <string name="github">Github</string>
     <string name="github_link">https://github.com/Vladuken</string>
+    <string name="app_greetings">Hello, this is Launcher</string>
+    <string name="app_description">This is simple launcher</string>
+    
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+
 </resources>
