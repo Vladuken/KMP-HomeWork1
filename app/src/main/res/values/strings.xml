@@ -13,4 +13,7 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
 
+    <string name="standard_layout">Standard layout</string>
+    <string name="compact_layout">Compact layout</string>
+
 </resources>

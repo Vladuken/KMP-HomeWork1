@@ -15,14 +15,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    protected final static String TAG = "WelcomeActivity:";
 
     protected ViewPager mViewPager;
 //    private WelcomeViewPagerAdapter mViewPagerAdapter;
     protected int[] mLayouts;
     protected Button mBtnSkip, mBtnNext;
+
+    protected RadioGroup mThemeRadioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +102,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 //TODO
             }
         });
+
+
+
+
+
     }
 //
 //    private void changeStatusBarColor() {
@@ -123,6 +135,7 @@ public class WelcomeActivity extends AppCompatActivity {
     public class WelcomeViewPagerAdapter extends PagerAdapter {
 
         private LayoutInflater layoutInflater;
+        protected RadioGroup mLayoutRadioGroup;
 
         public WelcomeViewPagerAdapter() {
             //TODO
@@ -135,8 +148,64 @@ public class WelcomeActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(mLayouts[position], container, false);
             container.addView(view);
+            switch (position){
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    RelativeLayout layout3 = view.findViewById(R.id.screen3id);
+                    mLayoutRadioGroup = layout3.findViewById(R.id.radio_group_theme);
+                    mLayoutRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            int selectedId = mLayoutRadioGroup.getCheckedRadioButtonId();
 
+                            switch (selectedId){
+                                case R.id.light_theme_radiobutton:
+                                    Toast.makeText(getApplicationContext(),"Light theme",Toast.LENGTH_SHORT)
+                                    .show();
+                                    break;
+                                case R.id.dark_theme_radiobutton:
+                                    Toast.makeText(getApplicationContext(),"Dark theme",Toast.LENGTH_SHORT)
+                                    .show();
+
+                                    break;
+                            }
+                        }
+                    });
+                    break;
+                case 3:
+                    RelativeLayout layout4 = view.findViewById(R.id.screen4id);
+                    mLayoutRadioGroup = layout4.findViewById(R.id.radio_group_layout);
+                    mLayoutRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            int selectedId = mLayoutRadioGroup.getCheckedRadioButtonId();
+
+                            switch (selectedId){
+                                case R.id.standard_layout_rdb:
+                                    Toast.makeText(getApplicationContext(),"Standard layout",Toast.LENGTH_SHORT)
+                                            .show();
+                                    break;
+                                case R.id.compact_layout_rdb:
+                                    Toast.makeText(getApplicationContext(),"Compact layout",Toast.LENGTH_SHORT)
+                                            .show();
+
+                                    break;
+                            }
+                        }
+                    });
+                    break;
+
+            }
             return view;
+//            mLayoutRadioGroup = findViewById(R.id.radio_group_layout);
+//
+
+
+
+
         }
 
         @Override
