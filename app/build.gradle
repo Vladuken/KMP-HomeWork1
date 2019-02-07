@@ -49,7 +49,7 @@ android {
 //            ext.betaDistributionApkFilePath = './app/build/outputs/apk/debug/app-debug.apk'
             signingConfig signingConfigs.config
         }
-        debug{
+        debug {
             debuggable true
         }
     }
