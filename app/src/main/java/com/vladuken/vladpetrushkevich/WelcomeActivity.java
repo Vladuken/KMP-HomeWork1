@@ -1,6 +1,7 @@
 package com.vladuken.vladpetrushkevich;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +34,9 @@ public class WelcomeActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow()
                     .getDecorView()
-                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
 
         setContentView(R.layout.activity_welcome);
@@ -49,6 +54,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         mViewPagerAdapter = new WelcomeViewPagerAdapter();
         mViewPager.setAdapter(mViewPagerAdapter);
+
+        changeStatusBarColor();
 //        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override
 //            public void onPageScrolled(int i, float v, int i1) {
@@ -65,6 +72,22 @@ public class WelcomeActivity extends AppCompatActivity {
 //
 //            }
 //        });
+    }
+//
+//    private void changeStatusBarColor() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//        }
+//    }
+
+    private void changeStatusBarColor(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
 
