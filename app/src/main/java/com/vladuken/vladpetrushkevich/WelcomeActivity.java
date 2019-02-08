@@ -26,10 +26,10 @@ public class WelcomeActivity extends AppCompatActivity {
     protected static final String TAG = "WelcomeActivity:";
 
     protected ViewPager mViewPager;
-//    private WelcomeViewPagerAdapter mViewPagerAdapter;
     protected int[] mLayouts;
     protected Button mBtnSkip, mBtnNext;
 
+    //TODO get rid of magic numbers
     protected int theme; // 0 is light 1 is dark
     protected int portrait_rows;
     protected int landscape_rows;
@@ -38,6 +38,14 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
+        landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
+
+        if(savedInstanceState != null){
+            theme = savedInstanceState.getInt(getString(R.string.preference_theme_key));
+            landscape_rows = savedInstanceState.getInt(getString(R.string.preference_landscape_rows_key));
+            portrait_rows = savedInstanceState.getInt(getString(R.string.preference_portrait_rows_key));
+        }
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow()
@@ -129,6 +137,15 @@ public class WelcomeActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(getString(R.string.preference_theme_key),theme);
+        outState.putInt(getString(R.string.preference_landscape_rows_key),landscape_rows);
+        outState.putInt(getString(R.string.preference_portrait_rows_key),portrait_rows);
+
+    }
 
     public class WelcomeViewPagerAdapter extends PagerAdapter {
 
@@ -160,10 +177,14 @@ public class WelcomeActivity extends AppCompatActivity {
                             int selectedId = mThemeRadioGroup.getCheckedRadioButtonId();
 
                             if (selectedId == R.id.light_theme_radiobutton) {
+                                theme = 0;
+//                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(0,0,0,0));
                                 Toast.makeText(getApplicationContext(), "Light theme", Toast.LENGTH_SHORT)
                                         .show();
 
                             } else if (selectedId == R.id.dark_theme_radiobutton) {
+                                theme = 1;
+//                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(255,0,0,0));
                                 Toast.makeText(getApplicationContext(), "Dark theme", Toast.LENGTH_SHORT)
                                         .show();
                             }
@@ -179,34 +200,24 @@ public class WelcomeActivity extends AppCompatActivity {
                             int selectedId = mLayoutRadioGroup.getCheckedRadioButtonId();
 
                             if (selectedId == R.id.standard_layout_rdb) {
-                                portrait_rows = 4;
-                                landscape_rows = 6;
+                                portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
+                                landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
                                 Toast.makeText(getApplicationContext(), "Standard layout", Toast.LENGTH_SHORT)
                                         .show();
 
                             } else if (selectedId == R.id.compact_layout_rdb) {
-                                portrait_rows = 5;
-                                landscape_rows = 7;
+                                portrait_rows = getResources().getInteger(R.integer.compact_portrait_layout_span);
+                                landscape_rows = getResources().getInteger(R.integer.compact_landscape_layout_span);
                                 Toast.makeText(getApplicationContext(), "Compact layout", Toast.LENGTH_SHORT)
                                         .show();
-
-
                             }
                         }
                     });
                     break;
-
                 default:
                     break;
-
             }
             return view;
-//            mLayoutRadioGroup = findViewById(R.id.radio_group_layout);
-//
-
-
-
-
         }
 
         @Override
@@ -225,5 +236,4 @@ public class WelcomeActivity extends AppCompatActivity {
             container.removeView(view);
         }
     }
-
 }

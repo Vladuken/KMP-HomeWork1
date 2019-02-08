@@ -23,24 +23,38 @@ public class LauncherActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPref =
+                getSharedPreferences(getString(R.string.app_preferences),0);
+        int theme = sharedPref.getInt(getString(R.string.preference_theme_key),
+                getResources().getInteger(R.integer.standard_layout_theme));
+
+        if(theme == 0){
+            setTheme(R.style.AppTheme);
+        }else{
+            setTheme(R.style.AppThemeDark);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
         mRecyclerView = findViewById(R.id.icon_recycler_view);
-
-
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.app_preferences),0);
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.app_preferences), 0);
 
-        int portraitSpanCount = sharedPref.getInt(getString(R.string.preference_portrait_rows_key), 4);
-        int landscapeSpanCount = sharedPref.getInt(getString(R.string.preference_landscape_rows_key), 6);
-        //int theme = sharedPref.getInt(getString(R.string.preference_theme_key), 0);
+        int portraitSpanCount =
+                sharedPref.getInt(
+                        getString(R.string.preference_portrait_rows_key),
+                        getResources().getInteger(R.integer.standard_portrait_layout_span)
+                );
+        int landscapeSpanCount =
+                sharedPref.getInt(
+                        getString(R.string.preference_landscape_rows_key),
+                        getResources().getInteger(R.integer.standard_landscape_layout_span)
+                );
 
         int orientation = getResources().getConfiguration().orientation;
 

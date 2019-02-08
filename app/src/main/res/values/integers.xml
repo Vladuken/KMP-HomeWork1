@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="standard_portrait_layout_span">4</integer>
+    <integer name="standard_landscape_layout_span">6</integer>
+
+    <integer name="compact_portrait_layout_span">5</integer>
+    <integer name="compact_landscape_layout_span">7</integer>
+
+    <integer name="standard_layout_theme">0</integer>
+</resources>

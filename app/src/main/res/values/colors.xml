@@ -9,6 +9,12 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
 
+
+    <color name="primaryColorDarkTheme">#494949</color>
+    <color name="primaryDarkColorDarkTheme">#292929</color>
+
+
+
     <color name="bgScreen1">#AED581</color>
     <color name="bgScreen2">#FFF176</color>
     <color name="bgScreen3">#FF8A65</color>
