@@ -1,6 +1,24 @@
 <resources>
-    <string name="app_name">Vlad Petrushkevich</string>
+    <string name="app_name">Vlad Launcher</string>
     <string name="full_name">Vlad Petrushkevich</string>
     <string name="github">Github</string>
     <string name="github_link">https://github.com/Vladuken</string>
+    <string name="app_greetings">Hello, this is Launcher</string>
+    <string name="app_description">This is simple launcher</string>
+
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+
+    <string name="standard_layout">Standard layout</string>
+    <string name="compact_layout">Compact layout</string>
+
+    <string name="app_preferences">com.vladuken.vlapetrushkevich.PREFERENCE_FILE</string>
+    <string name="preference_theme_key">com.vladuken.vladpetrushkevich.PREFERENCE_THEME</string>
+    <string name="preference_landscape_rows_key">com.vladuken.vladpetrushkevich.PREFERENCE_LANDSCAPE</string>
+    <string name="preference_portrait_rows_key">com.vladuken.vladpetrushkevich.PREFERENCE_PORTRAIT</string>
+
 </resources>

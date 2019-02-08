@@ -16,6 +16,7 @@ apply from: "$project.rootDir/etc/pmd.gradle"
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 def keystorePropertiesFile = file("keystore.properties")
@@ -35,7 +36,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.vladuken.vladpetrushkevich"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 100
         versionName "1.0.0"
@@ -49,7 +50,7 @@ android {
 //            ext.betaDistributionApkFilePath = './app/build/outputs/apk/debug/app-debug.apk'
             signingConfig signingConfigs.config
         }
-        debug{
+        debug {
             debuggable true
         }
     }
@@ -71,4 +72,5 @@ dependencies {
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 
     implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
+    implementation "com.android.support:recyclerview-v7:28.0.0"
 }

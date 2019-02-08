@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/screen4id"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/bgScreen4">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/radio_group_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RadioButton
+                android:id="@+id/standard_layout_rdb"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:text="@string/standard_layout"
+                android:background="@drawable/radiobutton">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/compact_layout_rdb"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:text="@string/compact_layout"
+                android:background="@drawable/radiobutton"/>
+        </RadioGroup>
+
+    </LinearLayout>
+</RelativeLayout>
