@@ -2,6 +2,7 @@ package com.vladuken.vladpetrushkevich;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -22,14 +23,16 @@ import android.widget.Toast;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    protected final static String TAG = "WelcomeActivity:";
+    protected static final String TAG = "WelcomeActivity:";
 
     protected ViewPager mViewPager;
 //    private WelcomeViewPagerAdapter mViewPagerAdapter;
     protected int[] mLayouts;
     protected Button mBtnSkip, mBtnNext;
 
-    protected RadioGroup mThemeRadioGroup;
+    protected int theme; // 0 is light 1 is dark
+    protected int portrait_rows;
+    protected int landscape_rows;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,6 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-
-
         mLayouts = new int[]{
                 R.layout.welcome_slide1,
                 R.layout.welcome_slide2,
@@ -102,20 +103,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 //TODO
             }
         });
-
-
-
-
-
     }
-//
-//    private void changeStatusBarColor() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//        }
-//    }
 
     private void changeStatusBarColor(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -127,8 +115,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
     protected void launchHomeScreen(){
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, LauncherActivity.class);
+        savePreferences();
         startActivity(i);
+    }
+
+    private void savePreferences(){
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.app_preferences),0).edit();
+        editor.putInt(getString(R.string.preference_theme_key), theme);
+        editor.putInt(getString(R.string.preference_landscape_rows_key), landscape_rows);
+        editor.putInt(getString(R.string.preference_portrait_rows_key), portrait_rows);
+
+        editor.commit();
     }
 
 
@@ -136,7 +134,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         private LayoutInflater layoutInflater;
         protected RadioGroup mLayoutRadioGroup;
-
+        protected RadioGroup mThemeRadioGroup;
         public WelcomeViewPagerAdapter() {
             //TODO
         }
@@ -155,22 +153,19 @@ public class WelcomeActivity extends AppCompatActivity {
                     break;
                 case 2:
                     RelativeLayout layout3 = view.findViewById(R.id.screen3id);
-                    mLayoutRadioGroup = layout3.findViewById(R.id.radio_group_theme);
-                    mLayoutRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    mThemeRadioGroup = layout3.findViewById(R.id.radio_group_theme);
+                    mThemeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            int selectedId = mLayoutRadioGroup.getCheckedRadioButtonId();
+                            int selectedId = mThemeRadioGroup.getCheckedRadioButtonId();
 
-                            switch (selectedId){
-                                case R.id.light_theme_radiobutton:
-                                    Toast.makeText(getApplicationContext(),"Light theme",Toast.LENGTH_SHORT)
-                                    .show();
-                                    break;
-                                case R.id.dark_theme_radiobutton:
-                                    Toast.makeText(getApplicationContext(),"Dark theme",Toast.LENGTH_SHORT)
-                                    .show();
+                            if (selectedId == R.id.light_theme_radiobutton) {
+                                Toast.makeText(getApplicationContext(), "Light theme", Toast.LENGTH_SHORT)
+                                        .show();
 
-                                    break;
+                            } else if (selectedId == R.id.dark_theme_radiobutton) {
+                                Toast.makeText(getApplicationContext(), "Dark theme", Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         }
                     });
@@ -183,19 +178,25 @@ public class WelcomeActivity extends AppCompatActivity {
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             int selectedId = mLayoutRadioGroup.getCheckedRadioButtonId();
 
-                            switch (selectedId){
-                                case R.id.standard_layout_rdb:
-                                    Toast.makeText(getApplicationContext(),"Standard layout",Toast.LENGTH_SHORT)
-                                            .show();
-                                    break;
-                                case R.id.compact_layout_rdb:
-                                    Toast.makeText(getApplicationContext(),"Compact layout",Toast.LENGTH_SHORT)
-                                            .show();
+                            if (selectedId == R.id.standard_layout_rdb) {
+                                portrait_rows = 4;
+                                landscape_rows = 6;
+                                Toast.makeText(getApplicationContext(), "Standard layout", Toast.LENGTH_SHORT)
+                                        .show();
 
-                                    break;
+                            } else if (selectedId == R.id.compact_layout_rdb) {
+                                portrait_rows = 5;
+                                landscape_rows = 7;
+                                Toast.makeText(getApplicationContext(), "Compact layout", Toast.LENGTH_SHORT)
+                                        .show();
+
+
                             }
                         }
                     });
+                    break;
+
+                default:
                     break;
 
             }

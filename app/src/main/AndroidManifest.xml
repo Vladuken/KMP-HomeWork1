@@ -11,24 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="c17252f54a6e0bfe5ad050de3cfafce514111f9b" />
 
-        <activity android:name=".WelcomeActivity"
+        <activity
+            android:name=".WelcomeActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".LauncherActivity"></activity>
     </application>
 
 </manifest>
