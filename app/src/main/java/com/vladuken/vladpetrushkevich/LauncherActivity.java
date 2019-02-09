@@ -7,6 +7,7 @@ import android.graphics.ColorSpace;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -88,7 +89,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         @NonNull
         @Override
-        public LauncherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        public LauncherViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int position) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_icon_view,parent,false);
 
@@ -100,7 +101,7 @@ public class LauncherActivity extends AppCompatActivity {
                     if (background instanceof ColorDrawable)
                         color = ((ColorDrawable) background).getColor();
                     String textColor =  String.format("#%06X", (0xFFFFFF & color));
-                    Toast.makeText(v.getContext(),textColor,Toast.LENGTH_SHORT)
+                    Snackbar.make(v,textColor,Snackbar.LENGTH_SHORT)
                             .show();
                     return true;
                 }

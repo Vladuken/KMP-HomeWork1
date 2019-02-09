@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -161,7 +162,7 @@ public class WelcomeActivity extends AppCompatActivity {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View view = layoutInflater.inflate(mLayouts[position], container, false);
+            final View view = layoutInflater.inflate(mLayouts[position], container, false);
             container.addView(view);
             switch (position){
                 case 0:
@@ -169,7 +170,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 case 1:
                     break;
                 case 2:
-                    RelativeLayout layout3 = view.findViewById(R.id.screen3id);
+                    final RelativeLayout layout3 = view.findViewById(R.id.screen3id);
                     mThemeRadioGroup = layout3.findViewById(R.id.radio_group_theme);
                     mThemeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
@@ -179,20 +180,23 @@ public class WelcomeActivity extends AppCompatActivity {
                             if (selectedId == R.id.light_theme_radiobutton) {
                                 theme = 0;
 //                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(0,0,0,0));
-                                Toast.makeText(getApplicationContext(), "Light theme", Toast.LENGTH_SHORT)
+
+                                Snackbar.make(layout3,"Light theme",Snackbar.LENGTH_SHORT)
                                         .show();
 
                             } else if (selectedId == R.id.dark_theme_radiobutton) {
                                 theme = 1;
 //                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(255,0,0,0));
-                                Toast.makeText(getApplicationContext(), "Dark theme", Toast.LENGTH_SHORT)
+
+
+                                Snackbar.make(layout3,"Dark theme",Snackbar.LENGTH_SHORT)
                                         .show();
                             }
                         }
                     });
                     break;
                 case 3:
-                    RelativeLayout layout4 = view.findViewById(R.id.screen4id);
+                    final RelativeLayout layout4 = view.findViewById(R.id.screen4id);
                     mLayoutRadioGroup = layout4.findViewById(R.id.radio_group_layout);
                     mLayoutRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
@@ -202,13 +206,14 @@ public class WelcomeActivity extends AppCompatActivity {
                             if (selectedId == R.id.standard_layout_rdb) {
                                 portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
                                 landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
-                                Toast.makeText(getApplicationContext(), "Standard layout", Toast.LENGTH_SHORT)
+
+                                Snackbar.make(layout4,"Standard layout",Snackbar.LENGTH_SHORT)
                                         .show();
 
                             } else if (selectedId == R.id.compact_layout_rdb) {
                                 portrait_rows = getResources().getInteger(R.integer.compact_portrait_layout_span);
                                 landscape_rows = getResources().getInteger(R.integer.compact_landscape_layout_span);
-                                Toast.makeText(getApplicationContext(), "Compact layout", Toast.LENGTH_SHORT)
+                                Snackbar.make(layout4,"Compact layout",Snackbar.LENGTH_SHORT)
                                         .show();
                             }
                         }
