@@ -3,6 +3,9 @@ package com.vladuken.vladpetrushkevich;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -87,6 +91,20 @@ public class LauncherActivity extends AppCompatActivity {
         public LauncherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_icon_view,parent,false);
+
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int color = Color.TRANSPARENT;
+                    Drawable background = v.getBackground();
+                    if (background instanceof ColorDrawable)
+                        color = ((ColorDrawable) background).getColor();
+                    String textColor =  String.format("#%06X", (0xFFFFFF & color));
+                    Toast.makeText(v.getContext(),textColor,Toast.LENGTH_SHORT)
+                            .show();
+                    return true;
+                }
+            });
             return new LauncherViewHolder(view);
         }
 

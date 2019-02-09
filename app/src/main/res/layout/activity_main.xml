@@ -23,7 +23,7 @@
             android:background="@color/primaryColor"
             android:contentDescription="@string/full_name"
             android:scaleType="centerCrop"
-            android:src="@drawable/photo" />
+            android:src="@mipmap/photo" />
     </android.support.v7.widget.CardView>
 
 
