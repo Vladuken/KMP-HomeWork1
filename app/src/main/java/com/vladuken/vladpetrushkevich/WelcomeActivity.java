@@ -26,6 +26,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
     protected static final String TAG = "WelcomeActivity:";
 
+
+    private static final String PREFERENCE_THEME_KEY = "PREFERENCE_THEME";
+
+
+
     protected ViewPager mViewPager;
     protected int[] mLayouts;
     protected Button mBtnSkip, mBtnNext;
@@ -35,6 +40,8 @@ public class WelcomeActivity extends AppCompatActivity {
     protected int portrait_rows;
     protected int landscape_rows;
 
+
+    private PrefManager mPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +49,17 @@ public class WelcomeActivity extends AppCompatActivity {
         portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
         landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
 
+        mPrefManager = new PrefManager(this);
+        if(!mPrefManager.isFirstTimeLaunch()){
+            launchHomeScreen();
+            finish();
+        }
+
+
         if(savedInstanceState != null){
-            theme = savedInstanceState.getInt(getString(R.string.preference_theme_key));
-            landscape_rows = savedInstanceState.getInt(getString(R.string.preference_landscape_rows_key));
-            portrait_rows = savedInstanceState.getInt(getString(R.string.preference_portrait_rows_key));
+            theme = savedInstanceState.getInt(Constants.SharedPreferences.THEME);
+            portrait_rows = savedInstanceState.getInt(Constants.SharedPreferences.PORTRAITE_ROWS);
+            landscape_rows = savedInstanceState.getInt(Constants.SharedPreferences.LANDSCAPE_ROWS);
         }
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -64,6 +78,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mBtnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                savePreferences();
                 launchHomeScreen();
             }
         });
@@ -75,6 +90,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 if(current < mLayouts.length - 1){
                     mViewPager.setCurrentItem(current+1);
                 }else {
+                    savePreferences();
                     launchHomeScreen();
                 }
             }
@@ -125,15 +141,16 @@ public class WelcomeActivity extends AppCompatActivity {
 
     protected void launchHomeScreen(){
         Intent i = new Intent(this, LauncherActivity.class);
-        savePreferences();
+
+        mPrefManager.setFirstTimeLaunch(false);
         startActivity(i);
     }
 
     private void savePreferences(){
-        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.app_preferences),0).edit();
-        editor.putInt(getString(R.string.preference_theme_key), theme);
-        editor.putInt(getString(R.string.preference_landscape_rows_key), landscape_rows);
-        editor.putInt(getString(R.string.preference_portrait_rows_key), portrait_rows);
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0).edit();
+        editor.putInt(Constants.SharedPreferences.THEME, theme);
+        editor.putInt(Constants.SharedPreferences.PORTRAITE_ROWS, portrait_rows);
+        editor.putInt(Constants.SharedPreferences.LANDSCAPE_ROWS, landscape_rows);
 
         editor.commit();
     }
@@ -142,9 +159,9 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(getString(R.string.preference_theme_key),theme);
-        outState.putInt(getString(R.string.preference_landscape_rows_key),landscape_rows);
-        outState.putInt(getString(R.string.preference_portrait_rows_key),portrait_rows);
+        outState.putInt(Constants.SharedPreferences.THEME,theme);
+        outState.putInt(Constants.SharedPreferences.PORTRAITE_ROWS,portrait_rows);
+        outState.putInt(Constants.SharedPreferences.LANDSCAPE_ROWS,landscape_rows);
 
     }
 

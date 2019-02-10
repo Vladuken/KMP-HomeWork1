@@ -29,8 +29,8 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPref =
-                getSharedPreferences(getString(R.string.app_preferences),0);
-        int theme = sharedPref.getInt(getString(R.string.preference_theme_key),
+                getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0);
+        int theme = sharedPref.getInt(Constants.SharedPreferences.THEME,
                 getResources().getInteger(R.integer.standard_layout_theme));
 
         if(theme == 0){
@@ -48,16 +48,16 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         SharedPreferences sharedPref = getSharedPreferences(
-                getString(R.string.app_preferences), 0);
+                Constants.SharedPreferences.APP_PREFERENCES, 0);
 
         int portraitSpanCount =
                 sharedPref.getInt(
-                        getString(R.string.preference_portrait_rows_key),
+                        Constants.SharedPreferences.PORTRAITE_ROWS,
                         getResources().getInteger(R.integer.standard_portrait_layout_span)
                 );
         int landscapeSpanCount =
                 sharedPref.getInt(
-                        getString(R.string.preference_landscape_rows_key),
+                        Constants.SharedPreferences.LANDSCAPE_ROWS,
                         getResources().getInteger(R.integer.standard_landscape_layout_span)
                 );
 
