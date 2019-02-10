@@ -17,5 +17,18 @@
     <string name="compact_layout">Compact layout</string>
 
 
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Vlad Petrushkevich</string>
+    <string name="nav_header_subtitle">vladpetrushkevich1999@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="launcher_activity">Launcher activity</string>
+    <string name="list_activity">List activity</string>
+    <string name="settings">Settings</string>
+
+
 
 </resources>

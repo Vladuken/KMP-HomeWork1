@@ -7,13 +7,18 @@ import android.graphics.ColorSpace;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,8 +26,6 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class LauncherActivity extends AppCompatActivity {
-
-
 
     private RecyclerView mRecyclerView;
 
@@ -39,16 +42,23 @@ public class LauncherActivity extends AppCompatActivity {
             setTheme(R.style.AppThemeDark);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
+        setContentView(R.layout.activity_nav_drawer);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view,"TODO",Snackbar.LENGTH_SHORT)
+                        .setAction("Action",null)
+                        .show();
+            }
+        });
+
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         mRecyclerView = findViewById(R.id.icon_recycler_view);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences sharedPref = getSharedPreferences(
-                Constants.SharedPreferences.APP_PREFERENCES, 0);
 
         int portraitSpanCount =
                 sharedPref.getInt(
@@ -75,7 +85,11 @@ public class LauncherActivity extends AppCompatActivity {
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     public class LauncherAdapter extends RecyclerView.Adapter<LauncherViewHolder>{
@@ -142,6 +156,23 @@ public class LauncherActivity extends AppCompatActivity {
             super(itemView);
             mView = itemView;
         }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_launcher_activity) {
+            // Handle the camera action
+        } else if (id == R.id.nav_list_activity) {
+
+        } else if (id == R.id.nav_settings) {
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 }
