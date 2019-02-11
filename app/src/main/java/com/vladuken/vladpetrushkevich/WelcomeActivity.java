@@ -36,7 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected Button mBtnSkip, mBtnNext;
 
     //TODO get rid of magic numbers
-    protected int theme; // 0 is light 1 is dark
+    protected boolean theme; // 0 is light 1 is dark
     protected int portrait_rows;
     protected int landscape_rows;
 
@@ -57,7 +57,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
         if(savedInstanceState != null){
-            theme = savedInstanceState.getInt(Constants.SharedPreferences.THEME);
+            theme = savedInstanceState.getBoolean(Constants.SharedPreferences.THEME);
             portrait_rows = savedInstanceState.getInt(Constants.SharedPreferences.PORTRAITE_ROWS);
             landscape_rows = savedInstanceState.getInt(Constants.SharedPreferences.LANDSCAPE_ROWS);
         }
@@ -144,11 +144,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         mPrefManager.setFirstTimeLaunch(false);
         startActivity(i);
+        finish();
     }
 
     private void savePreferences(){
         SharedPreferences.Editor editor = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0).edit();
-        editor.putInt(Constants.SharedPreferences.THEME, theme);
+        editor.putBoolean(Constants.SharedPreferences.THEME, theme);
         editor.putInt(Constants.SharedPreferences.PORTRAITE_ROWS, portrait_rows);
         editor.putInt(Constants.SharedPreferences.LANDSCAPE_ROWS, landscape_rows);
 
@@ -159,7 +160,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(Constants.SharedPreferences.THEME,theme);
+        outState.putBoolean(Constants.SharedPreferences.THEME,theme);
         outState.putInt(Constants.SharedPreferences.PORTRAITE_ROWS,portrait_rows);
         outState.putInt(Constants.SharedPreferences.LANDSCAPE_ROWS,landscape_rows);
 
@@ -195,14 +196,14 @@ public class WelcomeActivity extends AppCompatActivity {
                             int selectedId = mThemeRadioGroup.getCheckedRadioButtonId();
 
                             if (selectedId == R.id.light_theme_radiobutton) {
-                                theme = 0;
+                                theme = false;
 //                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(0,0,0,0));
 
                                 Snackbar.make(layout3,"Light theme",Snackbar.LENGTH_SHORT)
                                         .show();
 
                             } else if (selectedId == R.id.dark_theme_radiobutton) {
-                                theme = 1;
+                                theme = true;
 //                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(255,0,0,0));
 
 

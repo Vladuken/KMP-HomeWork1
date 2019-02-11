@@ -1,5 +1,6 @@
 package com.vladuken.vladpetrushkevich;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -21,7 +22,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
 
 import java.util.Random;
 
@@ -29,14 +34,14 @@ public class LauncherActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
 
+    //TODO change preference to string xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPref =
                 getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0);
-        int theme = sharedPref.getInt(Constants.SharedPreferences.THEME,
-                getResources().getInteger(R.integer.standard_layout_theme));
+        boolean theme = sharedPref.getBoolean(Constants.SharedPreferences.THEME, false);
 
-        if(theme == 0){
+        if(!theme){
             setTheme(R.style.AppTheme);
         }else{
             setTheme(R.style.AppThemeDark);
@@ -54,9 +59,18 @@ public class LauncherActivity extends AppCompatActivity {
             }
         });
 
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+        View headerView =  navigationView.getHeaderView(0);
+        ImageView avatar = headerView.findViewById(R.id.avatarHeaderImageView);
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(),SettingsActivity.class);
+                startActivity(i);
+            }
+        });
 
         mRecyclerView = findViewById(R.id.icon_recycler_view);
 
