@@ -10,5 +10,9 @@
         android:key="Compact layout"
         android:title="Compact layout" />
 
+    <SwitchPreference
+        android:key="com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH"
+        android:title="Show intro next time"/>
+
 
 </PreferenceScreen>

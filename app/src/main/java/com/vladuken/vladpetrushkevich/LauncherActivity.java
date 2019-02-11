@@ -23,8 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
 
@@ -67,7 +65,7 @@ public class LauncherActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(),SettingsActivity.class);
+                Intent i = new Intent(v.getContext(),MainActivity.class);
                 startActivity(i);
             }
         });
@@ -180,8 +178,11 @@ public class LauncherActivity extends AppCompatActivity {
         if (id == R.id.nav_launcher_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_list_activity) {
-
+            Intent i = new Intent(getApplicationContext(),ListActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_settings) {
+            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
