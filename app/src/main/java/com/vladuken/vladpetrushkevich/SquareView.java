@@ -1,15 +1,11 @@
 package com.vladuken.vladpetrushkevich;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Toast;
 
-public class SquareView extends View {
+public class SquareView extends AppCompatImageView {
 
     public SquareView(Context context) {
         super(context);
@@ -21,10 +17,6 @@ public class SquareView extends View {
 
     public SquareView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public SquareView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

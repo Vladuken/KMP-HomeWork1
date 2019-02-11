@@ -7,16 +7,16 @@ import static com.vladuken.vladpetrushkevich.Constants.SharedPreferences.APP_PRE
 import static com.vladuken.vladpetrushkevich.Constants.SharedPreferences.IS_FIRST_TIME_LAUNCH;
 
 public class PrefManager {
-    private SharedPreferences mPreferences;
-    private SharedPreferences.Editor mEditor;
+    private final SharedPreferences mPreferences;
+    private final SharedPreferences.Editor mEditor;
 
-    private Context mContext;
+//    private Context mContext;
 
     int PRIVATE_MODE = 0;
 
 
     public PrefManager(Context context) {
-        mContext = context;
+//        mContext = context;
 
         mPreferences = context.getSharedPreferences(APP_PREFERENCES, PRIVATE_MODE);
         mEditor = mPreferences.edit();
