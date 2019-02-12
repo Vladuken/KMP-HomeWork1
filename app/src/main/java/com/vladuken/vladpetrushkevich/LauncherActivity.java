@@ -1,12 +1,17 @@
 package com.vladuken.vladpetrushkevich;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,17 +22,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +43,7 @@ public class LauncherActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
 
+    protected BroadcastReceiver mBroadcastReceiver;
     //TODO change preference to string xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +105,19 @@ public class LauncherActivity extends AppCompatActivity {
                         .show();
             }
         });
+
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+                Log.d("AAAAAAAAAAAAA","Help");
+//                recreate();
+                //TODO set up normal broadcast receiver that would work to detect app install-uninstall
+            }
+        };
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
+        this.registerReceiver(mBroadcastReceiver, filter);
     }
 
     private void setupAdapter() {
@@ -105,15 +126,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
-        Collections.sort(activities, new Comparator<ResolveInfo>() {
-            @Override
-            public int compare(ResolveInfo a, ResolveInfo b) {
-                PackageManager pm = getPackageManager();
-                return String.CASE_INSENSITIVE_ORDER.compare(
-                        a.loadLabel(pm).toString(),
-                        b.loadLabel(pm).toString());
-            }
-        });
+        Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
         mRecyclerView.setAdapter(new LauncherAdapter(activities));
     }
 
@@ -126,6 +139,8 @@ public class LauncherActivity extends AppCompatActivity {
             mInstalledAppInfo =  installedAppsInfo;
             mIcons = new HashMap<>();
         }
+
+
 
         @NonNull
         @Override
@@ -154,8 +169,7 @@ public class LauncherActivity extends AppCompatActivity {
         }
     }
 
-    public class LauncherViewHolder extends RecyclerView.ViewHolder{
-
+    public class LauncherViewHolder extends RecyclerView.ViewHolder {
         private ResolveInfo mResolveInfo;
 
         private final ImageView mAppIcon;
@@ -166,6 +180,7 @@ public class LauncherActivity extends AppCompatActivity {
             mAppIcon = itemView.findViewById(R.id.app_icon_with_title);
             mAppTitle = itemView.findViewById(R.id.app_title);
             itemView.setOnClickListener(this::onClick);
+            itemView.setOnLongClickListener(this::showPopUp);
 
         }
 
@@ -183,12 +198,45 @@ public class LauncherActivity extends AppCompatActivity {
             ActivityInfo activityInfo = mResolveInfo.activityInfo;
 
             Intent i = new Intent(Intent.ACTION_MAIN)
-                    .setClassName(activityInfo.applicationInfo.packageName,
-                            activityInfo.name)
+                    .setClassName(activityInfo.applicationInfo.packageName,activityInfo.name)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             startActivity(i);
         }
+
+        public boolean showPopUp(View v){
+            PopupMenu popup = new PopupMenu(v.getContext(),v);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.app_popup,popup.getMenu());
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_uninstall_app:
+                            uninstallApp();
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+            });
+            popup.show();
+            return true;
+        }
+
+        private void uninstallApp(){
+            Intent i = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+            i.setData(Uri.parse("package:" + mResolveInfo.activityInfo.packageName));
+            //TODO StartactivityFor Result to update on gridview ondelete app
+            startActivity(i);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(mBroadcastReceiver);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
