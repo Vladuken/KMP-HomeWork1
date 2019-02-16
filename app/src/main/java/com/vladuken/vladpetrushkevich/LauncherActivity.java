@@ -33,6 +33,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
+import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,11 +45,12 @@ public class LauncherActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
 
     protected BroadcastReceiver mBroadcastReceiver;
+    protected SharedPreferences mSharedPreferences;
     //TODO change preference to string xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPref = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0);
-        boolean theme = sharedPref.getBoolean(Constants.SharedPreferences.THEME, false);
+        mSharedPreferences = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0);
+        boolean theme = mSharedPreferences.getBoolean(Constants.SharedPreferences.THEME, false);
         if(!theme){
             setTheme(R.style.AppTheme);
         }else{
@@ -73,12 +75,12 @@ public class LauncherActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.icon_recycler_view);
 
         int portraitSpanCount =
-                sharedPref.getInt(
+                mSharedPreferences.getInt(
                         Constants.SharedPreferences.PORTRAITE_ROWS,
                         getResources().getInteger(R.integer.standard_portrait_layout_span)
                 );
         int landscapeSpanCount =
-                sharedPref.getInt(
+                mSharedPreferences.getInt(
                         Constants.SharedPreferences.LANDSCAPE_ROWS,
                         getResources().getInteger(R.integer.standard_landscape_layout_span)
                 );
@@ -126,7 +128,31 @@ public class LauncherActivity extends AppCompatActivity {
 
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
-        Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+
+
+        int sortMethod = Integer.parseInt(
+                mSharedPreferences.getString("com.vladuken.vladpetrushkevich.SORT_METHOD","0"));
+
+        switch (sortMethod){
+            case 0:
+                break;
+            case 1:
+                Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+                break;
+            case 2:
+                Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+                Collections.reverse(activities);
+                break;
+            case 3:
+                Collections.sort(activities, new InstallDateComparator(pm));
+                break;
+
+        }
+
+        //TODO set comparator from settings
+//        Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+//        Collections.sort(activities, new InstallDateComparator(pm));
+
         mRecyclerView.setAdapter(new LauncherAdapter(activities));
     }
 

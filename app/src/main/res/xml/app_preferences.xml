@@ -14,5 +14,13 @@
         android:key="com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH"
         android:title="Show intro next time"/>
 
+    <ListPreference
+        android:title="@string/sort_method"
+        android:defaultValue="1"
+        android:key="com.vladuken.vladpetrushkevich.SORT_METHOD"
+        android:entries="@array/sortMethodList"
+        android:entryValues="@array/sortMethodValues">
+    </ListPreference>
+
 
 </PreferenceScreen>
