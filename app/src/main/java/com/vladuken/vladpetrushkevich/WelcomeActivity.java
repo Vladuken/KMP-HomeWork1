@@ -51,9 +51,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
         if(savedInstanceState != null){
-            theme = savedInstanceState.getBoolean(Constants.SharedPreferences.THEME);
-            portrait_rows = savedInstanceState.getInt(Constants.SharedPreferences.PORTRAITE_ROWS);
-            landscape_rows = savedInstanceState.getInt(Constants.SharedPreferences.LANDSCAPE_ROWS);
+            theme = savedInstanceState.getBoolean(getString(R.string.preference_key_theme));
+            portrait_rows = savedInstanceState.getInt(getString(R.string.preference_portrait_rows));
+            landscape_rows = savedInstanceState.getInt(getString(R.string.preference_landscape_rows));
         }
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -142,10 +142,10 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     protected void savePreferences(){
-        SharedPreferences.Editor editor = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0).edit();
-        editor.putBoolean(Constants.SharedPreferences.THEME, theme);
-        editor.putInt(Constants.SharedPreferences.PORTRAITE_ROWS, portrait_rows);
-        editor.putInt(Constants.SharedPreferences.LANDSCAPE_ROWS, landscape_rows);
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_file),0).edit();
+        editor.putBoolean(getString(R.string.preference_key_theme), theme);
+        editor.putInt(getString(R.string.preference_portrait_rows), portrait_rows);
+        editor.putInt(getString(R.string.preference_landscape_rows), landscape_rows);
 
         editor.commit();
     }
@@ -154,9 +154,9 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(Constants.SharedPreferences.THEME,theme);
-        outState.putInt(Constants.SharedPreferences.PORTRAITE_ROWS,portrait_rows);
-        outState.putInt(Constants.SharedPreferences.LANDSCAPE_ROWS,landscape_rows);
+        outState.putBoolean(getString(R.string.preference_key_theme),theme);
+        outState.putInt(getString(R.string.preference_portrait_rows),portrait_rows);
+        outState.putInt(getString(R.string.preference_landscape_rows),landscape_rows);
 
     }
 

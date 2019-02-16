@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <CheckBoxPreference
-        android:key="com.vladuken.vladpetrushkevich.PREFERENCE_THEME"
+        android:key="@string/preference_key_theme"
         android:title="Dark theme"/>
     <CheckBoxPreference
         android:key="Compact layout"
         android:title="Compact layout" />
 
     <SwitchPreference
-        android:key="com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH"
+        android:key="@string/preference_key_is_first_launch"
         android:title="Show intro next time"/>
 
     <ListPreference
         android:title="@string/sort_method"
         android:defaultValue="1"
-        android:key="com.vladuken.vladpetrushkevich.SORT_METHOD"
+        android:key="@string/sort_method"
         android:entries="@array/sortMethodList"
         android:entryValues="@array/sortMethodValues">
     </ListPreference>

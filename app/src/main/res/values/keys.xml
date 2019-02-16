@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+    <string name="preference_file">com.vladuken.vladpetrushkevich_preferences</string>
+
+
+    <string name="preference_key_theme">com.vladuken.vladpetrushkevich.PREFERENCE_THEME</string>
+    <string name="preference_key_is_first_launch">com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH</string>
+    <string name="preference_key_sort_method">com.vladuken.vladpetrushkevich.SORT_METHOD</string>
+
+    <string name="preference_landscape_rows">com.vladuken.vladpetrushkevich.PREFERENCE_LANDSCAPE</string>
+    <string name="preference_portrait_rows">com.vladuken.vladpetrushkevich.PREFERENCE_PORTRAIT</string>
+
+</resources>

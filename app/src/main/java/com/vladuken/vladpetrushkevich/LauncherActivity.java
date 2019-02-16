@@ -46,11 +46,14 @@ public class LauncherActivity extends AppCompatActivity {
 
     protected BroadcastReceiver mBroadcastReceiver;
     protected SharedPreferences mSharedPreferences;
+    protected PrefManager mPrefManager;
+
     //TODO change preference to string xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mSharedPreferences = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,0);
-        boolean theme = mSharedPreferences.getBoolean(Constants.SharedPreferences.THEME, false);
+//        mPrefManager = new PrefManager(this);
+        mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
+        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
         if(!theme){
             setTheme(R.style.AppTheme);
         }else{
@@ -76,12 +79,12 @@ public class LauncherActivity extends AppCompatActivity {
 
         int portraitSpanCount =
                 mSharedPreferences.getInt(
-                        Constants.SharedPreferences.PORTRAITE_ROWS,
+                        getString(R.string.preference_portrait_rows),
                         getResources().getInteger(R.integer.standard_portrait_layout_span)
                 );
         int landscapeSpanCount =
                 mSharedPreferences.getInt(
-                        Constants.SharedPreferences.LANDSCAPE_ROWS,
+                        getString(R.string.preference_landscape_rows),
                         getResources().getInteger(R.integer.standard_landscape_layout_span)
                 );
 
@@ -97,7 +100,6 @@ public class LauncherActivity extends AppCompatActivity {
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +109,7 @@ public class LauncherActivity extends AppCompatActivity {
                         .show();
             }
         });
+
 
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
