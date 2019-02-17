@@ -1,5 +1,6 @@
 package com.vladuken.vladpetrushkevich;
 
+import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.vladuken.vladpetrushkevich.db.AppDatabase;
+import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 
@@ -47,6 +50,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected BroadcastReceiver mBroadcastReceiver;
     protected SharedPreferences mSharedPreferences;
     protected PrefManager mPrefManager;
+    protected AppDatabase mDatabase;
 
     //TODO change preference to string xml
     @Override
@@ -61,6 +65,11 @@ public class LauncherActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
+
+        mDatabase = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "app_db")
+                .allowMainThreadQueries()
+                .build();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
@@ -204,6 +213,8 @@ public class LauncherActivity extends AppCompatActivity {
         private final ImageView mAppIcon;
         private final TextView mAppTitle;
 
+        private App mApp;
+
         public LauncherViewHolder(@NonNull View itemView) {
             super(itemView);
             mAppIcon = itemView.findViewById(R.id.app_icon_with_title);
@@ -219,6 +230,15 @@ public class LauncherActivity extends AppCompatActivity {
             PackageManager pm = getPackageManager();
             String appName = mResolveInfo.loadLabel(pm).toString();
 
+
+            //TODO move all this code to Adaper
+            mApp = mDatabase.appDao().getById(mResolveInfo.activityInfo.packageName);
+            if(mApp == null){
+                mApp = new App(mResolveInfo.activityInfo.packageName,0);
+                mDatabase.appDao().insertAll(mApp);
+            }
+            //
+
             mAppIcon.setImageDrawable(icon);
             mAppTitle.setText(appName);
         }
@@ -229,6 +249,10 @@ public class LauncherActivity extends AppCompatActivity {
             Intent i = new Intent(Intent.ACTION_MAIN)
                     .setClassName(activityInfo.applicationInfo.packageName,activityInfo.name)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            mApp.launches_count++;
+            mDatabase.appDao().update(mApp);
+
 
             startActivity(i);
         }
@@ -245,6 +269,8 @@ public class LauncherActivity extends AppCompatActivity {
                         case R.id.action_uninstall_app:
                             uninstallApp();
                             return true;
+                        case R.id.action_count_app_launches:
+                            showLaunchCounts();
                         default:
                             return false;
                     }
@@ -260,6 +286,16 @@ public class LauncherActivity extends AppCompatActivity {
             //TODO StartactivityFor Result to update on gridview ondelete app
             startActivity(i);
         }
+
+        private void showLaunchCounts(){
+            Snackbar.make(this.itemView,
+                    "Launched " + mApp.launches_count + " times",
+                    Snackbar.LENGTH_SHORT)
+                    .setAction("Action",null)
+                    .show();
+
+        }
+
     }
 
     @Override

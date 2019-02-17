@@ -8,4 +8,10 @@
         android:title="@string/uninstall_app"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_count_app_launches"
+        android:orderInCategory="200"
+        android:title="@string/launch_counts"
+        app:showAsAction="never" />
+
 </menu>
