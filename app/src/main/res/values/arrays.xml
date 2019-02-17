@@ -5,6 +5,7 @@
         <item>By title</item>
         <item>By title(Reverced)</item>
         <item>By install date</item>
+        <item>By launch count</item>
     </string-array>
 
     <string-array name="sortMethodValues">
@@ -12,6 +13,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-
+        <item>4</item>
     </string-array>
 </resources>

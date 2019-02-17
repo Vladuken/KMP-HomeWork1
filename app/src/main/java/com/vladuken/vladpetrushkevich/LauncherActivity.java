@@ -37,6 +37,7 @@ import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
+import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,10 +67,7 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
 
-        mDatabase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "app_db")
-                .allowMainThreadQueries()
-                .build();
+        mDatabase = SingletonDatabase.getInstance(getApplicationContext());
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
@@ -157,6 +155,8 @@ public class LauncherActivity extends AppCompatActivity {
                 break;
             case 3:
                 Collections.sort(activities, new InstallDateComparator(pm));
+            case 4:
+                Collections.sort(activities, new LaunchCountComparator(mDatabase));
                 break;
 
         }

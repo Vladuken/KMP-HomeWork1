@@ -17,7 +17,7 @@
     <ListPreference
         android:title="@string/sort_method"
         android:defaultValue="1"
-        android:key="@string/sort_method"
+        android:key="@string/preference_key_sort_method"
         android:entries="@array/sortMethodList"
         android:entryValues="@array/sortMethodValues">
     </ListPreference>
