@@ -1,28 +1,27 @@
 package com.vladuken.vladpetrushkevich.activities.welcome;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
-import com.vladuken.vladpetrushkevich.utils.PrefManager;
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherActivity;
+import com.vladuken.vladpetrushkevich.activities.welcome.fragments.FirstPageFragment;
+import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ForthPageFragment;
+import com.vladuken.vladpetrushkevich.activities.welcome.fragments.SecondPageFragment;
+import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ThirdPageFragment;
+import com.vladuken.vladpetrushkevich.utils.PrefManager;
 
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -30,7 +29,6 @@ public class WelcomeActivity extends AppCompatActivity {
     protected static final String TAG = "WelcomeActivity:";
 
     protected ViewPager mViewPager;
-    protected int[] mLayouts;
     protected Button mBtnSkip, mBtnNext;
 
     //TODO get rid of magic numbers
@@ -85,47 +83,18 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int current = mViewPager.getCurrentItem();
-                if(current < mLayouts.length - 1){
+                if(current < mViewPager.getAdapter().getCount() - 1){
                     mViewPager.setCurrentItem(current+1);
                 }else {
-                    savePreferences();
                     launchHomeScreen();
                 }
             }
         });
 
-        mLayouts = new int[]{
-                R.layout.welcome_slide1,
-                R.layout.welcome_slide2,
-                R.layout.welcome_slide3,
-                R.layout.welcome_slide4};
-
-        WelcomeViewPagerAdapter mViewPagerAdapter = new WelcomeViewPagerAdapter();
-        mViewPager.setAdapter(mViewPagerAdapter);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mViewPager.setAdapter(new WelcomeFragmentPagerAdapter(fragmentManager));
 
         changeStatusBarColor();
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-                //TODO
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                if(i == mLayouts.length - 1){
-                    mBtnNext.setText(getString(R.string.start));
-                    mBtnSkip.setVisibility(View.GONE);
-                }else {
-                    mBtnNext.setText(getString(R.string.next));
-                    mBtnSkip.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-                //TODO
-            }
-        });
     }
 
     private void changeStatusBarColor(){
@@ -135,7 +104,6 @@ public class WelcomeActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
-
 
     protected void launchHomeScreen(){
         Intent i = new Intent(this, LauncherActivity.class);
@@ -164,97 +132,37 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    public class WelcomeViewPagerAdapter extends PagerAdapter {
+    private class WelcomeFragmentPagerAdapter extends FragmentPagerAdapter{
+        int[] mLayouts = new int[]{
+                R.layout.welcome_slide1,
+                R.layout.welcome_slide2,
+                R.layout.welcome_slide3,
+                R.layout.welcome_slide4};
 
-        private LayoutInflater layoutInflater;
-        protected RadioGroup mLayoutRadioGroup;
-        protected RadioGroup mThemeRadioGroup;
-        public WelcomeViewPagerAdapter() {
-            //TODO
+        public WelcomeFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-        @NonNull
         @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            final View view = layoutInflater.inflate(mLayouts[position], container, false);
-            container.addView(view);
-            switch (position){
+        public Fragment getItem(int i) {
+            switch (i){
                 case 0:
-                    break;
+                    return FirstPageFragment.newInstance();
                 case 1:
-                    break;
+                    return SecondPageFragment.newInstance();
                 case 2:
-                    final RelativeLayout layout3 = view.findViewById(R.id.screen3id);
-                    mThemeRadioGroup = layout3.findViewById(R.id.radio_group_theme);
-                    mThemeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            int selectedId = mThemeRadioGroup.getCheckedRadioButtonId();
-
-                            if (selectedId == R.id.light_theme_radiobutton) {
-                                theme = false;
-//                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(0,0,0,0));
-
-                                Snackbar.make(layout3,"Light theme",Snackbar.LENGTH_SHORT)
-                                        .show();
-
-                            } else if (selectedId == R.id.dark_theme_radiobutton) {
-                                theme = true;
-//                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(255,0,0,0));
-
-
-                                Snackbar.make(layout3,"Dark theme",Snackbar.LENGTH_SHORT)
-                                        .show();
-                            }
-                        }
-                    });
-                    break;
+                    return ThirdPageFragment.newInstance();
                 case 3:
-                    final RelativeLayout layout4 = view.findViewById(R.id.screen4id);
-                    mLayoutRadioGroup = layout4.findViewById(R.id.radio_group_layout);
-                    mLayoutRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            int selectedId = mLayoutRadioGroup.getCheckedRadioButtonId();
-
-                            if (selectedId == R.id.standard_layout_rdb) {
-                                portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
-                                landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
-
-                                Snackbar.make(layout4,"Standard layout",Snackbar.LENGTH_SHORT)
-                                        .show();
-
-                            } else if (selectedId == R.id.compact_layout_rdb) {
-                                portrait_rows = getResources().getInteger(R.integer.compact_portrait_layout_span);
-                                landscape_rows = getResources().getInteger(R.integer.compact_landscape_layout_span);
-                                Snackbar.make(layout4,"Compact layout",Snackbar.LENGTH_SHORT)
-                                        .show();
-                            }
-                        }
-                    });
-                    break;
+                    return ForthPageFragment.newInstance();
                 default:
                     break;
             }
-            return view;
+            return null;
         }
 
         @Override
         public int getCount() {
             return mLayouts.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object o) {
-            return view.equals(o);
-        }
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            View view = (View) object;
-            container.removeView(view);
         }
     }
 }
