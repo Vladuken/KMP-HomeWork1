@@ -26,8 +26,6 @@ import com.vladuken.vladpetrushkevich.utils.PrefManager;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    protected static final String TAG = "WelcomeActivity:";
-
     protected ViewPager mViewPager;
     protected Button mBtnSkip, mBtnNext;
 
@@ -35,7 +33,6 @@ public class WelcomeActivity extends AppCompatActivity {
     protected boolean theme; // 0 is light 1 is dark
     protected int portrait_rows;
     protected int landscape_rows;
-
 
     protected PrefManager mPrefManager;
     @Override
@@ -130,6 +127,16 @@ public class WelcomeActivity extends AppCompatActivity {
         outState.putInt(getString(R.string.preference_portrait_rows),portrait_rows);
         outState.putInt(getString(R.string.preference_landscape_rows),landscape_rows);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        int currentItem =mViewPager.getCurrentItem();
+        if(currentItem != 0){
+            mViewPager.setCurrentItem(currentItem - 1,true);
+        }else {
+            super.onBackPressed();
+        }
     }
 
     private class WelcomeFragmentPagerAdapter extends FragmentPagerAdapter{
