@@ -1,7 +1,9 @@
-package com.vladuken.vladpetrushkevich.settings;
+package com.vladuken.vladpetrushkevich.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.vladuken.vladpetrushkevich.fragment.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 

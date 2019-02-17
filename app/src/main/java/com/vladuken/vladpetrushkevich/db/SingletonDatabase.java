@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.db;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;

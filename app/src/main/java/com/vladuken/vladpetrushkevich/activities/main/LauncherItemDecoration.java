@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.activities.main;
 
 import android.graphics.Rect;
 import android.support.annotation.NonNull;

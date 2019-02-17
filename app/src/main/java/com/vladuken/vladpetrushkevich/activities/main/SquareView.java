@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.activities.main;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

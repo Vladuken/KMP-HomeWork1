@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich.settings;
+package com.vladuken.vladpetrushkevich.fragment;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;

@@ -1,6 +1,5 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.activities.main;
 
-import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,9 +32,13 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.vladuken.vladpetrushkevich.utils.PrefManager;
+import com.vladuken.vladpetrushkevich.R;
+import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
+import com.vladuken.vladpetrushkevich.activities.MainActivity;
+import com.vladuken.vladpetrushkevich.activities.SettingsActivity;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
-import com.vladuken.vladpetrushkevich.settings.SettingsActivity;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
@@ -77,7 +80,7 @@ public class LauncherActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(),MainActivity.class);
+                Intent i = new Intent(v.getContext(), MainActivity.class);
                 startActivity(i);
             }
         });
@@ -312,10 +315,10 @@ public class LauncherActivity extends AppCompatActivity {
         if (id == R.id.nav_launcher_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_list_activity) {
-            Intent i = new Intent(getApplicationContext(),ListActivity.class);
+            Intent i = new Intent(getApplicationContext(), ListActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_settings) {
-            Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+            Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(i);
         }
 

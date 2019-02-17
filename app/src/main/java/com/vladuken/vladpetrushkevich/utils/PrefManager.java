@@ -1,7 +1,9 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.vladuken.vladpetrushkevich.R;
 
 public class PrefManager {
     private final SharedPreferences mPreferences;

@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.activities.welcome;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+
+import com.vladuken.vladpetrushkevich.utils.PrefManager;
+import com.vladuken.vladpetrushkevich.R;
+import com.vladuken.vladpetrushkevich.activities.main.LauncherActivity;
 
 
 public class WelcomeActivity extends AppCompatActivity {

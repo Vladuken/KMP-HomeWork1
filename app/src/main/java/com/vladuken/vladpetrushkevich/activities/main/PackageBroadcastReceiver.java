@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich;
+package com.vladuken.vladpetrushkevich.activities.main;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
