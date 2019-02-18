@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
@@ -38,10 +39,29 @@ public class ForthPageFragment extends Fragment {
                     portrait_rows = getResources().getInteger(R.integer.compact_portrait_layout_span);
                     landscape_rows = getResources().getInteger(R.integer.compact_landscape_layout_span);
                 }
-
                 savePreferences();
             }
         });
+
+        SharedPreferences sharedPreferences = this.getActivity()
+                .getSharedPreferences(getString(R.string.preference_file),0);
+
+        int portraitRows = sharedPreferences.getInt(
+                getString(R.string.preference_portrait_rows),
+                getResources().getInteger(R.integer.standard_portrait_layout_span)
+        );
+
+        int landscapeRows = sharedPreferences.getInt(
+                getString(R.string.preference_landscape_rows),
+                getResources().getInteger(R.integer.standard_landscape_layout_span)
+        );
+
+        if(portraitRows == getResources().getInteger(R.integer.compact_portrait_layout_span) &&
+        landscapeRows == getResources().getInteger(R.integer.compact_landscape_layout_span)){
+            ((RadioButton) layout4.findViewById(R.id.compact_layout_rdb)).setChecked(true);
+        }else {
+            ((RadioButton) layout4.findViewById(R.id.standard_layout_rdb)).setChecked(true);
+        }
 
         return v;
     }
