@@ -46,12 +46,12 @@ public class GridLauncherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
-        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-        if(!theme){
-            getActivity().setTheme(R.style.AppTheme);
-        }else{
-            getActivity().setTheme(R.style.AppThemeDark);
-        }
+//        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
+//        if(!theme){
+//            getActivity().setTheme(R.style.AppTheme);
+//        }else{
+//            getActivity().setTheme(R.style.AppThemeDark);
+//        }
         super.onCreate(savedInstanceState);
     }
 
@@ -120,18 +120,18 @@ public class GridLauncherFragment extends Fragment {
                 break;
         }
 
-        mRecyclerView.setAdapter(new LauncherAdapter(activities));
+        mRecyclerView.setAdapter(new GridLauncherAdapter(activities));
     }
 
     public static GridLauncherFragment newInstance(){
         return new GridLauncherFragment();
     }
 
-    public class LauncherAdapter extends RecyclerView.Adapter<LauncherViewHolder>{
+    public class GridLauncherAdapter extends RecyclerView.Adapter<LauncherViewHolder>{
         private final List<ResolveInfo> mInstalledAppInfo;
         private final Map<ResolveInfo,Drawable> mIcons;
 
-        public LauncherAdapter(List<ResolveInfo> installedAppsInfo) {
+        public GridLauncherAdapter(List<ResolveInfo> installedAppsInfo) {
             mInstalledAppInfo =  installedAppsInfo;
             mIcons = new HashMap<>();
         }
