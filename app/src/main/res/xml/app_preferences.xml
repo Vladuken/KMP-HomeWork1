@@ -7,7 +7,7 @@
         android:key="@string/preference_key_theme"
         android:title="Dark theme"/>
     <CheckBoxPreference
-        android:key="Compact layout"
+        android:key="@string/preference_key_layout"
         android:title="Compact layout" />
 
     <SwitchPreference

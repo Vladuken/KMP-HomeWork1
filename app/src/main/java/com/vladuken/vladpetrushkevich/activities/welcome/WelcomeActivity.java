@@ -29,17 +29,13 @@ public class WelcomeActivity extends AppCompatActivity {
     protected ViewPager mViewPager;
     protected Button mBtnSkip, mBtnNext;
 
-    protected boolean theme; // 0 is light 1 is dark
-    protected int portrait_rows;
-    protected int landscape_rows;
+    protected boolean mIsDarkTheme; // 0 is light 1 is dark
+    protected boolean mIsCompactLayout;
 
     protected PrefManager mPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
-        landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
 
         mPrefManager = new PrefManager(this);
         if(!mPrefManager.isFirstTimeLaunch()){
@@ -47,11 +43,9 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
-
         if(savedInstanceState != null){
-            theme = savedInstanceState.getBoolean(getString(R.string.preference_key_theme));
-            portrait_rows = savedInstanceState.getInt(getString(R.string.preference_portrait_rows));
-            landscape_rows = savedInstanceState.getInt(getString(R.string.preference_landscape_rows));
+            mIsDarkTheme = savedInstanceState.getBoolean(getString(R.string.preference_key_theme));
+            mIsCompactLayout = savedInstanceState.getBoolean(getString(R.string.preference_key_layout));
         }
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -111,9 +105,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
     protected void savePreferences(){
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_file),0).edit();
-        editor.putBoolean(getString(R.string.preference_key_theme), theme);
-        editor.putInt(getString(R.string.preference_portrait_rows), portrait_rows);
-        editor.putInt(getString(R.string.preference_landscape_rows), landscape_rows);
+        editor.putBoolean(getString(R.string.preference_key_theme), mIsDarkTheme);
+        editor.putBoolean(getString(R.string.preference_key_layout),mIsCompactLayout);
 
         editor.commit();
     }
@@ -122,9 +115,8 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(getString(R.string.preference_key_theme),theme);
-        outState.putInt(getString(R.string.preference_portrait_rows),portrait_rows);
-        outState.putInt(getString(R.string.preference_landscape_rows),landscape_rows);
+        outState.putBoolean(getString(R.string.preference_key_theme), mIsDarkTheme);
+        outState.putBoolean(getString(R.string.preference_key_layout),mIsCompactLayout);
 
     }
 

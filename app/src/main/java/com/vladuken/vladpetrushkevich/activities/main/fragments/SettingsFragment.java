@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich.fragment;
+package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;

@@ -37,8 +37,8 @@ public class GridLauncherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
-//        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-//        if(!theme){
+//        boolean mIsDarkTheme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
+//        if(!mIsDarkTheme){
 //            getActivity().setTheme(R.style.AppTheme);
 //        }else{
 //            getActivity().setTheme(R.style.AppThemeDark);
@@ -54,16 +54,22 @@ public class GridLauncherFragment extends Fragment {
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
         mRecyclerView = v.findViewById(R.id.icon_recycler_view);
 
-        int portraitSpanCount =
-                mSharedPreferences.getInt(
-                        getString(R.string.preference_portrait_rows),
-                        getResources().getInteger(R.integer.standard_portrait_layout_span)
+        boolean isCompactLayout =
+                mSharedPreferences.getBoolean(
+                        getString(R.string.preference_key_layout),
+                        false
                 );
-        int landscapeSpanCount =
-                mSharedPreferences.getInt(
-                        getString(R.string.preference_landscape_rows),
-                        getResources().getInteger(R.integer.standard_landscape_layout_span)
-                );
+
+        int portraitSpanCount;
+        int landscapeSpanCount;
+        if(isCompactLayout){
+            portraitSpanCount = getResources().getInteger(R.integer.compact_portrait_layout_span);
+            landscapeSpanCount = getResources().getInteger(R.integer.compact_landscape_layout_span);
+        }else {
+            portraitSpanCount = getResources().getInteger(R.integer.standard_portrait_layout_span);
+            landscapeSpanCount = getResources().getInteger(R.integer.standard_landscape_layout_span);
+        }
+
 
         int orientation = getResources().getConfiguration().orientation;
 

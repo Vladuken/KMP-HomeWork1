@@ -19,7 +19,7 @@ import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ProfileCardFragment;
-import com.vladuken.vladpetrushkevich.fragment.SettingsFragment;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
 
 import io.fabric.sdk.android.Fabric;
 

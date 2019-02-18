@@ -1,15 +1,15 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application mIsDarkTheme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize your mIsDarkTheme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
 
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize your mIsDarkTheme here. -->
         <item name="colorPrimary">@color/primaryColorDarkTheme</item>
         <item name="colorPrimaryDark">@color/primaryDarkColorDarkTheme</item>
     </style>

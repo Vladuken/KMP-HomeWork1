@@ -37,8 +37,8 @@ public class ListLauncherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
-//        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-//        if(!theme){
+//        boolean mIsDarkTheme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
+//        if(!mIsDarkTheme){
 //            getActivity().setTheme(R.style.AppTheme);
 //        }else{
 //            getActivity().setTheme(R.style.AppThemeDark);
