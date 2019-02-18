@@ -16,9 +16,23 @@
     <string name="standard_layout">Standard layout</string>
     <string name="compact_layout">Compact layout</string>
 
-    <string name="app_preferences">com.vladuken.vlapetrushkevich.PREFERENCE_FILE</string>
-    <string name="preference_theme_key">com.vladuken.vladpetrushkevich.PREFERENCE_THEME</string>
-    <string name="preference_landscape_rows_key">com.vladuken.vladpetrushkevich.PREFERENCE_LANDSCAPE</string>
-    <string name="preference_portrait_rows_key">com.vladuken.vladpetrushkevich.PREFERENCE_PORTRAIT</string>
+
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Vlad Petrushkevich</string>
+    <string name="nav_header_subtitle">vladpetrushkevich1999@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="launcher_activity">Launcher activity</string>
+    <string name="list_activity">List activity</string>
+    <string name="settings">Settings</string>
+
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="launch_counts">Count launches</string>
+
+    <string name="sort_method">Sorting</string>
+
 
 </resources>

@@ -18,16 +18,16 @@
             android:layout_height="match_parent">
             <RadioButton
                 android:id="@+id/standard_layout_rdb"
-                android:layout_width="260dp"
-                android:layout_height="200dp"
+                android:layout_width="@dimen/radiobutton_card_width"
+                android:layout_height="@dimen/radiobutton_card_height"
                 android:text="@string/standard_layout"
                 android:background="@drawable/radiobutton">
 
             </RadioButton>
             <RadioButton
                 android:id="@+id/compact_layout_rdb"
-                android:layout_width="260dp"
-                android:layout_height="200dp"
+                android:layout_width="@dimen/radiobutton_card_width"
+                android:layout_height="@dimen/radiobutton_card_height"
                 android:text="@string/compact_layout"
                 android:background="@drawable/radiobutton"/>
         </RadioGroup>
