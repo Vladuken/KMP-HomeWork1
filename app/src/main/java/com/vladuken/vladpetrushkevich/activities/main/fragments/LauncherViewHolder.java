@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -90,6 +91,10 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder{
                     case R.id.action_uninstall_app:
                         uninstallApp();
                         return true;
+
+                    case R.id.action_open_app_settings:
+                        openAppSettings();
+                        return true;
                     default:
                         return false;
                 }
@@ -104,7 +109,14 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder{
     }
 
     protected void uninstallApp(){
-        Intent i = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+        Intent i = new Intent();
+        i.setData(Uri.parse("package:" + mResolveInfo.activityInfo.packageName));
+        //TODO StartactivityFor Result to update on gridview ondelete app
+        mView.getContext().startActivity(i);
+    }
+
+    protected void openAppSettings(){
+        Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         i.setData(Uri.parse("package:" + mResolveInfo.activityInfo.packageName));
         //TODO StartactivityFor Result to update on gridview ondelete app
         mView.getContext().startActivity(i);
