@@ -28,12 +28,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.main.LauncherActivity" />
-        <activity android:name=".activities.SettingsActivity" />
-        <activity
-            android:name=".activities.main.NavDrawerActivity"
-            android:label="@string/title_activity_nav_drawer"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activities.main.ListActivity"></activity>
     </application>
 
 </manifest>

@@ -21,8 +21,10 @@
     <!--</android.support.design.widget.AppBarLayout>-->
 
     <!--<include layout="@layout/content_nav_drawer" />-->
-    <include
-        layout="@layout/activity_launcher"/>
+    <FrameLayout
+        android:id="@+id/launcher_container_fragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -29,7 +29,6 @@ public class WelcomeActivity extends AppCompatActivity {
     protected ViewPager mViewPager;
     protected Button mBtnSkip, mBtnNext;
 
-    //TODO get rid of magic numbers
     protected boolean theme; // 0 is light 1 is dark
     protected int portrait_rows;
     protected int landscape_rows;

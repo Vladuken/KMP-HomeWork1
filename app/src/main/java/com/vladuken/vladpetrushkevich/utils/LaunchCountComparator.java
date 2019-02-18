@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class LaunchCountComparator implements Comparator<ResolveInfo> {
 
-    AppDatabase mDatabase;
+    private final AppDatabase mDatabase;
 
     public LaunchCountComparator(AppDatabase database) {
         mDatabase = database;
@@ -20,6 +20,6 @@ public class LaunchCountComparator implements Comparator<ResolveInfo> {
         App app1 = mDatabase.appDao().getById(a.activityInfo.packageName);
         App app2 = mDatabase.appDao().getById(b.activityInfo.packageName);
 
-        return (app2.launches_count - app1.launches_count);
+        return app2.launches_count - app1.launches_count;
     }
 }

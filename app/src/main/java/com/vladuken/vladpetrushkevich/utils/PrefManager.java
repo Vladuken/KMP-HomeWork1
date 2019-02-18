@@ -9,7 +9,7 @@ public class PrefManager {
     private final SharedPreferences mPreferences;
     private final SharedPreferences.Editor mEditor;
 
-    private Context mContext;
+    private final Context mContext;
 
     int PRIVATE_MODE = 0;
 

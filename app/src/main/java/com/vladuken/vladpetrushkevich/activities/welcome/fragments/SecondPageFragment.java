@@ -15,8 +15,7 @@ public class SecondPageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.welcome_slide2,container,false);
-        return v;
+        return inflater.inflate(R.layout.welcome_slide2,container,false);
     }
 
     public static SecondPageFragment newInstance(){

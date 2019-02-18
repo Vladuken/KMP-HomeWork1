@@ -11,12 +11,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                                     String rootKey) {
         setPreferencesFromResource(R.xml.app_preferences, rootKey);
     }
-//
-//    private void setupSharedPreferences() {
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//        sharedPreferences.registerOnSharedPreferenceChangeListener(this::onSharedPreferenceChanged);
-//    }
-//
-//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//    }
+
+    public static SettingsFragment newInstance(){
+        return new SettingsFragment();
+    }
 }
