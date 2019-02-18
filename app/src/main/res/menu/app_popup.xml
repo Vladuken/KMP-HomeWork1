@@ -9,6 +9,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_open_app_settings"
+        android:orderInCategory="200"
+        android:title="@string/open_app_settings"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_count_app_launches"
         android:orderInCategory="200"
         android:title="@string/launch_counts"
