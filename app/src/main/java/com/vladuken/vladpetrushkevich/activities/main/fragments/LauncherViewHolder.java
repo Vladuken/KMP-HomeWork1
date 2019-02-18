@@ -29,10 +29,10 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder{
     int mIconLayoutId;
     int mTitleLayoutId;
 
-    private View mView;
+    private final View mView;
 
     private App mApp;
-    private AppDatabase mDatabase;
+    private final AppDatabase mDatabase;
 
     public LauncherViewHolder(@NonNull View itemView, AppDatabase database, int icon_layout_id, int title_layout_id) {
         super(itemView);
@@ -56,11 +56,10 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder{
 
         //TODO move all this code to Adaper
         mApp = mDatabase.appDao().getById(mResolveInfo.activityInfo.packageName);
-        if(mApp == null){
-            mApp = new App(mResolveInfo.activityInfo.packageName,0);
+        if(mApp == null) {
+            mApp = new App(mResolveInfo.activityInfo.packageName, 0);
             mDatabase.appDao().insertAll(mApp);
         }
-        //
 
         mAppIcon.setImageDrawable(icon);
         mAppTitle.setText(appName);
@@ -91,14 +90,15 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder{
                     case R.id.action_uninstall_app:
                         uninstallApp();
                         return true;
-                    case R.id.action_count_app_launches:
-                        showLaunchCounts();
-                        return true;
                     default:
                         return false;
                 }
             }
         });
+
+        MenuItem launchCountMenu = popup.getMenu().findItem(R.id.action_count_app_launches);
+        launchCountMenu.setTitle("Launched " + mApp.launches_count + " times");
+        launchCountMenu.setEnabled(false);
         popup.show();
         return true;
     }
@@ -110,14 +110,4 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder{
         mView.getContext().startActivity(i);
 
     }
-
-    protected void showLaunchCounts(){
-        Snackbar.make(this.itemView,
-                "Launched " + mApp.launches_count + " times",
-                Snackbar.LENGTH_SHORT)
-                .setAction("Action",null)
-                .show();
-
-    }
-
 }

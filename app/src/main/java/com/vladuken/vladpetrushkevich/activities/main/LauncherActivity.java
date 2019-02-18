@@ -1,29 +1,35 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
+import com.crashlytics.android.Crashlytics;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.distribute.Distribute;
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.MainActivity;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.ProfileCardFragment;
 import com.vladuken.vladpetrushkevich.fragment.SettingsFragment;
+
+import io.fabric.sdk.android.Fabric;
 
 public class LauncherActivity extends AppCompatActivity {
 
+    private static final String CHECKED_NAV_ID = "CheckedNavId";
     protected SharedPreferences mSharedPreferences;
     protected FrameLayout mFrameLayout;
+
+    protected NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,39 +41,41 @@ public class LauncherActivity extends AppCompatActivity {
             setTheme(R.style.AppThemeDark);
         }
         super.onCreate(savedInstanceState);
+
+        Fabric.with(this, new Crashlytics());
+        AppCenter.start(getApplication(),
+                "77770b97-7fc5-4620-b874-95c26bb3e37c",
+                Analytics.class,
+                Crashes.class,
+                Distribute.class);
+
         setContentView(R.layout.activity_nav_drawer);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
-        View headerView =  navigationView.getHeaderView(0);
-        ImageView avatar = headerView.findViewById(R.id.avatarHeaderImageView);
-        avatar.setOnClickListener(new View.OnClickListener() {
+        View headerView =  mNavigationView.getHeaderView(0);
+
+        headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MainActivity.class);
-                startActivity(i);
+                mNavigationView.setCheckedItem(R.id.nav_none);
+                onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_none));
             }
         });
 
         mFrameLayout = findViewById(R.id.launcher_container_fragments);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.launcher_container_fragments,new GridLauncherFragment())
-                .commit();
 
+        mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
+        onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_launcher_activity));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view,"TODO",Snackbar.LENGTH_SHORT)
-                        .setAction("Action",null)
-                        .show();
-            }
-        });
+        if(savedInstanceState != null){
+            int menuId = savedInstanceState.getInt(CHECKED_NAV_ID,R.id.nav_list_activity);
+            MenuItem menuItem = mNavigationView.getMenu().findItem(menuId);
 
-        fab.hide();
-
+            mNavigationView.setCheckedItem(menuId);
+            onNavigationItemSelected(menuItem);
+        }
 
 //        mBroadcastReceiver = new BroadcastReceiver() {
 //            @Override
@@ -90,6 +98,19 @@ public class LauncherActivity extends AppCompatActivity {
 ////        this.unregisterReceiver(mBroadcastReceiver);
 //    }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CHECKED_NAV_ID,mNavigationView.getCheckedItem().getItemId());
+        super.onSaveInstanceState(outState);
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        //TODO add normal onbackpressed implementation
+//        super.onBackPressed();
+//    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -107,6 +128,10 @@ public class LauncherActivity extends AppCompatActivity {
                     .replace(R.id.launcher_container_fragments, SettingsFragment.newInstance())
                     .commit();
 
+        }else if(id == R.id.nav_none){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.launcher_container_fragments, ProfileCardFragment.newInstance())
+                    .commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
