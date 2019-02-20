@@ -20,6 +20,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFrag
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ProfileCardFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
+import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -35,12 +36,10 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
         boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-        if(!theme){
-            setTheme(R.style.AppTheme);
-        }else{
-            setTheme(R.style.AppThemeDark);
-        }
+
+        ThemeChanger.onCreateSetTheme(this,theme);
         super.onCreate(savedInstanceState);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         Fabric.with(this, new Crashlytics());
         AppCenter.start(getApplication(),

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Vlad Launcher</string>
     <string name="full_name">Vlad Petrushkevich</string>
+    <string name="my_greetings">Welcome, my name is Vlad and this app is for Yandex mobile development course</string>
     <string name="github">Github</string>
     <string name="github_link">https://github.com/Vladuken</string>
-    <string name="app_greetings">Hello, this is Launcher</string>
-    <string name="app_description">This is simple launcher</string>
+    <string name="app_description">This is simple launcher.\n
+        You can choose of 2 layout types and 2 themes.\n
+        Launcher support app sorting and launch counting.\n
+        You can delete apps and open app settings.</string>
 
     <string name="next">Next</string>
     <string name="skip">Skip</string>

@@ -17,15 +17,13 @@ import com.vladuken.vladpetrushkevich.R;
 public class ForthPageFragment extends Fragment {
 
     protected RadioGroup mLayoutRadioGroup;
-    protected int portrait_rows;
-    protected int landscape_rows;
     protected boolean mIsCompactLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.welcome_slide4,container,false);
 
-        final RelativeLayout layout4 = v.findViewById(R.id.screen4id);
+        final View layout4 = v.findViewById(R.id.screen4id);
         mLayoutRadioGroup = layout4.findViewById(R.id.radio_group_layout);
         mLayoutRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

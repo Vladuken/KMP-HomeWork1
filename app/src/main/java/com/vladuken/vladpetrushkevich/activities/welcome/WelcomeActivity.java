@@ -22,19 +22,27 @@ import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ForthPageFrag
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.SecondPageFragment;
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ThirdPageFragment;
 import com.vladuken.vladpetrushkevich.utils.PrefManager;
+import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 
 public class WelcomeActivity extends AppCompatActivity {
 
     protected ViewPager mViewPager;
-    protected Button mBtnSkip, mBtnNext;
+    protected Button  mBtnNext;
 
     protected boolean mIsDarkTheme; // 0 is light 1 is dark
     protected boolean mIsCompactLayout;
 
+    protected SharedPreferences mSharedPreferences;
+
+
     protected PrefManager mPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
+        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
+
+        ThemeChanger.onCreateSetTheme(this,theme);
         super.onCreate(savedInstanceState);
 
         mPrefManager = new PrefManager(this);
@@ -58,16 +66,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         mViewPager = findViewById(R.id.view_pager);
-        mBtnSkip = findViewById(R.id.btn_skip);
+
         mBtnNext = findViewById(R.id.btn_next);
 
-        mBtnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePreferences();
-                launchHomeScreen();
-            }
-        });
 
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override

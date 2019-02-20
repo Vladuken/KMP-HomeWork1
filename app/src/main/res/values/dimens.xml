@@ -7,13 +7,23 @@
 
     <dimen name="offset">5dp</dimen>
 
+
     <dimen name="margins">48dp</dimen>
-    <dimen name="welcome_image_size">180dp</dimen>
-    <dimen name="welcome_image_size_corner_radius">90dp</dimen>
 
 
-    <dimen name="title_text">24sp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="normal_margin">16dp</dimen>
+    <dimen name="huge_margin">32dp</dimen>
+
+    <dimen name="welcome_image_size">152dp</dimen>
+    <dimen name="welcome_image_size_corner_radius">76dp</dimen>
+
+
+
+    <dimen name="welcome_page_text_width">260dp</dimen>
+    <dimen name="title_text">20sp</dimen>
     <dimen name="title_small_text">16sp</dimen>
+
 
 
     <dimen name="radiobutton_card_width">260dp</dimen>
