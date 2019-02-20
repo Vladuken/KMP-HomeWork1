@@ -2,10 +2,12 @@ package com.vladuken.vladpetrushkevich.activities.main;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,6 +34,8 @@ public class LauncherActivity extends AppCompatActivity {
 
     protected NavigationView mNavigationView;
 
+    protected Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
@@ -49,6 +53,19 @@ public class LauncherActivity extends AppCompatActivity {
                 Distribute.class);
 
         setContentView(R.layout.activity_nav_drawer);
+
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuItem menuItem = mNavigationView.getMenu().findItem(R.id.nav_launcher_activity);
+
+                mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
+                onNavigationItemSelected(R.id.nav_launcher_activity);
+            }
+        });
 
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
@@ -110,9 +127,15 @@ public class LauncherActivity extends AppCompatActivity {
 //        super.onBackPressed();
 //    }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    public boolean onNavigationItemSelected(MenuItem item) {
+
+    public boolean onNavigationItemSelected(MenuItem item){
         int id = item.getItemId();
+
+        onNavigationItemSelected(id);
+        return true;
+    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    public boolean onNavigationItemSelected(int id) {
 
         if (id == R.id.nav_launcher_activity) {
             getSupportFragmentManager().beginTransaction()

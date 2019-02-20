@@ -84,6 +84,27 @@ public class WelcomeActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new WelcomeFragmentPagerAdapter(fragmentManager));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if(i == mViewPager.getAdapter().getCount() - 1){
+                    mBtnNext.setText(getString(R.string.start));
+                }else {
+                    mBtnNext.setText(getString(R.string.next));
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         changeStatusBarColor();
     }
