@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,9 +26,7 @@ import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GridLauncherFragment extends Fragment {
 
@@ -55,7 +52,6 @@ public class GridLauncherFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.icon_recycler_view);
 
         setupAdapter();
-
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
@@ -106,11 +102,15 @@ public class GridLauncherFragment extends Fragment {
 
 
         boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
+        timings.addSplit("Get boolean Popular Apps from SharedPref");
+
+        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+        timings.addSplit("Create new list of popular apps");
         if(showPopApps){
-            List<ResolveInfo> popularActivities = new ArrayList<>(activities);
             Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
+            timings.addSplit("Sort popular apps");
             launcherAdapter.setPopularAppInfo(popularActivities);
-            timings.addSplit("Popular apps init");
+            timings.addSplit("Set popular app info");
         }
 
 
@@ -150,6 +150,7 @@ public class GridLauncherFragment extends Fragment {
 
 
         mRecyclerView.setLayoutManager(gridLayoutManager);
+
         mRecyclerView.setAdapter(launcherAdapter);
 
         timings.dumpToLog();

@@ -3,9 +3,6 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.li
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.vladuken.vladpetrushkevich.R;

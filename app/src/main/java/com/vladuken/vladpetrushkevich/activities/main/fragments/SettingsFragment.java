@@ -3,7 +3,6 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.TimingLogger;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;

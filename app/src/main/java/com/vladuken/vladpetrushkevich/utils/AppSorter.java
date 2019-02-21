@@ -1,18 +1,5 @@
 package com.vladuken.vladpetrushkevich.utils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.preference.PreferenceManager;
-
-import com.vladuken.vladpetrushkevich.R;
-
-import java.util.Collections;
-import java.util.List;
-
 public class AppSorter {
 
 //

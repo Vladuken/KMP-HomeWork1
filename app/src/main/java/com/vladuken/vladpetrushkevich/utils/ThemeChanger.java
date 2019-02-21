@@ -1,11 +1,6 @@
 package com.vladuken.vladpetrushkevich.utils;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.transition.Transition;
-import android.util.TimingLogger;
 
 import com.vladuken.vladpetrushkevich.R;
 
