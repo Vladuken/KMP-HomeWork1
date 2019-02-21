@@ -15,7 +15,7 @@
         android:layout_marginLeft = "16dp"
         android:layout_marginRight = "16dp"
         android:layout_marginTop = "20dp"
-        tools:background="@mipmap/photo"
+        tools:background="@drawable/photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
