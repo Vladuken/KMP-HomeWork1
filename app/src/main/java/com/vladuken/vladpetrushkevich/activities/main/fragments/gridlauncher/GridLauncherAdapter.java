@@ -45,14 +45,20 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         mInstalledAppInfo =  installedAppsInfo;
         mDatabase = database;
         mContext = context;
-        mIcons = initIconHashMap(mContext,mInstalledAppInfo);
+        mIcons = new HashMap<>();
+//        mIcons = initIconHashMap(mContext,mInstalledAppInfo);
+
+
     }
 
     private Map initIconHashMap(Context context,List<ResolveInfo> installedAppInfo){
 
         HashMap<ResolveInfo, Drawable> iconMap = new HashMap<>();
         for (ResolveInfo appInfo : installedAppInfo){
-            iconMap.put(appInfo,appInfo.loadIcon(context.getPackageManager()));
+
+//            new LoadIconTask(iconMap,appInfo,context.getPackageManager()).execute();
+//            iconMap.put(appInfo,appInfo.loadIcon(context.getPackageManager()));
+
         }
 
         return iconMap;
@@ -129,7 +135,12 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void bindLauncherViewHolder(RecyclerView.ViewHolder viewHolder,ResolveInfo resolveInfo){
         if(viewHolder instanceof LauncherViewHolder){
             LauncherViewHolder vh = (LauncherViewHolder) viewHolder;
-            vh.bind(resolveInfo,mIcons.get(resolveInfo));
+            if(mIcons.get(resolveInfo) == null){
+                new LoadIconTask(vh,mIcons,resolveInfo,viewHolder.itemView.getContext().getPackageManager()).execute();
+
+            }else {
+                vh.bind(resolveInfo,mIcons.get(resolveInfo));
+            }
 
             vh.itemView.setOnClickListener(new IconOnClickListener(vh,this));
             vh.itemView.setOnLongClickListener(new IconLongClickListener(vh));
@@ -160,13 +171,9 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
 
-        int popularAppsCount = 0;
-
         if (mPopularAppInfo.size() == 0) {
             return super.getItemViewType(position);
         }
-
-        popularAppsCount = mPopularAppInfo.size();
 
         if(position == 0) return POPULAR_GROUP_TITLE;//TODO APP TITLE
         if(position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){

@@ -3,16 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:key="@string/preference_key_theme"
         android:title="Dark theme"/>
-    <CheckBoxPreference
+    <SwitchPreference
         android:key="@string/preference_key_layout"
         android:title="Compact layout" />
 
     <SwitchPreference
         android:key="@string/preference_key_is_first_launch"
         android:title="Show intro next time"/>
+
+    <SwitchPreference
+        android:key="@string/preference_key_popular_apps"
+        android:title="Show popular apps"/>
 
     <ListPreference
         android:title="@string/sort_method"

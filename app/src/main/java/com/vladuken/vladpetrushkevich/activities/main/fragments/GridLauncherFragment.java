@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TimingLogger;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 public class GridLauncherFragment extends Fragment {
+
+    private static final String TAG = "VladSettingsFragment";
+
 
     protected RecyclerView mRecyclerView;
     protected SharedPreferences mSharedPreferences;
@@ -59,6 +63,9 @@ public class GridLauncherFragment extends Fragment {
     }
 
     private void setupAdapter() {
+
+        TimingLogger timings = new TimingLogger(TAG, "Reload activity");
+
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -66,6 +73,7 @@ public class GridLauncherFragment extends Fragment {
         List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
 
 
+        timings.addSplit("Start Work");
         int sortMethod = Integer.parseInt(
                 mSharedPreferences.getString(getString(R.string.preference_key_sort_method),"0"));
         switch (sortMethod){
@@ -89,13 +97,21 @@ public class GridLauncherFragment extends Fragment {
                 break;
         }
 
+        timings.addSplit("Sorting");
         GridLauncherAdapter launcherAdapter = new GridLauncherAdapter(activities,mDatabase,getContext());
+        timings.addSplit("GridLauncherAdapter init");
 
-//
-//        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
-//        Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
-//        launcherAdapter.setPopularAppInfo(popularActivities);
 
+
+
+
+        boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
+        if(showPopApps){
+            List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+            Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
+            launcherAdapter.setPopularAppInfo(popularActivities);
+            timings.addSplit("Popular apps init");
+        }
 
 
 
@@ -124,6 +140,7 @@ public class GridLauncherFragment extends Fragment {
             gridLayoutManager = new GridLayoutManager(getContext(), landscapeSpanCount);
         }
 
+
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int i) {
@@ -131,8 +148,12 @@ public class GridLauncherFragment extends Fragment {
             }
         });
 
+
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(launcherAdapter);
+
+        timings.dumpToLog();
+
     }
 
     public static GridLauncherFragment newInstance(){

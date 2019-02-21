@@ -51,7 +51,10 @@ public class IconOnClickListener implements View.OnClickListener {
         );
 
         if(sortMethod == 4){
-            Collections.sort(mAdapter.getInstalledAppInfo(),new LaunchCountComparator(mViewHolder.getDatabase()));
+            Collections.sort(
+                    mAdapter.getInstalledAppInfo(),
+                    new LaunchCountComparator(mViewHolder.getDatabase())
+            );
         }
 
 
