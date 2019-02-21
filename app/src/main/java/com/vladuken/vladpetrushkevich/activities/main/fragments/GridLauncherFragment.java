@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.GridLauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
@@ -37,12 +38,6 @@ public class GridLauncherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
-//        boolean mIsDarkTheme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-//        if(!mIsDarkTheme){
-//            getActivity().setTheme(R.style.AppTheme);
-//        }else{
-//            getActivity().setTheme(R.style.AppThemeDark);
-//        }
         super.onCreate(savedInstanceState);
     }
 
@@ -54,32 +49,8 @@ public class GridLauncherFragment extends Fragment {
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
         mRecyclerView = v.findViewById(R.id.icon_recycler_view);
 
-        boolean isCompactLayout =
-                mSharedPreferences.getBoolean(
-                        getString(R.string.preference_key_layout),
-                        false
-                );
-
-        int portraitSpanCount;
-        int landscapeSpanCount;
-        if(isCompactLayout){
-            portraitSpanCount = getResources().getInteger(R.integer.compact_portrait_layout_span);
-            landscapeSpanCount = getResources().getInteger(R.integer.compact_landscape_layout_span);
-        }else {
-            portraitSpanCount = getResources().getInteger(R.integer.standard_portrait_layout_span);
-            landscapeSpanCount = getResources().getInteger(R.integer.standard_landscape_layout_span);
-        }
-
-
-        int orientation = getResources().getConfiguration().orientation;
-
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), portraitSpanCount));
-        } else {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), landscapeSpanCount));
-        }
-
         setupAdapter();
+
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
@@ -92,7 +63,6 @@ public class GridLauncherFragment extends Fragment {
 
         PackageManager pm = getActivity().getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
-
 
         int sortMethod = Integer.parseInt(
                 mSharedPreferences.getString(getString(R.string.preference_key_sort_method),"0"));
@@ -117,48 +87,47 @@ public class GridLauncherFragment extends Fragment {
                 break;
         }
 
-        mRecyclerView.setAdapter(new GridLauncherAdapter(activities));
+        GridLauncherAdapter launcherAdapter = new GridLauncherAdapter(activities,mDatabase,getContext());
+        launcherAdapter.setPopularAppInfo(activities.subList(7,15));
+
+        boolean isCompactLayout =
+                mSharedPreferences.getBoolean(
+                        getString(R.string.preference_key_layout),
+                        false
+                );
+
+        int portraitSpanCount;
+        int landscapeSpanCount;
+        if(isCompactLayout){
+            portraitSpanCount = getResources().getInteger(R.integer.compact_portrait_layout_span);
+            landscapeSpanCount = getResources().getInteger(R.integer.compact_landscape_layout_span);
+        }else {
+            portraitSpanCount = getResources().getInteger(R.integer.standard_portrait_layout_span);
+            landscapeSpanCount = getResources().getInteger(R.integer.standard_landscape_layout_span);
+        }
+
+        int orientation = getResources().getConfiguration().orientation;
+        GridLayoutManager gridLayoutManager;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            gridLayoutManager = new GridLayoutManager(getContext(),portraitSpanCount);
+
+        }else {
+            gridLayoutManager = new GridLayoutManager(getContext(), landscapeSpanCount);
+        }
+
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int i) {
+                return launcherAdapter.isGroupTitle(i) ? gridLayoutManager.getSpanCount() : 1;
+            }
+        });
+
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setAdapter(launcherAdapter);
     }
 
     public static GridLauncherFragment newInstance(){
         return new GridLauncherFragment();
     }
 
-    public class GridLauncherAdapter extends RecyclerView.Adapter<LauncherViewHolder>{
-        private final List<ResolveInfo> mInstalledAppInfo;
-        private final Map<ResolveInfo,Drawable> mIcons;
-
-        public GridLauncherAdapter(List<ResolveInfo> installedAppsInfo) {
-            mInstalledAppInfo =  installedAppsInfo;
-            mIcons = new HashMap<>();
-        }
-
-
-
-        @NonNull
-        @Override
-        public LauncherViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int position) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_icon_view,parent,false);
-
-            return new LauncherViewHolder(view,mDatabase,R.id.grid_app_icon,R.id.grid_app_title);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull LauncherViewHolder viewHolder, int position) {
-            ResolveInfo resolveInfo = mInstalledAppInfo.get(position);
-            PackageManager pm = getActivity().getPackageManager();
-
-            if(mIcons.get(resolveInfo) == null){
-                mIcons.put(resolveInfo,mInstalledAppInfo.get(position).loadIcon(pm));
-            }
-
-            viewHolder.bind(resolveInfo,mIcons.get(resolveInfo));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mInstalledAppInfo.size();
-        }
-    }
 }
