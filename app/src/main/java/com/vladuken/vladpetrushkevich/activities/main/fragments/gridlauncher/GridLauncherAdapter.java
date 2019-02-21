@@ -17,6 +17,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.lis
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int DIVIDER = 3;
 
 
-    private List<ResolveInfo> mPopularAppInfo;
+    private List<ResolveInfo> mPopularAppInfo = new ArrayList<>();
     private final List<ResolveInfo> mInstalledAppInfo;
     private final Map<ResolveInfo,Drawable> mIcons;
 
@@ -57,6 +58,14 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return iconMap;
     }
 
+
+    public List<ResolveInfo> getInstalledAppInfo() {
+        return mInstalledAppInfo;
+    }
+
+    public List<ResolveInfo> getPopularAppInfo() {
+        return mPopularAppInfo;
+    }
 
     public void setPopularAppInfo(List<ResolveInfo> popularAppInfos){
         mPopularAppInfo = popularAppInfos;
@@ -97,11 +106,11 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ResolveInfo resolveInfo;
 
-        if(mPopularAppInfo != null){
+        if(mPopularAppInfo.size() != 0){
             if(position == 0){
                 //TODO
             }else if(position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
-                resolveInfo = mPopularAppInfo.get(position);
+                resolveInfo = mPopularAppInfo.get(position - 1);
                 bindLauncherViewHolder(viewHolder,resolveInfo);
             }else if(position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
                 //TODO
@@ -111,10 +120,6 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 bindLauncherViewHolder(viewHolder,resolveInfo);
             }
         } else {
-            if(position == 128)
-            {
-                Log.d("a","a");
-            }
             resolveInfo = mInstalledAppInfo.get(position);
             bindLauncherViewHolder(viewHolder,resolveInfo);
         }
@@ -126,14 +131,15 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             LauncherViewHolder vh = (LauncherViewHolder) viewHolder;
             vh.bind(resolveInfo,mIcons.get(resolveInfo));
 
-            vh.itemView.setOnClickListener(new IconOnClickListener(vh));
+            vh.itemView.setOnClickListener(new IconOnClickListener(vh,this));
             vh.itemView.setOnLongClickListener(new IconLongClickListener(vh));
+
         }
 
     }
 
     public boolean isGroupTitle(int position){
-        if(mPopularAppInfo != null){
+        if(mPopularAppInfo.size() != 0){
             if(position == 0 || position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER)
                 return true;
         }
@@ -144,7 +150,7 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         int popularAppsCount = 0;
-        if(mPopularAppInfo != null){
+        if(mPopularAppInfo.size() != 0){
             popularAppsCount = POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER + 1;
         }
 
@@ -156,26 +162,20 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         int popularAppsCount = 0;
 
-        if (mPopularAppInfo == null){
+        if (mPopularAppInfo.size() == 0) {
             return super.getItemViewType(position);
-        }else {
-            popularAppsCount = mPopularAppInfo.size();
         }
 
+        popularAppsCount = mPopularAppInfo.size();
 
-
-        if(popularAppsCount > 0){
-            if(position == 0) return POPULAR_GROUP_TITLE;//TODO APP TITLE
-            if(position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
-                return POPULAR_APP;
-            }
-            if (position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER)
-                return DIVIDER;
-            else {
-                return super.getItemViewType(position);
-            }
+        if(position == 0) return POPULAR_GROUP_TITLE;//TODO APP TITLE
+        if(position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
+            return POPULAR_APP;
         }
-
-        return super.getItemViewType(position);
+        if (position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER)
+            return DIVIDER;
+        else {
+            return super.getItemViewType(position);
+        }
     }
 }

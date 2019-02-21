@@ -24,6 +24,7 @@ import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +65,7 @@ public class GridLauncherFragment extends Fragment {
         PackageManager pm = getActivity().getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
 
+
         int sortMethod = Integer.parseInt(
                 mSharedPreferences.getString(getString(R.string.preference_key_sort_method),"0"));
         switch (sortMethod){
@@ -88,7 +90,14 @@ public class GridLauncherFragment extends Fragment {
         }
 
         GridLauncherAdapter launcherAdapter = new GridLauncherAdapter(activities,mDatabase,getContext());
-        launcherAdapter.setPopularAppInfo(activities.subList(7,15));
+
+//
+//        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+//        Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
+//        launcherAdapter.setPopularAppInfo(popularActivities);
+
+
+
 
         boolean isCompactLayout =
                 mSharedPreferences.getBoolean(
