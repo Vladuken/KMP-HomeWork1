@@ -19,11 +19,9 @@
     <dimen name="welcome_image_size_corner_radius">76dp</dimen>
 
 
-
     <dimen name="welcome_page_text_width">260dp</dimen>
     <dimen name="title_text">20sp</dimen>
     <dimen name="title_small_text">16sp</dimen>
-
 
 
     <dimen name="radiobutton_card_width">260dp</dimen>

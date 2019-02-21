@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    android:padding="@dimen/activity_horizontal_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/text_view_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/my_phone_number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <!--android:textColor="@color/textColor"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_phone_number"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:text="@string/profile_page_phone_number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                />
+            <!--android:textColor="@color/smallTextColor"-->
+
+            <!--<ToggleButton-->
+                <!--android:id="@+id/chkState1"-->
+                <!--android:layout_width="24dp"-->
+                <!--android:layout_height="24dp"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+                <!--android:background="@drawable/photo"-->
+                <!--android:checked="true"-->
+                <!--android:padding="6dp"-->
+                <!--android:textOff=""-->
+                <!--android:textOn="" />-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/text_view_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/my_email"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <!--android:textColor="@color/textColor"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_email"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:text="@string/profile_page_email"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                />
+            <!--android:textColor="@color/smallTextColor"-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/card_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/text_view_card_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/my_card_number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <!--android:textColor="@color/textColor"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_card_number"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:text="@string/profile_page_card_number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                />
+            <!--android:textColor="@color/smallTextColor"-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/instagram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/text_view_instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/my_instagram"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <!--android:textColor="@color/textColor"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_instagram"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:text="@string/profile_page_instagram"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                />
+            <!--android:textColor="@color/smallTextColor"-->
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/github"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/text_view_github"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/my_github"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <!--android:textColor="@color/textColor"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_github"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:text="@string/profile_page_github"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                />
+            <!--android:textColor="@color/smallTextColor"-->
+
+        </RelativeLayout>
+        <!--<include layout="@layout/item_divider" />-->
+
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

@@ -20,4 +20,8 @@
     <color name="bgScreen3">#FF8A65</color>
     <color name="bgScreen4">#4DB6AC</color>
 
+    <!--ProfilePageColors-->
+    <color name="textColor">#212121</color>
+    <color name="smallTextColor">#727272</color>
+
 </resources>

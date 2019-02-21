@@ -1,5 +1,6 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -22,6 +23,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFrag
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ProfileCardFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
+import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 import io.fabric.sdk.android.Fabric;
@@ -75,7 +77,10 @@ public class LauncherActivity extends AppCompatActivity {
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mNavigationView.setCheckedItem(R.id.nav_none);
+
+                Intent i = new Intent(v.getContext(),ProfilePageActivity.class);
+                startActivity(i);
+//                mNavigationView.setCheckedItem(R.id.nav_none);
                 onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_none));
             }
         });
@@ -151,14 +156,14 @@ public class LauncherActivity extends AppCompatActivity {
                     .commit();
 
         }else if(id == R.id.nav_none){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.launcher_container_fragments, ProfileCardFragment.newInstance())
-                    .commit();
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }
