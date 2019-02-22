@@ -42,7 +42,7 @@ public class IconLongClickListener implements View.OnLongClickListener {
         });
 
         MenuItem launchCountMenu = popup.getMenu().findItem(R.id.action_count_app_launches);
-        launchCountMenu.setTitle("Launched " + mViewHolder.getApp().launches_count + " times");
+        launchCountMenu.setTitle(v.getResources().getString(R.string.launched) + " " + mViewHolder.getApp().launches_count + " " + v.getResources().getString(R.string.times));
         launchCountMenu.setEnabled(false);
         popup.show();
         return true;

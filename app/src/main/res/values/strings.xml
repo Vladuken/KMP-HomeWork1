@@ -85,6 +85,8 @@
     <string name="sort_title_reverce">By title (reverce)</string>
     <string name="sort_install_date">By install date</string>
     <string name="sort_launch_count">By launch count</string>
+    <string name="launched">Launched</string>
+    <string name="times">times</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.vladuken.vladpetrushkevich.activities.welcome;
+package com.vladuken.vladpetrushkevich.activities.welcome.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

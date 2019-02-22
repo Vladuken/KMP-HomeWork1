@@ -21,6 +21,7 @@ import com.vladuken.vladpetrushkevich.activities.welcome.fragments.FirstPageFrag
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ForthPageFragment;
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.SecondPageFragment;
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ThirdPageFragment;
+import com.vladuken.vladpetrushkevich.activities.welcome.fragments.TutorialFragment;
 import com.vladuken.vladpetrushkevich.utils.PrefManager;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 

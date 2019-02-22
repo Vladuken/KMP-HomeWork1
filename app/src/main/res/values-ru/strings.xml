@@ -1,5 +1,5 @@
 <resources>
---><string name="app_name">В.Лаунчер</string>
+    <string name="app_name">В.Лаунчер</string>
     <string name="full_name">Влад Петрушкевич</string>
     <string name="my_greetings">Меня зовут Влад, и это приложение я разрабатываю в рамках курса "Разработка мобильных приложений" от Яндекса.</string>
     <string name="github" translatable="false">Github</string>
@@ -7,8 +7,8 @@
     <string name="app_description">Здравствуйте!\n
         Это простой лаунчер.\n
         Вы можете выбрать 2 типа макета и 2 темы.\n
-        Сортировка приложений поддержки запуска и подсчет запуска.\n
-        Вы можете удалить приложения и открыть настройки приложения. Удачи!</string>
+        Лаунчер поддерживает сортировку приложений и подсчет запусков приложений.\n
+        Вы можете удалять приложения и открывать их настройки. Удачи!</string>
 
 
 
@@ -53,8 +53,8 @@
 
 
 
-    <string name="copied">скопированный</string>
-    <string name="dismiss">отклонять</string>
+    <string name="copied">Скопировано</string>
+    <string name="dismiss">Отклонить</string>
 
 
     <string name="popular_app_group_title">Популярные приложения</string>
@@ -71,4 +71,8 @@
     <string name="sort_title_reverce">По имени (обратный порядок)</string>
     <string name="sort_install_date">По дате установки</string>
     <string name="sort_launch_count">По кол-ву запусков</string>
+
+    <string name="launched">Запущено</string>
+    <string name="times">раз</string>
+
 </resources>

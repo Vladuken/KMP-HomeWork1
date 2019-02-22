@@ -81,4 +81,6 @@
     <string name="sort_title_reverce">לפי כותרת (reverce)</string>
     <string name="sort_install_date">לפי תאריך התקנה</string>
     <string name="sort_launch_count">לפי ספירת ההשקה</string>
+    <string name="launched">וא בפעם</string>
+    <string name="times">אריך הת</string>
 </resources>
