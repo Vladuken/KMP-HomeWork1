@@ -6,23 +6,23 @@
     <PreferenceCategory>
         <SwitchPreference
             android:key="@string/preference_key_theme"
-            android:title="Dark theme"/>
+            android:title="@string/dark_theme"/>
         <SwitchPreference
             android:key="@string/preference_key_layout"
-            android:title="Compact layout" />
+            android:title="@string/pref_compat_layout" />
     </PreferenceCategory>
 
     <PreferenceCategory>
 
         <SwitchPreference
             android:key="@string/preference_key_is_first_launch"
-            android:title="Show intro next time"/>
+            android:title="@string/pref_intro_next_time"/>
     </PreferenceCategory>
 
     <PreferenceCategory>
         <SwitchPreference
             android:key="@string/preference_key_popular_apps"
-            android:title="Show popular apps"/>
+            android:title="@string/pref_popular_apps"/>
     </PreferenceCategory>
 
     <PreferenceCategory>

@@ -1,0 +1,74 @@
+<resources>
+--><string name="app_name">В.Лаунчер</string>
+    <string name="full_name">Влад Петрушкевич</string>
+    <string name="my_greetings">Меня зовут Влад, и это приложение я разрабатываю в рамках курса "Разработка мобильных приложений" от Яндекса.</string>
+    <string name="github" translatable="false">Github</string>
+    <string name="github_link" translatable="false">https://github.com/Vladuken</string>
+    <string name="app_description">Здравствуйте!\n
+        Это простой лаунчер.\n
+        Вы можете выбрать 2 типа макета и 2 темы.\n
+        Сортировка приложений поддержки запуска и подсчет запуска.\n
+        Вы можете удалить приложения и открыть настройки приложения. Удачи!</string>
+
+
+
+    <string name="next">Далее</string>
+    <string name="start">Начать</string>
+
+    <string name="light_theme">Светлая тема</string>
+    <string name="dark_theme">Темная тема</string>
+
+    <string name="standard_layout">Стандартный макет</string>
+    <string name="compact_layout">Компактный макет</string>
+
+    <string name="tutorial_popular_apps">Вы можете добавить наиболее часто открываемые приложения в начало списка.</string>
+    <string name="tutorial_list_launcher">Также вы можете перейти на экран с красивым линейным списком приложений.</string>
+    <string name="settings">Настройки</string>
+
+    <string name="uninstall_app">Удалить приложение</string>
+    <string name="launch_counts">Количество запусков</string>
+    <string name="open_app_settings">Открыть настройки</string>
+
+    <string name="sort_method">Сортировка</string>
+    <string name="title_activity_profile_page" translatable="false">ProfilePageActivity</string>
+
+
+
+
+    <string name="profile_page_phone_number">Мобильный</string>
+    <string name="profile_page_email">Эл. адрес</string>
+    <string name="profile_page_card_number">Номер карты</string>
+
+    <string name="profile_page_vk">ВКонтакте</string>
+    <string name="profile_page_instagram">Инсаграм</string>
+    <string name="profile_page_github">GitHub</string>
+
+    <string name="my_name">Влад Петрушкевич</string>
+    <string name="my_phone_number" translatable="false">+375291387114</string>
+    <string name="my_email" translatable="false">vladpetrushkevich1999@gmail.com</string>
+    <string name="my_card_number" translatable="false">8349 3358 3435 9343 9353</string>
+    <string name="my_vk" translatable="false">vk.com/id100354810</string>
+    <string name="my_instagram" translatable="false">instagram.com/vladuken</string>
+    <string name="my_github" translatable="false">github.com/vladuken</string>
+
+
+
+    <string name="copied">скопированный</string>
+    <string name="dismiss">отклонять</string>
+
+
+    <string name="popular_app_group_title">Популярные приложения</string>
+
+    <!--PREFERENCES-->
+    <string name="pref_dark_theme">Темная тема</string>
+    <string name="pref_compat_layout">Компактный тип макета</string>
+    <string name="pref_intro_next_time">Включить интро при следующем запуске</string>
+    <string name="pref_popular_apps">Окно популярных приложений</string>
+
+    <!--SORTINGS-->
+    <string name="sort_no">Без сортировки</string>
+    <string name="sort_title">По имени</string>
+    <string name="sort_title_reverce">По имени (обратный порядок)</string>
+    <string name="sort_install_date">По дате установки</string>
+    <string name="sort_launch_count">По кол-ву запусков</string>
+</resources>
