@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">Vlad Launcher</string>
     <string name="full_name">Vlad Petrushkevich</string>
-    <string name="my_greetings">Welcome, my name is Vlad and this app is for Yandex mobile development course</string>
+    <string name="my_greetings">My name is Vlad and this app is for Yandex mobile development course</string>
     <string name="github">Github</string>
     <string name="github_link">https://github.com/Vladuken</string>
-    <string name="app_description">This is simple launcher.\n
+    <string name="app_description">Hello!\n
+        This is simple launcher.\n
         You can choose of 2 layout types and 2 themes.\n
         Launcher support app sorting and launch counting.\n
-        You can delete apps and open app settings.</string>
+        You can delete apps and open app settings. Good luck!</string>
 
+
+    <!--Welcome page-->
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="start">Start</string>
@@ -19,7 +22,12 @@
     <string name="standard_layout">Standard layout</string>
     <string name="compact_layout">Compact layout</string>
 
+    <string name="tutorial_popular_apps">You can add most frequently opened apps to the top.</string>
+    <string name="tutorial_list_launcher">Also you can find a beautiful list with apps.</string>
+    <string name="tutorial_settings">And a huge amount of settings!</string>
 
+
+    <!---->
     <string name="title_activity_nav_drawer">NavDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

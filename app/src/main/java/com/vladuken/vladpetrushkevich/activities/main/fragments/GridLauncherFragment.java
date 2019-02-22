@@ -75,6 +75,8 @@ public class GridLauncherFragment extends Fragment {
         filter.addDataScheme("package");
 
         getContext().registerReceiver(mBroadcastReceiver, filter);
+//        mRecyclerView.getAdapter().notifyDataSetChanged();
+
     }
 
     private void setupAdapter() {
@@ -180,6 +182,7 @@ public class GridLauncherFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
+//        mRecyclerView.getAdapter().notifyDataSetChanged();
         getContext().unregisterReceiver(mBroadcastReceiver);
     }
 

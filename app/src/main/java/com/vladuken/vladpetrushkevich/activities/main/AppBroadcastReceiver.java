@@ -20,6 +20,10 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
 
     RecyclerView mRecyclerView;
 
+
+    public AppBroadcastReceiver() {
+    }
+
     public AppBroadcastReceiver(Context context, RecyclerView recyclerView) {
         this.context = context;
         mRecyclerView = recyclerView;

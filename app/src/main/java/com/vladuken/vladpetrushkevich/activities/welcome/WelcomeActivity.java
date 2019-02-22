@@ -157,7 +157,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.welcome_slide1,
                 R.layout.welcome_slide2,
                 R.layout.welcome_slide3,
-                R.layout.welcome_slide4};
+                R.layout.welcome_slide4,
+                R.layout.tutorial_slide};
 
         public WelcomeFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -167,13 +168,21 @@ public class WelcomeActivity extends AppCompatActivity {
         public Fragment getItem(int i) {
             switch (i){
                 case 0:
-                    return FirstPageFragment.newInstance();
-                case 1:
                     return SecondPageFragment.newInstance();
+                case 1:
+                    return FirstPageFragment.newInstance();
                 case 2:
-                    return ThirdPageFragment.newInstance();
+                    return TutorialFragment.newInstance(getString(R.string.tutorial_popular_apps), R.drawable.popular_apps);
                 case 3:
+                    return TutorialFragment.newInstance(getString(R.string.tutorial_list_launcher), R.drawable.screen_list_launcher);
+                case 4:
+                    return TutorialFragment.newInstance(getString(R.string.tutorial_settings), R.drawable.screen_settings);
+
+                case 5:
+                    return ThirdPageFragment.newInstance();
+                case 6:
                     return ForthPageFragment.newInstance();
+
                 default:
                     break;
             }
@@ -182,7 +191,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return mLayouts.length;
+            return 7;
         }
     }
 }

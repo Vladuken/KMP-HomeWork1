@@ -33,7 +33,9 @@
         <activity android:name=".activities.main.LauncherActivity" />
 
         <receiver
-            android:name=".activities.main.AppBroadcastReceiver">
+            android:name=".activities.main.AppBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.PACKAGE_INSTALL"/>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>

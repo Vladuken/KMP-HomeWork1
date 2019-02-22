@@ -53,6 +53,7 @@ public class IconLongClickListener implements View.OnLongClickListener {
         i.setData(Uri.parse("package:" + mViewHolder.getResolveInfo().activityInfo.packageName));
         //TODO StartactivityFor Result to update on gridview ondelete app
         mViewHolder.itemView.getContext().startActivity(i);
+
     }
 
     protected void openAppSettings() {
