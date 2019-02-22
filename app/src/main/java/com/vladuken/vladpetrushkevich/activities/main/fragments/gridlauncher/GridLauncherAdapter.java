@@ -38,30 +38,17 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final AppDatabase mDatabase;
     private Context  mContext;
 
+    private boolean mIsGridView;
 
-    public GridLauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, Context context) {
+
+    public GridLauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, Context context, boolean isGridView) {
         mInstalledAppInfo =  installedAppsInfo;
         mDatabase = database;
         mContext = context;
         mIcons = new HashMap<>();
-//        mIcons = initIconHashMap(mContext,mInstalledAppInfo);
 
-
+        mIsGridView = isGridView;
     }
-
-    private Map initIconHashMap(Context context,List<ResolveInfo> installedAppInfo){
-
-        HashMap<ResolveInfo, Drawable> iconMap = new HashMap<>();
-        for (ResolveInfo appInfo : installedAppInfo){
-
-//            new LoadIconTask(iconMap,appInfo,context.getPackageManager()).execute();
-//            iconMap.put(appInfo,appInfo.loadIcon(context.getPackageManager()));
-
-        }
-
-        return iconMap;
-    }
-
 
     public List<ResolveInfo> getInstalledAppInfo() {
         return mInstalledAppInfo;
@@ -91,12 +78,22 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }else if (viewType == DIVIDER){
             return new FooterViewHolder(inflateView(parent,R.layout.horizontal_divider));
         }else{
-            return new LauncherViewHolder(
-                    inflateView(parent,R.layout.item_icon_view),
-                    mDatabase,
-                    R.id.grid_app_icon,
-                    R.id.grid_app_title
-            );
+            if(mIsGridView){
+                //TODO use OOP to create two classes
+                return new LauncherViewHolder(
+                        inflateView(parent,R.layout.item_icon_view),
+                        mDatabase,
+                        R.id.grid_app_icon,
+                        R.id.grid_app_title
+                );
+            }else {
+                return new LauncherViewHolder(
+                        inflateView(parent,R.layout.item_list_view),
+                        mDatabase,
+                        R.id.list_app_icon,
+                        R.id.list_app_title
+                );
+            }
         }
     }
 

@@ -8,6 +8,7 @@
     <dimen name="offset">5dp</dimen>
 
 
+    <dimen name="ultra_small_margin">4dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="huge_margin">32dp</dimen>
