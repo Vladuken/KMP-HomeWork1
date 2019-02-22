@@ -21,25 +21,30 @@ import com.vladuken.vladpetrushkevich.activities.welcome.fragments.FirstPageFrag
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ForthPageFragment;
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.SecondPageFragment;
 import com.vladuken.vladpetrushkevich.activities.welcome.fragments.ThirdPageFragment;
+import com.vladuken.vladpetrushkevich.activities.welcome.fragments.TutorialFragment;
 import com.vladuken.vladpetrushkevich.utils.PrefManager;
+import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 
 public class WelcomeActivity extends AppCompatActivity {
 
     protected ViewPager mViewPager;
-    protected Button mBtnSkip, mBtnNext;
+    protected Button  mBtnNext;
 
-    protected boolean theme; // 0 is light 1 is dark
-    protected int portrait_rows;
-    protected int landscape_rows;
+    protected boolean mIsDarkTheme; // 0 is light 1 is dark
+    protected boolean mIsCompactLayout;
+
+    protected SharedPreferences mSharedPreferences;
+
 
     protected PrefManager mPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
+        boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
 
-        portrait_rows = getResources().getInteger(R.integer.standard_portrait_layout_span);
-        landscape_rows = getResources().getInteger(R.integer.standard_landscape_layout_span);
+        ThemeChanger.onCreateSetTheme(this,theme);
+        super.onCreate(savedInstanceState);
 
         mPrefManager = new PrefManager(this);
         if(!mPrefManager.isFirstTimeLaunch()){
@@ -47,11 +52,9 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
-
         if(savedInstanceState != null){
-            theme = savedInstanceState.getBoolean(getString(R.string.preference_key_theme));
-            portrait_rows = savedInstanceState.getInt(getString(R.string.preference_portrait_rows));
-            landscape_rows = savedInstanceState.getInt(getString(R.string.preference_landscape_rows));
+            mIsDarkTheme = savedInstanceState.getBoolean(getString(R.string.preference_key_theme));
+            mIsCompactLayout = savedInstanceState.getBoolean(getString(R.string.preference_key_layout));
         }
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
@@ -64,16 +67,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         mViewPager = findViewById(R.id.view_pager);
-        mBtnSkip = findViewById(R.id.btn_skip);
+
         mBtnNext = findViewById(R.id.btn_next);
 
-        mBtnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePreferences();
-                launchHomeScreen();
-            }
-        });
 
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +85,27 @@ public class WelcomeActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new WelcomeFragmentPagerAdapter(fragmentManager));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+                //TODO
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if(i == mViewPager.getAdapter().getCount() - 1){
+                    mBtnNext.setText(getString(R.string.start));
+                }else {
+                    mBtnNext.setText(getString(R.string.next));
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+                //TODO
+            }
+        });
 
         changeStatusBarColor();
     }
@@ -111,20 +128,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
     protected void savePreferences(){
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_file),0).edit();
-        editor.putBoolean(getString(R.string.preference_key_theme), theme);
-        editor.putInt(getString(R.string.preference_portrait_rows), portrait_rows);
-        editor.putInt(getString(R.string.preference_landscape_rows), landscape_rows);
+        editor.putBoolean(getString(R.string.preference_key_theme), mIsDarkTheme);
+        editor.putBoolean(getString(R.string.preference_key_layout),mIsCompactLayout);
 
-        editor.commit();
+        editor.apply();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(getString(R.string.preference_key_theme),theme);
-        outState.putInt(getString(R.string.preference_portrait_rows),portrait_rows);
-        outState.putInt(getString(R.string.preference_landscape_rows),landscape_rows);
+        outState.putBoolean(getString(R.string.preference_key_theme), mIsDarkTheme);
+        outState.putBoolean(getString(R.string.preference_key_layout),mIsCompactLayout);
 
     }
 
@@ -143,7 +158,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.welcome_slide1,
                 R.layout.welcome_slide2,
                 R.layout.welcome_slide3,
-                R.layout.welcome_slide4};
+                R.layout.welcome_slide4,
+                R.layout.tutorial_slide};
 
         public WelcomeFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -153,13 +169,21 @@ public class WelcomeActivity extends AppCompatActivity {
         public Fragment getItem(int i) {
             switch (i){
                 case 0:
-                    return FirstPageFragment.newInstance();
-                case 1:
                     return SecondPageFragment.newInstance();
+                case 1:
+                    return FirstPageFragment.newInstance();
                 case 2:
-                    return ThirdPageFragment.newInstance();
+                    return TutorialFragment.newInstance(getString(R.string.tutorial_popular_apps), R.drawable.popular_apps);
                 case 3:
+                    return TutorialFragment.newInstance(getString(R.string.tutorial_list_launcher), R.drawable.screen_list_launcher);
+                case 4:
+                    return TutorialFragment.newInstance(getString(R.string.tutorial_settings), R.drawable.screen_settings);
+
+                case 5:
+                    return ThirdPageFragment.newInstance();
+                case 6:
                     return ForthPageFragment.newInstance();
+
                 default:
                     break;
             }
@@ -168,7 +192,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return mLayouts.length;
+            return 7;
         }
     }
 }

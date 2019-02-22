@@ -1,21 +1,47 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application mIsDarkTheme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize your mIsDarkTheme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryLightColor</item>
+
+
+        <!--<item name="android:windowBackground">@android:color/holo_red_dark</item>-->
 
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize your mIsDarkTheme here. -->
         <item name="colorPrimary">@color/primaryColorDarkTheme</item>
         <item name="colorPrimaryDark">@color/primaryDarkColorDarkTheme</item>
+        <item name="colorAccent">@color/primaryLightColorDarkTheme</item>
+
+        <!--<item name="android:windowBackground">@android:color/holo_blue_bright</item>-->
+    </style>
+
+
+    <style name="WelcomeRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:layout_width">260dp</item>
+        <item name="android:layout_height">200dp</item>
+
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+
+    <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+
 
 </resources>

@@ -1,13 +1,18 @@
 <resources>
-    <string name="app_name">Vlad Launcher</string>
+    <string name="app_name" translatable="false">Vlad Launcher</string>
     <string name="full_name">Vlad Petrushkevich</string>
-    <string name="github">Github</string>
-    <string name="github_link">https://github.com/Vladuken</string>
-    <string name="app_greetings">Hello, this is Launcher</string>
-    <string name="app_description">This is simple launcher</string>
+    <string name="my_greetings">My name is Vlad and this app is for Yandex mobile development course</string>
+    <string name="github" translatable="false">Github</string>
+    <string name="github_link" translatable="false">https://github.com/Vladuken</string>
+    <string name="app_description">Hello!\n
+        This is simple launcher.\n
+        You can choose of 2 layout types and 2 themes.\n
+        Launcher support app sorting and launch counting.\n
+        You can delete apps and open app settings. Good luck!</string>
 
+
+    <!--Welcome page-->
     <string name="next">Next</string>
-    <string name="skip">Skip</string>
     <string name="start">Start</string>
 
     <string name="light_theme">Light theme</string>
@@ -16,12 +21,16 @@
     <string name="standard_layout">Standard layout</string>
     <string name="compact_layout">Compact layout</string>
 
+    <string name="tutorial_popular_apps">You can add most frequently opened apps to the top.</string>
+    <string name="tutorial_list_launcher">Also you can find a beautiful list with apps.</string>
+    <string name="tutorial_settings">And a huge amount of settings!</string>
 
-    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <!---->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Vlad Petrushkevich</string>
-    <string name="nav_header_subtitle">vladpetrushkevich1999@gmail.com</string>
+    <string name="nav_header_subtitle" translatable="false">vladpetrushkevich1999@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -31,8 +40,53 @@
 
     <string name="uninstall_app">Uninstall app</string>
     <string name="launch_counts">Count launches</string>
+    <string name="open_app_settings">Open settings</string>
 
     <string name="sort_method">Sorting</string>
+    <string name="title_activity_profile_page" translatable="false">ProfilePageActivity</string>
+
+    
+    
+    <!--Profile Page Strings-->
+    <string name="profile_page_phone_number">Mobile</string>
+    <string name="profile_page_email">Email</string>
+    <string name="profile_page_card_number">Card number</string>
+
+    <string name="profile_page_vk">VK</string>
+    <string name="profile_page_instagram">Instagram</string>
+    <string name="profile_page_github">GitHub</string>
+
+    <string name="my_name">Vlad Petrushkevich</string>
+    <string name="my_phone_number" translatable="false">+375291387114</string>
+    <string name="my_email" translatable="false">vladpetrushkevich1999@gmail.com</string>
+    <string name="my_card_number" translatable="false">8349 3358 3435 9343 9353</string>
+    <string name="my_vk" translatable="false">vk.com/id100354810</string>
+    <string name="my_instagram" translatable="false">instagram.com/vladuken</string>
+    <string name="my_github" translatable="false">github.com/vladuken</string>
+
+
+
+    <string name="copied">Copied</string>
+    <string name="dismiss">Dismiss</string>
+
+
+    <string name="popular_app_group_title">Popular apps</string>
+
+
+    <!--PREFERENCES-->
+    <string name="pref_dark_theme">Dark theme</string>
+    <string name="pref_compat_layout">Compat layout</string>
+    <string name="pref_intro_next_time">Show intro next time</string>
+    <string name="pref_popular_apps">Show popular apps</string>
+
+    <!--SORT-->
+    <string name="sort_no">No sort</string>
+    <string name="sort_title">By title</string>
+    <string name="sort_title_reverce">By title (reverce)</string>
+    <string name="sort_install_date">By install date</string>
+    <string name="sort_launch_count">By launch count</string>
+    <string name="launched">Launched</string>
+    <string name="times">times</string>
 
 
 </resources>

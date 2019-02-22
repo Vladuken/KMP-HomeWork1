@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="sortMethodList">
-        <item>No sort</item>
-        <item>By title</item>
-        <item>By title(Reverced)</item>
-        <item>By install date</item>
-        <item>By launch count</item>
+        <item>@string/sort_no</item>
+        <item>@string/sort_title</item>
+        <item>@string/sort_title_reverce</item>
+        <item>@string/sort_install_date</item>
+        <item>@string/sort_launch_count</item>
     </string-array>
 
     <string-array name="sortMethodValues">

@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity" />
+        <activity
+            android:name=".activities.profile.ProfilePageActivity"
+            android:label="@string/title_activity_profile_page"
+            android:parentActivityName=".activities.main.LauncherActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -19,15 +23,29 @@
 
         <activity
             android:name=".activities.welcome.WelcomeActivity"
-            android:parentActivityName=".activities.MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.main.LauncherActivity" />
+
+        <!--<receiver-->
+            <!--android:name=".activities.main.AppBroadcastReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter android:priority="999">-->
+                <!--<action android:name="android.intent.action.PACKAGE_INSTALL"/>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED"/>-->
+                <!--<action android:name="android.intent.action.PACKAGE_REMOVED"/>-->
+                <!--<data android:scheme="package"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
     </application>
 
 </manifest>
