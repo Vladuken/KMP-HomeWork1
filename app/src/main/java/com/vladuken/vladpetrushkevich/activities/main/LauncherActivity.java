@@ -1,8 +1,11 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.crashlytics.android.Crashlytics;
@@ -20,8 +25,8 @@ import com.microsoft.appcenter.distribute.Distribute;
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.ProfileCardFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
+import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 import io.fabric.sdk.android.Fabric;
@@ -40,9 +45,9 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
         boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-
         ThemeChanger.onCreateSetTheme(this,theme);
         super.onCreate(savedInstanceState);
+
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         Fabric.with(this, new Crashlytics());
@@ -75,7 +80,10 @@ public class LauncherActivity extends AppCompatActivity {
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mNavigationView.setCheckedItem(R.id.nav_none);
+
+                Intent i = new Intent(v.getContext(),ProfilePageActivity.class);
+                startActivity(i);
+//                mNavigationView.setCheckedItem(R.id.nav_none);
                 onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_none));
             }
         });
@@ -92,6 +100,15 @@ public class LauncherActivity extends AppCompatActivity {
             mNavigationView.setCheckedItem(menuId);
             onNavigationItemSelected(menuItem);
         }
+
+//        AppBroadcastReceiver broadcastReceiver = new AppBroadcastReceiver();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+//        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+//
+//        filter.addDataScheme("package");
+//
+//        this.registerReceiver(broadcastReceiver, filter);
 
 //        mBroadcastReceiver = new BroadcastReceiver() {
 //            @Override
@@ -151,14 +168,14 @@ public class LauncherActivity extends AppCompatActivity {
                     .commit();
 
         }else if(id == R.id.nav_none){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.launcher_container_fragments, ProfileCardFragment.newInstance())
-                    .commit();
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }

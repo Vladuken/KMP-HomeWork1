@@ -1,14 +1,13 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,35 +16,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
+import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ListLauncherFragment extends Fragment {
 
-
-    protected SharedPreferences mSharedPreferences;
     protected RecyclerView mRecyclerView;
+    protected SharedPreferences mSharedPreferences;
     protected AppDatabase mDatabase;
+
+    protected AppBroadcastReceiver mBroadcastReceiver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
-//        boolean mIsDarkTheme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-//        if(!mIsDarkTheme){
-//            getActivity().setTheme(R.style.AppTheme);
-//        }else{
-//            getActivity().setTheme(R.style.AppThemeDark);
-//        }
         super.onCreate(savedInstanceState);
     }
-
 
     @Nullable
     @Override
@@ -53,27 +48,35 @@ public class ListLauncherFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_list,container,false);
 
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
-
         mRecyclerView = v.findViewById(R.id.list_recycler_view);
+
+        mBroadcastReceiver = new AppBroadcastReceiver(getContext(),mRecyclerView);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mRecyclerView.setAdapter(mAdapter);
-
-        FloatingActionButton mFloatingActionButton = v.findViewById(R.id.activity_list_fab);
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                mItems.add(1);
-//                mAdapter.notifyDataSetChanged();
-            }
-        });
-
-        mFloatingActionButton.hide();
 
         setupAdapter();
 
+        int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
+        mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
+
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+
+        filter.addDataScheme("package");
+
+        getContext().registerReceiver(mBroadcastReceiver, filter);
+    }
+
     private void setupAdapter() {
+
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -103,50 +106,26 @@ public class ListLauncherFragment extends Fragment {
             default:
                 break;
         }
+        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,getContext(),false);
 
-        mRecyclerView.setAdapter(new ListLauncherAdapter(activities));
+
+        boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
+
+        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+        if(showPopApps){
+            Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
+            launcherAdapter.setPopularAppInfo(popularActivities);
+        }
+
+        mRecyclerView.setAdapter(launcherAdapter);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
 
-    public class ListLauncherAdapter extends RecyclerView.Adapter<LauncherViewHolder>{
-
-        private final List<ResolveInfo> mInstalledAppInfo;
-        private final Map<ResolveInfo,Drawable> mIcons;
-
-        public ListLauncherAdapter(List<ResolveInfo> installedAppInfo) {
-            mInstalledAppInfo = installedAppInfo;
-            mIcons = new HashMap<>();
-        }
-
-        @NonNull
-        @Override
-        public LauncherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_list_view,parent,false);
-
-            return new LauncherViewHolder(view, mDatabase,R.id.list_app_icon,R.id.list_app_title);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull LauncherViewHolder viewHolder, int position) {
-            ResolveInfo resolveInfo = mInstalledAppInfo.get(position);
-            PackageManager pm = getActivity().getPackageManager();
-
-            if(mIcons.get(resolveInfo) == null){
-                mIcons.put(resolveInfo,mInstalledAppInfo.get(position).loadIcon(pm));
-            }
-
-            viewHolder.bind(resolveInfo,mIcons.get(resolveInfo));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mInstalledAppInfo.size();
-        }
+        getContext().unregisterReceiver(mBroadcastReceiver);
     }
-
-
-
 
     public static ListLauncherFragment newInstance(){
         return new ListLauncherFragment();

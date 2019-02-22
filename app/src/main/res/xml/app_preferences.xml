@@ -3,24 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <CheckBoxPreference
-        android:key="@string/preference_key_theme"
-        android:title="Dark theme"/>
-    <CheckBoxPreference
-        android:key="@string/preference_key_layout"
-        android:title="Compact layout" />
+    <PreferenceCategory>
+        <SwitchPreference
+            android:key="@string/preference_key_theme"
+            android:title="Dark theme"/>
+        <SwitchPreference
+            android:key="@string/preference_key_layout"
+            android:title="Compact layout" />
+    </PreferenceCategory>
 
-    <SwitchPreference
-        android:key="@string/preference_key_is_first_launch"
-        android:title="Show intro next time"/>
+    <PreferenceCategory>
 
-    <ListPreference
-        android:title="@string/sort_method"
-        android:defaultValue="1"
-        android:key="@string/preference_key_sort_method"
-        android:entries="@array/sortMethodList"
-        android:entryValues="@array/sortMethodValues">
-    </ListPreference>
+        <SwitchPreference
+            android:key="@string/preference_key_is_first_launch"
+            android:title="Show intro next time"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <SwitchPreference
+            android:key="@string/preference_key_popular_apps"
+            android:title="Show popular apps"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <ListPreference
+            android:title="@string/sort_method"
+            android:defaultValue="1"
+            android:key="@string/preference_key_sort_method"
+            android:entries="@array/sortMethodList"
+            android:entryValues="@array/sortMethodValues">
+        </ListPreference>
+    </PreferenceCategory>
+
 
 
 </PreferenceScreen>

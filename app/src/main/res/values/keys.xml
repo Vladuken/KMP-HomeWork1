@@ -9,6 +9,8 @@
     <string name="preference_key_is_first_launch">com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH</string>
     <string name="preference_key_sort_method">com.vladuken.vladpetrushkevich.SORT_METHOD</string>
 
+    <string name="preference_key_popular_apps">com.vladuken.vladpetrushkevich.POPULAR_APPS</string>
+
     <string name="preference_key_layout">com.vladuken.vladpetrushkevich.LAYOUT</string>
 
     <!--<string name="preference_landscape_rows">com.vladuken.vladpetrushkevich.PREFERENCE_LANDSCAPE</string>-->

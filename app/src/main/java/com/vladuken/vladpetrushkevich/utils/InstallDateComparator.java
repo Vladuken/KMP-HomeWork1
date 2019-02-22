@@ -19,16 +19,11 @@ public class InstallDateComparator implements Comparator<ResolveInfo> {
     public int compare(ResolveInfo a, ResolveInfo b) {
 
 
-//        ApplicationInfo applicationInfo = mPM.getApplicationInfo(a.activityInfo.packageName,0);
-//        String appFile = applicationInfo.sourceDir;
-//        long installed = new File(appFile).lastModified(); //Epoch Time
-
         long installedA;
         long installedB;
 
         try{
-//            installedA =mPM.getPackageInfo(a.activityInfo.packageName, 0)
-//                    .firstInstallTime;
+
             ApplicationInfo applicationInfo = mPM.getApplicationInfo(a.activityInfo.packageName,0);
             String appFile = applicationInfo.sourceDir;
             installedA = new File(appFile).lastModified(); //Epoch Time
@@ -38,8 +33,6 @@ public class InstallDateComparator implements Comparator<ResolveInfo> {
         }
 
         try{
-//            installedB =mPM.getPackageInfo(b.activityInfo.packageName, 0)
-//                    .firstInstallTime;
 
             ApplicationInfo applicationInfo = mPM.getApplicationInfo(b.activityInfo.packageName,0);
             String appFile = applicationInfo.sourceDir;
@@ -51,4 +44,6 @@ public class InstallDateComparator implements Comparator<ResolveInfo> {
 
         return (int) (installedA - installedB);
     }
+
+
 }
