@@ -1,0 +1,86 @@
+<resources>
+<string name="app_name" translatable="false">Vlad Launcher</string>
+    <string name="full_name">ולד פטרושקבי</string>
+    <string name="my_greetings">שמי Vlad ו App זה עבור Yandex קורס פיתוח סלולרי</string>
+    <string name="github" translatable="false">Github</string>
+    <string name="github_link" translatable="false">https://github.com/Vladuken</string>
+    <string name="app_description">שלום! \ N         זה משגר פשוט. \ N         ניתן לבחור בין 2 סוגי פריסות ו- 2 ערכות נושא. \ N         מפעיל תמיכה במיון האפליקציה וספירת ההשקה. \ N         תוכל למחוק אפליקציות ולפתוח את הגדרות האפליקציה. בהצלחה!</string>
+
+
+
+    <string name="next">הבא</string>
+    <string name="start">התחל</string>
+
+    <string name="light_theme">נושא קל</string>
+    <string name="dark_theme">ערכת נושא כהה</string>
+
+    <string name="standard_layout">פריסה רגילה</string>
+    <string name="compact_layout">פריסה קומפקטית</string>
+
+    <string name="tutorial_popular_apps">תוכל להוסיף את היישומים הפופולריים ביותר שנפתחו לפסגה.</string>
+    <string name="tutorial_list_launcher">כמו כן ניתן למצוא רשימה יפה עם יישומים.</string>
+    <string name="tutorial_settings">וגם כמות עצומה של הגדרות!</string>
+
+
+
+    <string name="navigation_drawer_open">פתח את מגירת הניווט</string>
+    <string name="navigation_drawer_close">סגור את מגירת הניווט</string>
+    <string name="nav_header_title">ולד פטרושקביץ </string>
+    <string name="nav_header_subtitle" translatable="false">vladpetrushkevich1999@gmail.com</string>
+    <string name="nav_header_desc">כותרת ניווט</string>
+    <string name="action_settings">הגדרות</string>
+
+    <string name="launcher_activity">פעילות מפעיל</string>
+    <string name="list_activity">פעילות רשימה</string>
+    <string name="settings">הגדרות</string>
+
+    <string name="uninstall_app">הסר את ההתקנה של האפליקציה</string>
+    <string name="launch_counts">הרוזן משיקה</string>
+    <string name="open_app_settings">פתח את ההגדרות</string>
+
+    <string name="sort_method">מיון</string>
+    <string name="title_activity_profile_page" translatable="false">ProfilePageActivity</string>
+
+
+
+
+    <string name="profile_page_phone_number">נייד</string>
+    <string name="profile_page_email">דוא"ל</string>
+    <string name="profile_page_card_number">מספר כרטיס</string>
+
+    <string name="profile_page_vk">K V</string>
+    <string name="profile_page_instagram">אינסטגרם</string>
+    <string name="profile_page_github">GitHub</string>
+
+    <string name="my_name">ולד פטרושקביץ </string>
+    <string name="my_phone_number" translatable="false">+375291387114</string>
+    <string name="my_email" translatable="false">vladpetrushkevich1999@gmail.com</string>
+    <string name="my_card_number" translatable="false">8349 3358 3435 9343 9353</string>
+    <string name="my_vk" translatable="false">vk.com/id100354810</string>
+    <string name="my_instagram" translatable="false">instagram.com/vladuken</string>
+    <string name="my_github" translatable="false">github.com/vladuken</string>
+
+
+
+    <string name="copied">הועתק</string>
+    <string name="dismiss">לשחרר</string>
+
+
+    <string name="popular_app_group_title">יישומים פופולריים</string>
+
+
+
+    <string name="pref_dark_theme">ערכת נושא כהה</string>
+    <string name="pref_compat_layout">פריסת Compat</string>
+    <string name="pref_intro_next_time">הצג מבוא בפעם הבאה</string>
+    <string name="pref_popular_apps">הצג יישומים פופולריים</string>
+
+
+    <string name="sort_no">אין סדר</string>
+    <string name="sort_title">לפי כותרת</string>
+    <string name="sort_title_reverce">לפי כותרת (reverce)</string>
+    <string name="sort_install_date">לפי תאריך התקנה</string>
+    <string name="sort_launch_count">לפי ספירת ההשקה</string>
+    <string name="launched">וא בפעם</string>
+    <string name="times">אריך הת</string>
+</resources>

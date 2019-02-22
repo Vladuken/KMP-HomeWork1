@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/screen3id"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <RadioGroup
+        android:id="@+id/radio_group_theme"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/normal_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/dark_theme_radiobutton"
+            android:background="@drawable/radiobutton"
+            style="@style/WelcomeRadioButton"
+            android:text="@string/dark_theme" />
+
+        <RadioButton
+            android:id="@+id/light_theme_radiobutton"
+            android:background="@drawable/radiobutton"
+            style="@style/WelcomeRadioButton"
+            android:text="@string/light_theme"/>
+    </RadioGroup>
+
+
+</android.support.constraint.ConstraintLayout>

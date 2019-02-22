@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/photo_card_view"
+            android:elevation="@dimen/small_margin"
+            android:layout_width="@dimen/welcome_image_size"
+            android:layout_height="@dimen/welcome_image_size"
+
+            app:cardCornerRadius="@dimen/welcome_image_size_corner_radius">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/full_name"
+                android:scaleType="centerCrop"
+                android:src="@drawable/photo" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/full_name"
+            android:textSize="@dimen/title_text"/>
+
+        <TextView
+            android:layout_width="@dimen/welcome_page_text_width"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/my_greetings"
+            android:textSize="@dimen/title_small_text" />
+    </LinearLayout>
+
+</RelativeLayout>
