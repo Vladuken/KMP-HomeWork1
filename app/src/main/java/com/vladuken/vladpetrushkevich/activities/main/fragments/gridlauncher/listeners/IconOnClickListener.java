@@ -7,16 +7,16 @@ import android.view.View;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.GridLauncherAdapter;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
 import java.util.Collections;
 
 public class IconOnClickListener implements View.OnClickListener {
     protected LauncherViewHolder mViewHolder;
-    protected GridLauncherAdapter mAdapter;
+    protected LauncherAdapter mAdapter;
 
-    public IconOnClickListener(LauncherViewHolder viewHolder, GridLauncherAdapter adapter) {
+    public IconOnClickListener(LauncherViewHolder viewHolder, LauncherAdapter adapter) {
         mViewHolder = viewHolder;
         mAdapter = adapter;
     }

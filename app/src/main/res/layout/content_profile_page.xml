@@ -43,20 +43,6 @@
                 />
             <!--android:textColor="@color/smallTextColor"-->
 
-            <!--<ToggleButton-->
-                <!--android:id="@+id/chkState1"-->
-                <!--android:layout_width="24dp"-->
-                <!--android:layout_height="24dp"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-                <!--android:layout_marginStart="@dimen/activity_horizontal_margin"-->
-                <!--android:background="@drawable/photo"-->
-                <!--android:checked="true"-->
-                <!--android:padding="6dp"-->
-                <!--android:textOff=""-->
-                <!--android:textOn="" />-->
 
         </RelativeLayout>
 

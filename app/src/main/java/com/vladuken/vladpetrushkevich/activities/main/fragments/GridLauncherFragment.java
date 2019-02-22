@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.GridLauncherAdapter;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
@@ -94,8 +94,8 @@ public class GridLauncherFragment extends Fragment {
         }
 
         timings.addSplit("Sorting");
-        GridLauncherAdapter launcherAdapter = new GridLauncherAdapter(activities,mDatabase,getContext(),true);
-        timings.addSplit("GridLauncherAdapter init");
+        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,getContext(),true);
+        timings.addSplit("LauncherAdapter init");
 
 
 

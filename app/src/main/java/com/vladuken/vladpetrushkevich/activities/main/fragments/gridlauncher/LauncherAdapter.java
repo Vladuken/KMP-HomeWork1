@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static final int POPULAR_APP_SIZE = 5;
     private static final int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = POPULAR_APP_SIZE + 1;
@@ -41,7 +41,7 @@ public class GridLauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private boolean mIsGridView;
 
 
-    public GridLauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, Context context, boolean isGridView) {
+    public LauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, Context context, boolean isGridView) {
         mInstalledAppInfo =  installedAppsInfo;
         mDatabase = database;
         mContext = context;

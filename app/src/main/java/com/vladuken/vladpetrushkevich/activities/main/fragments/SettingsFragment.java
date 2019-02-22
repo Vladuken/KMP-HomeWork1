@@ -1,6 +1,7 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
@@ -37,7 +38,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private boolean onPreferenceClick(Preference preference) {
 
         ThemeChanger.reloadActivity(getActivity());
-
 
         return true;
     }

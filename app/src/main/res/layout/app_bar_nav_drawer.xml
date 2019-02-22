@@ -14,7 +14,7 @@
         <FrameLayout
             android:id="@+id/launcher_container_fragments"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
+            android:layout_height="match_parent"/>
         <!-- Your scrolling content -->
 
     </android.support.v4.widget.NestedScrollView>
