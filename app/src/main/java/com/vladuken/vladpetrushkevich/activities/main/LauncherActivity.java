@@ -1,6 +1,7 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -99,6 +100,15 @@ public class LauncherActivity extends AppCompatActivity {
             mNavigationView.setCheckedItem(menuId);
             onNavigationItemSelected(menuItem);
         }
+
+//        AppBroadcastReceiver broadcastReceiver = new AppBroadcastReceiver();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+//        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+//
+//        filter.addDataScheme("package");
+//
+//        this.registerReceiver(broadcastReceiver, filter);
 
 //        mBroadcastReceiver = new BroadcastReceiver() {
 //            @Override

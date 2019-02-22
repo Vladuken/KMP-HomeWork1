@@ -49,7 +49,7 @@ public class IconLongClickListener implements View.OnLongClickListener {
     }
 
     protected void uninstallApp() {
-        Intent i = new Intent();
+        Intent i = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
         i.setData(Uri.parse("package:" + mViewHolder.getResolveInfo().activityInfo.packageName));
         //TODO StartactivityFor Result to update on gridview ondelete app
         mViewHolder.itemView.getContext().startActivity(i);

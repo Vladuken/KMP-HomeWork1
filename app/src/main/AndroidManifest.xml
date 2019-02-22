@@ -31,6 +31,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.main.LauncherActivity" />
+
+        <receiver
+            android:name=".activities.main.AppBroadcastReceiver">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.PACKAGE_INSTALL"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

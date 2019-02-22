@@ -1,6 +1,7 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
+import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
@@ -32,6 +34,8 @@ public class ListLauncherFragment extends Fragment {
     protected SharedPreferences mSharedPreferences;
     protected AppDatabase mDatabase;
 
+    protected AppBroadcastReceiver mBroadcastReceiver;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
@@ -46,6 +50,8 @@ public class ListLauncherFragment extends Fragment {
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
         mRecyclerView = v.findViewById(R.id.list_recycler_view);
 
+        mBroadcastReceiver = new AppBroadcastReceiver(getContext(),mRecyclerView);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         setupAdapter();
@@ -55,6 +61,20 @@ public class ListLauncherFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+
+        filter.addDataScheme("package");
+
+        getContext().registerReceiver(mBroadcastReceiver, filter);
+    }
+
     private void setupAdapter() {
 
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
@@ -100,6 +120,12 @@ public class ListLauncherFragment extends Fragment {
         mRecyclerView.setAdapter(launcherAdapter);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        getContext().unregisterReceiver(mBroadcastReceiver);
+    }
 
     public static ListLauncherFragment newInstance(){
         return new ListLauncherFragment();
