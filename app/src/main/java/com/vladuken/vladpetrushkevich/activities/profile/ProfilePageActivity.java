@@ -70,6 +70,7 @@ public class ProfilePageActivity extends AppCompatActivity {
                         .setAction(getString(R.string.dismiss), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                //TODO
                             }
                         })
                         .show();
@@ -115,7 +116,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         }
     }
 
-    private void createIntentAndStart(View v, int textViewId, final String intentAction, String uriPrefix){
+    protected void createIntentAndStart(View v, int textViewId, final String intentAction, String uriPrefix){
         Intent i = new Intent(intentAction);
         TextView textView = v.findViewById(textViewId);
         String s = textView.getText().toString();

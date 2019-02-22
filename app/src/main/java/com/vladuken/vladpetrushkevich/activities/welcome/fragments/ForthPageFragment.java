@@ -17,10 +17,11 @@ public class ForthPageFragment extends Fragment {
 
     protected RadioGroup mLayoutRadioGroup;
     protected boolean mIsCompactLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.welcome_slide4,container,false);
+        View v = inflater.inflate(R.layout.welcome_slide4, container, false);
 
         final View layout4 = v.findViewById(R.id.screen4id);
         mLayoutRadioGroup = layout4.findViewById(R.id.radio_group_layout);
@@ -39,7 +40,7 @@ public class ForthPageFragment extends Fragment {
         });
 
         SharedPreferences sharedPreferences = this.getActivity()
-                .getSharedPreferences(getString(R.string.preference_file),0);
+                .getSharedPreferences(getString(R.string.preference_file), 0);
 
         mIsCompactLayout =
                 sharedPreferences.getBoolean(
@@ -48,26 +49,26 @@ public class ForthPageFragment extends Fragment {
                 );
 
 
-        if(mIsCompactLayout){
+        if (mIsCompactLayout) {
             ((RadioButton) layout4.findViewById(R.id.compact_layout_rdb)).setChecked(true);
-        }else {
+        } else {
             ((RadioButton) layout4.findViewById(R.id.standard_layout_rdb)).setChecked(true);
         }
 
         return v;
     }
 
-    public static ForthPageFragment newInstance(){
+    public static ForthPageFragment newInstance() {
         return new ForthPageFragment();
     }
 
-    protected void savePreferences(){
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences(getString(R.string.preference_file),0).edit();
+    protected void savePreferences() {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences(getString(R.string.preference_file), 0).edit();
 //        editor.putInt(getString(R.string.preference_portrait_rows), portrait_rows);
 //        editor.putInt(getString(R.string.preference_landscape_rows), landscape_rows);
 
-        editor.putBoolean(getString(R.string.preference_key_layout),mIsCompactLayout);
-        editor.commit();
+        editor.putBoolean(getString(R.string.preference_key_layout), mIsCompactLayout);
+        editor.apply();
     }
 }
 

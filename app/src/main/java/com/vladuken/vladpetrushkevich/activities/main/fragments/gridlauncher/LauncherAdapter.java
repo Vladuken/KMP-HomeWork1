@@ -1,6 +1,5 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher;
 
-import android.content.Context;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -36,15 +35,13 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final Map<ResolveInfo,Drawable> mIcons;
 
     private final AppDatabase mDatabase;
-    private Context  mContext;
 
-    private boolean mIsGridView;
+    private final boolean mIsGridView;
 
 
-    public LauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, Context context, boolean isGridView) {
+    public LauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, boolean isGridView) {
         mInstalledAppInfo =  installedAppsInfo;
         mDatabase = database;
-        mContext = context;
         mIcons = new HashMap<>();
 
         mIsGridView = isGridView;
@@ -107,21 +104,22 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ResolveInfo resolveInfo;
 
-        if(mPopularAppInfo.size() != 0){
-            if(position == 0){
+        int pos = position;
+        if(!mPopularAppInfo.isEmpty()){
+            if(pos == 0){
                 //TODO
-            }else if(position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
-                resolveInfo = mPopularAppInfo.get(position - 1);
+            }else if(pos < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
+                resolveInfo = mPopularAppInfo.get(pos - 1);
                 bindLauncherViewHolder(viewHolder,resolveInfo);
-            }else if(position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
+            }else if(pos == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
                 //TODO
             }else {
-                position = position - POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER - 1;
-                resolveInfo = mInstalledAppInfo.get(position);
+                pos = pos - POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER - 1;
+                resolveInfo = mInstalledAppInfo.get(pos);
                 bindLauncherViewHolder(viewHolder,resolveInfo);
             }
         } else {
-            resolveInfo = mInstalledAppInfo.get(position);
+            resolveInfo = mInstalledAppInfo.get(pos);
             bindLauncherViewHolder(viewHolder,resolveInfo);
         }
 
@@ -145,18 +143,14 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public boolean isGroupTitle(int position){
-        if(mPopularAppInfo.size() != 0){
-            if(position == 0 || position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER)
-                return true;
-        }
-
-        return false;
+        return  !mPopularAppInfo.isEmpty() &&
+                (position == 0 || position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER);
     }
 
     @Override
     public int getItemCount() {
         int popularAppsCount = 0;
-        if(mPopularAppInfo.size() != 0){
+        if(!mPopularAppInfo.isEmpty()){
             popularAppsCount = POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER + 1;
         }
 
@@ -166,17 +160,20 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
 
-        if (mPopularAppInfo.size() == 0) {
+        if (mPopularAppInfo.isEmpty()) {
             return super.getItemViewType(position);
         }
 
-        if(position == 0) return POPULAR_GROUP_TITLE;//TODO APP TITLE
-        if(position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
+        if (position == 0){
+            return POPULAR_GROUP_TITLE;//TODO APP TITLE
+        }
+        if (position < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
             return POPULAR_APP;
         }
-        if (position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER)
+        if (position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
             return DIVIDER;
-        else {
+
+        }else {
             return super.getItemViewType(position);
         }
     }

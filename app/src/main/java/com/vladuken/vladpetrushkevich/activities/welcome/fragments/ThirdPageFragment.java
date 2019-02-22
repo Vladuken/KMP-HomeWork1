@@ -84,6 +84,6 @@ public class ThirdPageFragment extends Fragment {
     protected void savePreferences(){
         SharedPreferences.Editor editor = this.getActivity().getSharedPreferences(getString(R.string.preference_file),0).edit();
         editor.putBoolean(getString(R.string.preference_key_theme), theme);
-        editor.commit();
+        editor.apply();
     }
 }

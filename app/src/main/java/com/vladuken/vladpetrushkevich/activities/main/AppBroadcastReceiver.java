@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 
@@ -19,10 +16,6 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
     Context context;
 
     RecyclerView mRecyclerView;
-
-
-    public AppBroadcastReceiver() {
-    }
 
     public AppBroadcastReceiver(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -77,11 +70,12 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
             List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
 
             ResolveInfo appToAdd = null;
-            if(uid != 0){
-                for(ResolveInfo resolveInfo:activities){
-                    if(resolveInfo.activityInfo.applicationInfo.uid == uid){
-                        appToAdd = resolveInfo;
-                    }
+            if(uid == 0){
+                return;
+            }
+            for(ResolveInfo resolveInfo:activities){
+                if(resolveInfo.activityInfo.applicationInfo.uid == uid){
+                    appToAdd = resolveInfo;
                 }
             }
 

@@ -1,10 +1,7 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.crashlytics.android.Crashlytics;
@@ -65,7 +60,6 @@ public class LauncherActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuItem menuItem = mNavigationView.getMenu().findItem(R.id.nav_launcher_activity);
 
                 mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
                 onNavigationItemSelected(R.id.nav_launcher_activity);
@@ -168,7 +162,7 @@ public class LauncherActivity extends AppCompatActivity {
                     .commit();
 
         }else if(id == R.id.nav_none){
-
+            //TODO
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

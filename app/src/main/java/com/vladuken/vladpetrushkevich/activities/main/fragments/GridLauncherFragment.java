@@ -115,7 +115,7 @@ public class GridLauncherFragment extends Fragment {
         }
 
         timings.addSplit("Sorting");
-        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,getContext(),true);
+        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,true);
         timings.addSplit("LauncherAdapter init");
 
 

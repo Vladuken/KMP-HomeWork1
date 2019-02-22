@@ -1,9 +1,9 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.util.Log;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
@@ -18,7 +18,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference themePreference = findPreference(getString(R.string.preference_key_theme));
         themePreference.setOnPreferenceClickListener(this::onPreferenceClick);
 
-        Preference layoutPreference = findPreference((getString(R.string.preference_key_layout)));
+        Preference layoutPreference = findPreference(getString(R.string.preference_key_layout));
         layoutPreference.setOnPreferenceClickListener(this::onPreferenceClick);
 
         Preference sortPreference = findPreference(getString(R.string.preference_key_sort_method));
@@ -36,9 +36,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private boolean onPreferenceClick(Preference preference) {
-
+        Log.d("KEYPREF",preference.getKey());
         ThemeChanger.reloadActivity(getActivity());
-
         return true;
     }
 }

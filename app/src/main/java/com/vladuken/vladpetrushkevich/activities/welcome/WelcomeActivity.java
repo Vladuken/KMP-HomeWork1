@@ -88,7 +88,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
+                //TODO
             }
 
             @Override
@@ -103,7 +103,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
+                //TODO
             }
         });
 
@@ -131,7 +131,7 @@ public class WelcomeActivity extends AppCompatActivity {
         editor.putBoolean(getString(R.string.preference_key_theme), mIsDarkTheme);
         editor.putBoolean(getString(R.string.preference_key_layout),mIsCompactLayout);
 
-        editor.commit();
+        editor.apply();
     }
 
     @Override

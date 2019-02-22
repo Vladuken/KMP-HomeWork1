@@ -33,6 +33,7 @@ public class PrefManager {
 
     public void setTheme(boolean isDarkTheme){
         mEditor.putBoolean(mContext.getString(R.string.preference_key_theme),isDarkTheme);
+        mEditor.commit();
     }
 
     public boolean getTheme(){

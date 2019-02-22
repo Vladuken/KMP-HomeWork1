@@ -106,7 +106,7 @@ public class ListLauncherFragment extends Fragment {
             default:
                 break;
         }
-        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,getContext(),false);
+        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,false);
 
 
         boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
