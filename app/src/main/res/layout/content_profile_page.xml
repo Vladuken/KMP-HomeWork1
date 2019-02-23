@@ -27,6 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:text="@string/my_phone_number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
             <!--android:textColor="@color/textColor"-->
@@ -36,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_phone_number"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="8dp"
                 android:text="@string/profile_page_phone_number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -59,6 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:text="@string/my_email"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
             <!--android:textColor="@color/textColor"-->
@@ -68,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_email"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="8dp"
                 android:text="@string/profile_page_email"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -90,6 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:text="@string/my_card_number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
             <!--android:textColor="@color/textColor"-->
@@ -99,6 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_card_number"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:layout_marginTop="8dp"
                 android:text="@string/profile_page_card_number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -121,6 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:text="@string/my_instagram"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
             <!--android:textColor="@color/textColor"-->
@@ -130,6 +141,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_instagram"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:layout_marginTop="8dp"
                 android:text="@string/profile_page_instagram"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -153,6 +166,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:text="@string/my_github"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
             <!--android:textColor="@color/textColor"-->
@@ -162,6 +177,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_github"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:layout_marginTop="8dp"
                 android:text="@string/profile_page_github"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"

@@ -44,6 +44,7 @@ public class GridLauncherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
+
         super.onCreate(savedInstanceState);
     }
 
@@ -62,12 +63,10 @@ public class GridLauncherFragment extends Fragment {
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
-        return v;
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+
+
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
@@ -75,9 +74,10 @@ public class GridLauncherFragment extends Fragment {
         filter.addDataScheme("package");
 
         getContext().registerReceiver(mBroadcastReceiver, filter);
-//        mRecyclerView.getAdapter().notifyDataSetChanged();
 
+        return v;
     }
+
 
     private void setupAdapter() {
 
@@ -179,11 +179,10 @@ public class GridLauncherFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-
-//        mRecyclerView.getAdapter().notifyDataSetChanged();
+    public void onDestroyView() {
+        super.onDestroyView();
         getContext().unregisterReceiver(mBroadcastReceiver);
+
     }
 
     public static GridLauncherFragment newInstance(){

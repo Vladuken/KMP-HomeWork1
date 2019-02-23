@@ -32,7 +32,8 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.main.LauncherActivity" />
+        <activity android:name=".activities.main.LauncherActivity" >
+        </activity>
 
         <!--<receiver-->
             <!--android:name=".activities.main.AppBroadcastReceiver"-->

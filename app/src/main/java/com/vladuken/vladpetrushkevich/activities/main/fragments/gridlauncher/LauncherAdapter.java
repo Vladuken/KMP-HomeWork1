@@ -177,4 +177,6 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return super.getItemViewType(position);
         }
     }
+
+
 }
