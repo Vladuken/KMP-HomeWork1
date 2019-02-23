@@ -11,6 +11,8 @@
         android:textSize="@dimen/title_text"
         android:text="@string/popular_app_group_title"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:padding="4dp"/>

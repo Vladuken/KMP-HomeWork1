@@ -26,6 +26,8 @@
 
             android:layout_marginBottom="@dimen/normal_margin"
             android:layout_marginEnd="@dimen/huge_margin"
+            android:layout_marginRight="@dimen/huge_margin"
+
 
             app:layout_constraintTop_toBottomOf="@id/view_pager"
             app:layout_constraintBottom_toBottomOf="parent"

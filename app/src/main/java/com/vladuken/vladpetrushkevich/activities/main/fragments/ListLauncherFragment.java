@@ -59,12 +59,6 @@ public class ListLauncherFragment extends Fragment {
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
@@ -73,6 +67,9 @@ public class ListLauncherFragment extends Fragment {
         filter.addDataScheme("package");
 
         getContext().registerReceiver(mBroadcastReceiver, filter);
+
+
+        return v;
     }
 
     private void setupAdapter() {
@@ -120,11 +117,12 @@ public class ListLauncherFragment extends Fragment {
         mRecyclerView.setAdapter(launcherAdapter);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         getContext().unregisterReceiver(mBroadcastReceiver);
+
     }
 
     public static ListLauncherFragment newInstance(){
