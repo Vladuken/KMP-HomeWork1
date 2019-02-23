@@ -49,6 +49,7 @@
                 android:layout_width="@dimen/welcome_page_text_width"
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
+                android:layout_gravity="start"
                 android:layout_marginTop="@dimen/normal_margin"
                 android:text="@string/app_description"
                 android:textSize="@dimen/title_small_text"/>

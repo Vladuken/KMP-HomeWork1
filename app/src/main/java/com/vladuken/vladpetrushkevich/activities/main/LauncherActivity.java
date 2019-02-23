@@ -169,7 +169,4 @@ public class LauncherActivity extends AppCompatActivity {
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
 }

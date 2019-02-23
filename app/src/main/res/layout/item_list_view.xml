@@ -16,6 +16,8 @@
         android:layout_height="80dp"
         android:layout_marginBottom = "8dp"
         android:layout_marginStart = "16dp"
+        android:layout_marginLeft = "16dp"
+
         android:layout_marginTop = "8dp"
         tools:background="@drawable/photo"
         android:elevation="8dp"
@@ -28,6 +30,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
