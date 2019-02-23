@@ -6,6 +6,7 @@ import android.content.pm.ResolveInfo;
 
 import java.io.File;
 import java.util.Comparator;
+import java.util.Date;
 
 public class InstallDateComparator implements Comparator<ResolveInfo> {
 
@@ -17,32 +18,27 @@ public class InstallDateComparator implements Comparator<ResolveInfo> {
 
     @Override
     public int compare(ResolveInfo a, ResolveInfo b) {
-
-
         long installedA;
         long installedB;
 
         try{
-
-            ApplicationInfo applicationInfo = mPM.getApplicationInfo(a.activityInfo.packageName,0);
-            String appFile = applicationInfo.sourceDir;
-            installedA = new File(appFile).lastModified(); //Epoch Time
-
+            installedA = mPM.getPackageInfo(a.activityInfo.packageName,0).firstInstallTime;
         }catch (PackageManager.NameNotFoundException e){
-            return  -1;
+            installedA = new Date().getTime();
+        }
+        try {
+            installedB = mPM.getPackageInfo(b.activityInfo.packageName,0).firstInstallTime;
+        }catch (PackageManager.NameNotFoundException e){
+            installedB = new Date().getTime();
         }
 
-        try{
+        int res = 0;
+        if(installedB - installedA > 0)
+            res = 1;
+        if(installedB - installedA < 0)
+            res = -1;
 
-            ApplicationInfo applicationInfo = mPM.getApplicationInfo(b.activityInfo.packageName,0);
-            String appFile = applicationInfo.sourceDir;
-            installedB = new File(appFile).lastModified(); //Epoch Time
-        }catch (PackageManager.NameNotFoundException e){
-            return  -1;
-        }
-
-
-        return (int) (installedA - installedB);
+        return res;
     }
 
 
