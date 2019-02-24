@@ -23,10 +23,13 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFrag
 import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
 import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
+import com.yandex.metrica.YandexMetrica;
+import com.yandex.metrica.YandexMetricaConfig;
 
 import io.fabric.sdk.android.Fabric;
 
 public class LauncherActivity extends AppCompatActivity {
+
 
     private static final String CHECKED_NAV_ID = "CheckedNavId";
     protected SharedPreferences mSharedPreferences;
@@ -51,6 +54,9 @@ public class LauncherActivity extends AppCompatActivity {
                 Analytics.class,
                 Crashes.class,
                 Distribute.class);
+
+
+
 
         setContentView(R.layout.activity_nav_drawer);
 
