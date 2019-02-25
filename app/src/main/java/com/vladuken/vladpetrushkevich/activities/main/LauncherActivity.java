@@ -108,6 +108,7 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
 //                mNavigationView.setCheckedItem(i);
+                if(i < 3)
                 mNavigationView.getMenu().getItem(i).setChecked(true);
             }
 

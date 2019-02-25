@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.desktop.DesktopFragment;
 
 public class LauncherPagerAdapter extends FragmentPagerAdapter {
 
@@ -24,6 +25,10 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
                 return ListLauncherFragment.newInstance();
             case 2:
                 return SettingsFragment.newInstance();
+            case 3:
+                return DesktopFragment.newInstance(4,5);
+            case 4:
+                return DesktopFragment.newInstance(2,5);
             default:
                 return null;
         }
@@ -31,6 +36,6 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 5;
     }
 }
