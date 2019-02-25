@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -38,12 +41,13 @@ public class LauncherActivity extends AppCompatActivity {
     protected NavigationView mNavigationView;
 
     protected Toolbar mToolbar;
+    protected ViewPager mFramePager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mSharedPreferences = getSharedPreferences(getString(R.string.preference_file),0);
+        mSharedPreferences = getSharedPreferences(getString(R.string.preference_file), 0);
         boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
-        ThemeChanger.onCreateSetTheme(this,theme);
+        ThemeChanger.onCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -54,8 +58,6 @@ public class LauncherActivity extends AppCompatActivity {
                 Analytics.class,
                 Crashes.class,
                 Distribute.class);
-
-
 
 
         setContentView(R.layout.activity_nav_drawer);
@@ -75,61 +77,58 @@ public class LauncherActivity extends AppCompatActivity {
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
-        View headerView =  mNavigationView.getHeaderView(0);
+        View headerView = mNavigationView.getHeaderView(0);
 
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(v.getContext(),ProfilePageActivity.class);
+                Intent i = new Intent(v.getContext(), ProfilePageActivity.class);
                 startActivity(i);
 //                mNavigationView.setCheckedItem(R.id.nav_none);
                 onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_none));
             }
         });
 
-        mFrameLayout = findViewById(R.id.launcher_container_fragments);
+        //mFrameLayout = findViewById(R.id.launcher_container_fragments);
+
+        NestedScrollView nestedScrollView = findViewById(R.id.nested_scrollview);
+        nestedScrollView.setFillViewport(true);
+
+
+        FragmentManager fm = getSupportFragmentManager();
+        mFramePager = findViewById(R.id.launcher_fragment_viewpager);
+        mFramePager.setAdapter(new LauncherPagerAdapter(fm));
+        mFramePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+//                mNavigationView.setCheckedItem(i);
+                mNavigationView.getMenu().getItem(i).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
         onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_launcher_activity));
 
-        if(savedInstanceState != null){
-            int menuId = savedInstanceState.getInt(CHECKED_NAV_ID,R.id.nav_list_activity);
+        if (savedInstanceState != null) {
+            int menuId = savedInstanceState.getInt(CHECKED_NAV_ID, R.id.nav_list_activity);
             MenuItem menuItem = mNavigationView.getMenu().findItem(menuId);
 
             mNavigationView.setCheckedItem(menuId);
             onNavigationItemSelected(menuItem);
         }
 
-//        AppBroadcastReceiver broadcastReceiver = new AppBroadcastReceiver();
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
-//        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
-//
-//        filter.addDataScheme("package");
-//
-//        this.registerReceiver(broadcastReceiver, filter);
-
-//        mBroadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                mRecyclerView.getAdapter().notifyDataSetChanged();
-//                Log.d("AAAAAAAAAAAAA","Help");
-////                recreate();
-//                //TODO set up normal broadcast receiver that would work to detect app install-uninstall
-//            }
-//        };
-//        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//        filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
-//        this.registerReceiver(mBroadcastReceiver, filter);
     }
-
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-////        this.unregisterReceiver(mBroadcastReceiver);
-//    }
 
 
     @Override
@@ -154,19 +153,12 @@ public class LauncherActivity extends AppCompatActivity {
     @SuppressWarnings("StatementWithEmptyBody")
     public boolean onNavigationItemSelected(int id) {
 
-        if (id == R.id.nav_launcher_activity) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.launcher_container_fragments,GridLauncherFragment.newInstance())
-                    .commit();
-        } else if (id == R.id.nav_list_activity) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.launcher_container_fragments, ListLauncherFragment.newInstance())
-                    .commit();
-        } else if (id == R.id.nav_settings) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.launcher_container_fragments, SettingsFragment.newInstance())
-                    .commit();
-
+        if(id == R.id.nav_launcher_activity){
+            mFramePager.setCurrentItem(0);
+        }else if(id == R.id.nav_list_activity){
+            mFramePager.setCurrentItem(1);
+        }else if(id == R.id.nav_settings){
+            mFramePager.setCurrentItem(2);
         }else if(id == R.id.nav_none){
             //TODO
         }
