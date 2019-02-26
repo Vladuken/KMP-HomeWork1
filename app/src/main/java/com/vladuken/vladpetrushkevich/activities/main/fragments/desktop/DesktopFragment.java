@@ -1,5 +1,8 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,11 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.SquareView;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconLongClickListener;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
+import com.vladuken.vladpetrushkevich.db.AppDatabase;
+import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
+
+import java.util.List;
+import java.util.Random;
 
 public class DesktopFragment extends Fragment {
 
@@ -50,31 +62,61 @@ public class DesktopFragment extends Fragment {
 
     private void setupGridLayout(int rows, int colums){
 
+        Intent startupIntent = new Intent(Intent.ACTION_MAIN);
+        startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        PackageManager pm = getActivity().getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
+
+
+
+
         for(int c = 0; c < colums; c++){
             for(int r = 0; r < rows; r++){
-                ImageView oImageView = new ImageView(getContext());
-                oImageView.setImageResource(R.drawable.photo);
-                GridLayout.LayoutParams param =new GridLayout.LayoutParams();
+
+                View myview =  View.inflate(getContext(),R.layout.desctop_icon_view,null);
+
+                SquareView imageView = myview.findViewById(R.id.grid_app_icon);
+
+//                imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,0));
+
+//                myview.setLayoutParams(new LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT
+//                ));
+
+                LauncherViewHolder viewHolder = new LauncherViewHolder(
+                        myview,
+                        SingletonDatabase.getInstance(getContext()),
+                        R.id.grid_app_icon,
+                        R.id.grid_app_title
+                );
+
+
+                Random random = new Random();
+                ResolveInfo buffResolveInfo = activities.get(random.nextInt(activities.size()));
+                viewHolder.bind(buffResolveInfo,buffResolveInfo.loadIcon(pm));
+
+//                viewHolder.itemView.setOnClickListener(new IconOnClickListener(viewHolder,this));
+                viewHolder.itemView.setOnLongClickListener(new IconLongClickListener(viewHolder));
+
+
+//                ImageView bufferImageView = new ImageView(getContext());
+//                bufferImageView.setImageResource(R.drawable.photo);
+
 
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams(
-                        GridLayout.spec(c, GridLayout.FILL,1f),
-                        GridLayout.spec(r,GridLayout.FILL,1f)
+                        GridLayout.spec(c, 1f),
+                        GridLayout.spec(r,1f)
                 );
 
                 params.height = 0;
                 params.width = 0;
 
-                oImageView.setLayoutParams (params);
+                myview.setLayoutParams (params);
 
-                mTableLayout.addView(oImageView);
+                mTableLayout.addView(myview);
             }
         }
-
-
-
-
-
-
     }
 
     public static DesktopFragment newInstance(int rows, int columns){

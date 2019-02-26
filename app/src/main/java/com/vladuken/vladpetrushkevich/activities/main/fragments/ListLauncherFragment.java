@@ -36,6 +36,8 @@ public class ListLauncherFragment extends Fragment {
 
     protected AppBroadcastReceiver mBroadcastReceiver;
 
+    protected List<ResolveInfo> mInstalledApps;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
@@ -78,7 +80,7 @@ public class ListLauncherFragment extends Fragment {
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         PackageManager pm = getActivity().getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
+        mInstalledApps = pm.queryIntentActivities(startupIntent, 0);
 
 
         int sortMethod = Integer.parseInt(
@@ -87,28 +89,28 @@ public class ListLauncherFragment extends Fragment {
             case 0:
                 break;
             case 1:
-                Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+                Collections.sort(mInstalledApps, new ResolveInfo.DisplayNameComparator(pm));
                 break;
             case 2:
-                Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
-                Collections.reverse(activities);
+                Collections.sort(mInstalledApps, new ResolveInfo.DisplayNameComparator(pm));
+                Collections.reverse(mInstalledApps);
                 break;
             case 3:
-                Collections.sort(activities, new InstallDateComparator(pm));
+                Collections.sort(mInstalledApps, new InstallDateComparator(pm));
                 break;
             case 4:
-                Collections.sort(activities, new LaunchCountComparator(mDatabase));
+                Collections.sort(mInstalledApps, new LaunchCountComparator(mDatabase));
                 break;
 
             default:
                 break;
         }
-        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,false);
+        LauncherAdapter launcherAdapter = new LauncherAdapter(mInstalledApps,mDatabase,false);
 
 
         boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
 
-        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+        List<ResolveInfo> popularActivities = new ArrayList<>(mInstalledApps);
         if(showPopApps){
             Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
             launcherAdapter.setPopularAppInfo(popularActivities);
