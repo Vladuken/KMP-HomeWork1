@@ -47,6 +47,10 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
         return mApp;
     }
 
+    public void setApp(App app) {
+        mApp = app;
+    }
+
     public AppDatabase getDatabase() {
         return mDatabase;
     }

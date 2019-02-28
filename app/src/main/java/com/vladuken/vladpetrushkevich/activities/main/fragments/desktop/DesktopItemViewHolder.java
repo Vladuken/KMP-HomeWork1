@@ -1,25 +1,27 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
-import android.content.ComponentName;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LoadIconTask;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 
 public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
+    private static final String TAG = "DesktopItemViewHolder";
     private final ImageView mAppIcon;
     private final TextView mAppTitle;
 
@@ -32,11 +34,13 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     private final AppDatabase mDatabase;
 
     public DesktopItemViewHolder(@NonNull View itemView,
+                                 DesktopItem desktopItem,
                                  AppDatabase database,
                                  int iconLayoutId,
                                  int titleLayoutId){
         super(itemView);
         mView = itemView;
+        mDesktopItem = desktopItem;
         mAppIcon = itemView.findViewById(iconLayoutId);
         mAppTitle = itemView.findViewById(titleLayoutId);
         mDatabase = database;
@@ -44,13 +48,41 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(DesktopItem item){
 
-
-
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(mView,item.screenId + " " + item.row + " " + item.column,Snackbar.LENGTH_SHORT)
+                Snackbar.make(mView,item.screenPosition + " " + item.row + " " + item.column,Snackbar.LENGTH_SHORT)
                         .show();
+            }
+        });
+
+        mView.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                switch (event.getAction()){
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        itemView.setBackgroundColor(Color.RED);
+                        Log.d(TAG,"Drag Entered" + " r:" +item.row + " c:" + item.column);
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        itemView.setBackgroundColor(Color.TRANSPARENT);
+                        Log.d(TAG,"Drag Exited"+ " r:" +item.row + " c:" + item.column);
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        Log.d(TAG,"Drag Ended"+ " r:" +item.row + " c:" + item.column);
+                        break;
+                    case DragEvent.ACTION_DROP:
+//                        itemView.setBackgroundColor(Color.GREEN);
+                        ClipData.Item clipData = event.getClipData().getItemAt(0);
+                        String packageName = clipData.getText().toString();
+                        bind(mDatabase.appDao().getById(packageName));
+//                        Snackbar.make(v,clipData.getText(),Snackbar.LENGTH_LONG).show();
+
+                        Log.d(TAG,"Drag Dropped"+ " r:" +item.row + " c:" + item.column);
+                        break;
+                }
+
+                return true;
             }
         });
 
@@ -85,6 +117,12 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
             mAppIcon.setImageDrawable(icon);
             mAppTitle.setText(appName);
+
+            mView.setOnClickListener(new DesktopAppOnClickListener(mDatabase,app));
+
+            mDesktopItem.itemType = "app";
+            mDesktopItem.itemData = app.package_name;
+            mDatabase.desckopAppDao().update(mDesktopItem);
         }else{
             //TODO bind empty item bind();
             bind();
@@ -93,6 +131,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     private void bind(){
 
+        //mView.setOnClickListener();
     }
 
 

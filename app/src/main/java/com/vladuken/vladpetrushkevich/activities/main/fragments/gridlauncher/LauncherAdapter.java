@@ -1,10 +1,17 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher;
 
+import android.content.ClipData;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.view.DragEvent;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -126,20 +133,56 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void bindLauncherViewHolder(RecyclerView.ViewHolder viewHolder,ResolveInfo resolveInfo){
-        if(viewHolder instanceof LauncherViewHolder){
+        if(viewHolder instanceof LauncherViewHolder) {
             LauncherViewHolder vh = (LauncherViewHolder) viewHolder;
-            if(mIcons.get(resolveInfo) == null){
-                new LoadIconTask(vh,mIcons,resolveInfo,viewHolder.itemView.getContext().getPackageManager()).execute();
+            if (mIcons.get(resolveInfo) == null) {
+                new LoadIconTask(vh, mIcons, resolveInfo, viewHolder.itemView.getContext().getPackageManager()).execute();
 
-            }else {
-                vh.bind(resolveInfo,mIcons.get(resolveInfo));
+            } else {
+                vh.bind(resolveInfo, mIcons.get(resolveInfo));
             }
 
-            vh.itemView.setOnClickListener(new IconOnClickListener(vh,this));
+
+            final GestureDetector gestureDetector = new GestureDetector(vh.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    Snackbar.make(vh.itemView, "Longpress", Snackbar.LENGTH_SHORT).show();
+                    super.onLongPress(e);
+                }
+
+                @Override
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                    ClipData data = ClipData.newPlainText("text", resolveInfo.activityInfo.packageName);
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
+
+                    vh.itemView.startDragAndDrop(data, shadowBuilder, vh.itemView, 0);
+                    Snackbar.make(vh.itemView, "Scrolling detected", Snackbar.LENGTH_SHORT).show();
+                    return super.onScroll(e1, e2, distanceX, distanceY);
+                }
+            });
+
+
+            vh.itemView.setOnClickListener(new IconOnClickListener(vh, this));
             vh.itemView.setOnLongClickListener(new IconLongClickListener(vh));
+            vh.itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return gestureDetector.onTouchEvent(event);
+                }
+            });
 
+            vh.itemView.setOnDragListener(new View.OnDragListener() {
+                @Override
+                public boolean onDrag(View v, DragEvent event) {
+                    if (event.getAction() == DragEvent.ACTION_DRAG_STARTED) {
+                        Snackbar.make(v, "dragstarted", Snackbar.LENGTH_SHORT);
+                        return true;
+                    }
+
+                    return true;
+                }
+            });
         }
-
     }
 
     public boolean isGroupTitle(int position){

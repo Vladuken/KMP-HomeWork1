@@ -1,12 +1,16 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +54,6 @@ public class DesktopFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRows = 4;
-        mColumns = 5;
 //        mRows = getArguments().getInt(ARG_ROWS);
 //        mColumns = getArguments().getInt(ARG_COLUMNS);
         mViewPagerPosition = getArguments().getInt(ARG_VP_POSITION);
@@ -63,15 +65,38 @@ public class DesktopFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.desktop_table_layout,container,false);
 
+        SharedPreferences preferences = v.getContext().getSharedPreferences(getString(R.string.preference_file),0);
+        boolean isCompactLayout = preferences.getBoolean(getString(R.string.preference_key_layout),false);
+
+        if(isCompactLayout){
+            mRows = getResources().getInteger(R.integer.compact_portrait_layout_span);
+            mColumns = getResources().getInteger(R.integer.compact_landscape_layout_span);
+        }else {
+            mRows = getResources().getInteger(R.integer.standard_portrait_layout_span);
+            mColumns = getResources().getInteger(R.integer.standard_landscape_layout_span);
+        }
+
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
 
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
         if(mDesktopScreen == null){
             mDesktopScreen = new DesktopScreen(mViewPagerPosition,mRows,mColumns);
-            mDatabase.desktopScreenDao().insertAll();
+            mDatabase.desktopScreenDao().insertAll(mDesktopScreen);
         }
 
-        setupGridLayout(mRows,mColumns);
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation != Configuration.ORIENTATION_PORTRAIT) {
+            int buff = mRows;
+            mRows = mColumns;
+            mColumns = buff;
+            setupGridLayout(mColumns,mRows);
+        }else {
+            setupGridLayout(mRows,mColumns);
+        }
+
+
+
         return v;
     }
 
@@ -86,23 +111,30 @@ public class DesktopFragment extends Fragment {
 
 
 
-        for(int c = 0; c < colums; c++){
-            for(int r = 0; r < rows; r++){
+        for(int r = 0; r < rows; r++){
+            for(int c = 0; c < colums; c++){
 
                 View myview =  View.inflate(getContext(),R.layout.desctop_icon_view,null);
 //                SquareView imageView = myview.findViewById(R.id.grid_app_icon);
 
+                DesktopItem desktopItem = mDatabase.desckopAppDao().getByIds(mDesktopScreen.viewPagerPosition,r,c);
+                if(desktopItem == null){
+                    desktopItem = new DesktopItem(mDesktopScreen.viewPagerPosition,r,c,SCREEN_ITEM_EMPTY_TYPE,"");
+                    mDatabase.desckopAppDao().insertAll(desktopItem);
+                }
+                if(desktopItem.itemType.equals("app")){
+                    Log.d("AAA","AAA");
+                }
+
                 DesktopItemViewHolder viewHolder = new DesktopItemViewHolder(
                         myview,
+                        desktopItem,
                         SingletonDatabase.getInstance(getContext()),
                         R.id.grid_app_icon,
                         R.id.grid_app_title
                 );
 
-                DesktopItem desktopItem = mDatabase.desckopAppDao().getByIds(mDesktopScreen.viewPagerPosition,r,c);
-                if(desktopItem == null){
-                    desktopItem = new DesktopItem(mDesktopScreen.viewPagerPosition,r,c,SCREEN_ITEM_EMPTY_TYPE,"");
-                }
+
                 viewHolder.bind(desktopItem);
 
 //                if(desktopItem.itemType.equals(SCREEN_ITEM_APP_TYPE)){

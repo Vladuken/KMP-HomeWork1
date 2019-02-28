@@ -2,9 +2,10 @@ package com.vladuken.vladpetrushkevich.db.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = "position",unique = true)})
 public class DesktopScreen {
 
     @PrimaryKey(autoGenerate = true)

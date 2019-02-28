@@ -11,8 +11,8 @@ import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 @Dao
 public interface DesckopAppDao {
 
-    @Query("SELECT * FROM DesktopItem WHERE screen_id=:screenId AND row_index=:row AND column_index=:column")
-    DesktopItem getByIds(int screenId, int row, int column);
+    @Query("SELECT * FROM DesktopItem WHERE screen_position=:screenPosition AND row_index=:row AND column_index=:column")
+    DesktopItem getByIds(int screenPosition, int row, int column);
 
     @Query("SELECT * FROM DesktopItem")
     DesktopItem getAll();
