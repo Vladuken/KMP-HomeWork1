@@ -18,8 +18,8 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mAppIcon;
     private final TextView mAppTitle;
 
-    int mIconLayoutId;
-    int mTitleLayoutId;
+    private int mIconLayoutId;
+    private int mTitleLayoutId;
 
     private final View mView;
 

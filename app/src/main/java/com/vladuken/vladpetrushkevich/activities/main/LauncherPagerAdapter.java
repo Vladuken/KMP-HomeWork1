@@ -26,9 +26,9 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return SettingsFragment.newInstance();
             case 3:
-                return DesktopFragment.newInstance(4,5);
+                return DesktopFragment.newInstance(position);
             case 4:
-                return DesktopFragment.newInstance(2,5);
+                return DesktopFragment.newInstance(position);
             default:
                 return null;
         }

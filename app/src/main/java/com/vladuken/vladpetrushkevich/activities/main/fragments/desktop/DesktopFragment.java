@@ -16,20 +16,33 @@ import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.SquareView;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconLongClickListener;
+import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
+import com.vladuken.vladpetrushkevich.db.entity.App;
+import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
+import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 
 import java.util.List;
-import java.util.Random;
 
 public class DesktopFragment extends Fragment {
+
+    private static final String SCREEN_ITEM_EMPTY_TYPE = "empty";
+    private static final String SCREEN_ITEM_APP_TYPE = "app";
+    private static final String SCREEN_ITEM_LINK_TYPE = "link";
+
 
 
     private static final String ARG_ROWS = "rows";
     private static final String ARG_COLUMNS = "columns";
+    private static final String ARG_VP_POSITION = "position";
 
-//    protected RecyclerView mRecyclerView;
+
     protected GridLayout mTableLayout;
 
+    protected AppDatabase mDatabase;
+    protected DesktopScreen mDesktopScreen;
+
+    private int mViewPagerPosition;
     int mRows;
     int mColumns;
 
@@ -37,8 +50,12 @@ public class DesktopFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRows = getArguments().getInt(ARG_ROWS);
-        mColumns = getArguments().getInt(ARG_COLUMNS);
+        mRows = 4;
+        mColumns = 5;
+//        mRows = getArguments().getInt(ARG_ROWS);
+//        mColumns = getArguments().getInt(ARG_COLUMNS);
+        mViewPagerPosition = getArguments().getInt(ARG_VP_POSITION);
+        mDatabase = SingletonDatabase.getInstance(getContext());
     }
 
     @Nullable
@@ -47,6 +64,12 @@ public class DesktopFragment extends Fragment {
         View v = inflater.inflate(R.layout.desktop_table_layout,container,false);
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
+
+        mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
+        if(mDesktopScreen == null){
+            mDesktopScreen = new DesktopScreen(mViewPagerPosition,mRows,mColumns);
+            mDatabase.desktopScreenDao().insertAll();
+        }
 
         setupGridLayout(mRows,mColumns);
         return v;
@@ -67,33 +90,40 @@ public class DesktopFragment extends Fragment {
             for(int r = 0; r < rows; r++){
 
                 View myview =  View.inflate(getContext(),R.layout.desctop_icon_view,null);
+//                SquareView imageView = myview.findViewById(R.id.grid_app_icon);
 
-                SquareView imageView = myview.findViewById(R.id.grid_app_icon);
-
-//                imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,0));
-
-//                myview.setLayoutParams(new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT
-//                ));
-
-                LauncherViewHolder viewHolder = new LauncherViewHolder(
+                DesktopItemViewHolder viewHolder = new DesktopItemViewHolder(
                         myview,
                         SingletonDatabase.getInstance(getContext()),
                         R.id.grid_app_icon,
                         R.id.grid_app_title
                 );
 
+                DesktopItem desktopItem = mDatabase.desckopAppDao().getByIds(mDesktopScreen.viewPagerPosition,r,c);
+                if(desktopItem == null){
+                    desktopItem = new DesktopItem(mDesktopScreen.viewPagerPosition,r,c,SCREEN_ITEM_EMPTY_TYPE,"");
+                }
+                viewHolder.bind(desktopItem);
 
-                Random random = new Random();
-                ResolveInfo buffResolveInfo = activities.get(random.nextInt(activities.size()));
-                viewHolder.bind(buffResolveInfo,buffResolveInfo.loadIcon(pm));
+//                if(desktopItem.itemType.equals(SCREEN_ITEM_APP_TYPE)){
 
+//                    App app = mDatabase.appDao().getById(desktopItem.itemData);
+//                    ResolveInfo buffResolveInfo = null;
+//                    for(ResolveInfo resolveInfo: activities){
+//                        if(resolveInfo.activityInfo.packageName.equals(app.package_name)){
+//                            buffResolveInfo = resolveInfo;
+//                        }
+//                    }
+//
+//                    if(app != null){
+//                        viewHolder.bind(buffResolveInfo,buffResolveInfo.loadIcon(pm));
+//                    }
+//
 //                viewHolder.itemView.setOnClickListener(new IconOnClickListener(viewHolder,this));
-                viewHolder.itemView.setOnLongClickListener(new IconLongClickListener(viewHolder));
-
-
-//                ImageView bufferImageView = new ImageView(getContext());
-//                bufferImageView.setImageResource(R.drawable.photo);
+//                    viewHolder.itemView.setOnLongClickListener(new IconLongClickListener(viewHolder));
+//                }else if(desktopItem.itemType.equals(SCREEN_ITEM_EMPTY_TYPE)){
+//
+//                }
 
 
                 //TODO add to lover api
@@ -112,11 +142,12 @@ public class DesktopFragment extends Fragment {
         }
     }
 
-    public static DesktopFragment newInstance(int rows, int columns){
+    public static DesktopFragment newInstance(int viewPagerPosition){
 
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_COLUMNS,columns);
-        bundle.putInt(ARG_ROWS,rows);
+//        bundle.putInt(ARG_COLUMNS,columns);
+//        bundle.putInt(ARG_ROWS,rows);
+        bundle.putInt(ARG_VP_POSITION,viewPagerPosition);
 
 
         DesktopFragment fragment = new DesktopFragment();
