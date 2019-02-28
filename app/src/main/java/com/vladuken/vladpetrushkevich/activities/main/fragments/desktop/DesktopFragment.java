@@ -3,27 +3,19 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.SquareView;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconLongClickListener;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
-import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 
 import java.util.List;
@@ -104,6 +96,7 @@ public class DesktopFragment extends Fragment {
 //                bufferImageView.setImageResource(R.drawable.photo);
 
 
+                //TODO add to lover api
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams(
                         GridLayout.spec(c, 1f),
                         GridLayout.spec(r,1f)
