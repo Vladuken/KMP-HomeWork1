@@ -10,6 +10,7 @@ import android.widget.PopupMenu;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.db.entity.App;
+import com.yandex.metrica.YandexMetrica;
 
 public class AppLongClickListener implements View.OnLongClickListener {
 
@@ -27,15 +28,20 @@ public class AppLongClickListener implements View.OnLongClickListener {
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.app_popup, popup.getMenu());
 
+        YandexMetrica.reportEvent("App icon long clicked");
+
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_uninstall_app:
+
                         uninstallApp();
                         return true;
 
                     case R.id.action_open_app_settings:
+
                         openAppSettings();
                         return true;
                     default:
@@ -56,6 +62,8 @@ public class AppLongClickListener implements View.OnLongClickListener {
         i.setData(Uri.parse("package:" + mApp.package_name));
         //TODO StartactivityFor Result to update on gridview ondelete app
         mView.getContext().startActivity(i);
+        YandexMetrica.reportEvent("Start uninstalling app from popup menu");
+
 
     }
 
@@ -64,6 +72,8 @@ public class AppLongClickListener implements View.OnLongClickListener {
         i.setData(Uri.parse("package:" + mApp.package_name));
         //TODO StartactivityFor Result to update on gridview ondelete app
         mView.getContext().startActivity(i);
+        YandexMetrica.reportEvent("Start app settings from popup menu");
+
 
     }
 }

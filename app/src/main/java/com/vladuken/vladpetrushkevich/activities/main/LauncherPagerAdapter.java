@@ -8,6 +8,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFrag
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.desktop.DesktopFragment;
+import com.yandex.metrica.YandexMetrica;
 
 public class LauncherPagerAdapter extends FragmentPagerAdapter {
 

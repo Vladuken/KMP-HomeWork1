@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
+import com.yandex.metrica.YandexMetrica;
 
 public class DesktopAppOnClickListener implements View.OnClickListener {
 
@@ -21,6 +22,8 @@ public class DesktopAppOnClickListener implements View.OnClickListener {
     public void onClick(View v) {
         mApp.launches_count++;
         mDatabase.appDao().update(mApp);
+        YandexMetrica.reportEvent("App start on icon click in desktop page");
+
 
         PackageManager pm = v.getContext().getPackageManager();
 

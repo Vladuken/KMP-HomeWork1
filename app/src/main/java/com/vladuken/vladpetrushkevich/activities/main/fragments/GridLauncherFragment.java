@@ -25,6 +25,7 @@ import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,16 +99,22 @@ public class GridLauncherFragment extends Fragment {
                 break;
             case 1:
                 Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+                YandexMetrica.reportEvent("Sorted apps by name");
                 break;
             case 2:
                 Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
                 Collections.reverse(activities);
+                YandexMetrica.reportEvent("Sorted apps by name (reversed)");
+
                 break;
             case 3:
                 Collections.sort(activities, new InstallDateComparator(pm));
+                YandexMetrica.reportEvent("Sorted apps by install date");
+
                 break;
             case 4:
                 Collections.sort(activities, new LaunchCountComparator(mDatabase));
+                YandexMetrica.reportEvent("Sorted apps by launch count");
                 break;
 
             default:

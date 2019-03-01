@@ -48,6 +48,10 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
         mDatabase = database;
     }
 
+    public DesktopFragment getDesktopFragment() {
+        return mDesktopFragment;
+    }
+
     public void bind(DesktopItem item){
 
         mView.setOnDragListener(new View.OnDragListener() {
@@ -94,6 +98,9 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             case "link":
                 bindItemView(item);
                 break;
+            case "contact":
+                bindItemView(item);
+                break;
             default:
                 break;
         }
@@ -121,10 +128,10 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                     mDesktopFragment.startActivity(i);
                 }
             });
-
             //            mView.setOnLongClickListener(new AppLongClickListener(app,mView));
-
             mDatabase.desckopAppDao().update(mDesktopItem);
+        }else if(item.itemType.equals("contact")){
+
         }
     }
 

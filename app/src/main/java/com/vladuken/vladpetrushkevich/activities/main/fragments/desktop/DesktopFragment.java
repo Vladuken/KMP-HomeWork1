@@ -1,10 +1,14 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +26,10 @@ import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 
 
 public class DesktopFragment extends Fragment {
+
+    public static final int RESULT_CODE_PICK_PHONE = 555;
+
+
 
     private static final String SCREEN_ITEM_EMPTY_TYPE = "empty";
     private static final String SCREEN_ITEM_APP_TYPE = "app";
@@ -156,4 +164,30 @@ public class DesktopFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == RESULT_CODE_PICK_PHONE){
+
+                Uri contactUri = data.getData();
+                String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
+                Cursor cursor = getContext().getContentResolver().query(contactUri, projection,
+                        null, null, null);
+
+                // If the cursor returned is valid, get the phone number
+                if (cursor != null && cursor.moveToFirst()) {
+                    int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    String number = cursor.getString(numberIndex);
+                    Log.d("number",number);
+                    // Do something with the phone number
+                    int a = data.getIntExtra("HELP",-1);
+                    Log.d("number",a +"");
+
+//                    mDatabase.
+                }
+
+                cursor.close();
+            }
+        }
+    }
 }

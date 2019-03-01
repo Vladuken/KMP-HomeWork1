@@ -18,6 +18,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHold
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -154,6 +155,8 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
 
                     vh.itemView.startDragAndDrop(data, shadowBuilder, vh.itemView, 0);
+                    YandexMetrica.reportEvent("Started app drag and drop");
+
 //                    Snackbar.make(vh.itemView, "Scrolling detected", Snackbar.LENGTH_SHORT).show();
                     return super.onScroll(e1, e2, distanceX, distanceY);
                 }
@@ -176,7 +179,7 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public boolean onDrag(View v, DragEvent event) {
                     if (event.getAction() == DragEvent.ACTION_DRAG_STARTED) {
-                        Snackbar.make(v, "dragstarted", Snackbar.LENGTH_SHORT);
+//                        Snackbar.make(v, "dragstarted", Snackbar.LENGTH_SHORT);
                         return true;
                     }
 

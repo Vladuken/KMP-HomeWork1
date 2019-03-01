@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
+import com.yandex.metrica.YandexMetrica;
 
 public class ThirdPageFragment extends Fragment {
 
@@ -42,6 +43,8 @@ public class ThirdPageFragment extends Fragment {
                     savePreferences();
 //                                findViewById(R.id.dark_theme_radiobutton).setBackgroundColor(Color.argb(255,0,0,0));
                 }
+                YandexMetrica.reportEvent("Theme changed in welcome page");
+
             }
         });
 

@@ -24,6 +24,7 @@ import com.microsoft.appcenter.distribute.Distribute;
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
+import com.yandex.metrica.YandexMetrica;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -83,6 +84,8 @@ public class LauncherActivity extends AppCompatActivity {
                 startActivity(i);
 //                mNavigationView.setCheckedItem(R.id.nav_none);
                 onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_none));
+                YandexMetrica.reportEvent("Profile page started from launcher page");
+
             }
         });
 
@@ -106,6 +109,7 @@ public class LauncherActivity extends AppCompatActivity {
 //                mNavigationView.setCheckedItem(i);
                 if(i < 3)
                 mNavigationView.getMenu().getItem(i).setChecked(true);
+
             }
 
             @Override
