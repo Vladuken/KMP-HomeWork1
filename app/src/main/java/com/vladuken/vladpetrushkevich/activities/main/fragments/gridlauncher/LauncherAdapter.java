@@ -3,8 +3,6 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher;
 import android.content.ClipData;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconLongClickListener;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 
@@ -136,7 +134,7 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(viewHolder instanceof LauncherViewHolder) {
             LauncherViewHolder vh = (LauncherViewHolder) viewHolder;
             if (mIcons.get(resolveInfo) == null) {
-                new LoadIconTask(vh, mIcons, resolveInfo, viewHolder.itemView.getContext().getPackageManager()).execute();
+                new LoadIconTask(this,vh, mIcons, resolveInfo, viewHolder.itemView.getContext().getPackageManager()).execute();
 
             } else {
                 vh.bind(resolveInfo, mIcons.get(resolveInfo));
@@ -146,7 +144,7 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final GestureDetector gestureDetector = new GestureDetector(vh.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public void onLongPress(MotionEvent e) {
-                    Snackbar.make(vh.itemView, "Longpress", Snackbar.LENGTH_SHORT).show();
+//                    Snackbar.make(vh.itemView, "Longpress", Snackbar.LENGTH_SHORT).show();
                     super.onLongPress(e);
                 }
 
@@ -156,14 +154,17 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
 
                     vh.itemView.startDragAndDrop(data, shadowBuilder, vh.itemView, 0);
-                    Snackbar.make(vh.itemView, "Scrolling detected", Snackbar.LENGTH_SHORT).show();
+//                    Snackbar.make(vh.itemView, "Scrolling detected", Snackbar.LENGTH_SHORT).show();
                     return super.onScroll(e1, e2, distanceX, distanceY);
                 }
             });
 
 
-            vh.itemView.setOnClickListener(new IconOnClickListener(vh, this));
-            vh.itemView.setOnLongClickListener(new IconLongClickListener(vh));
+            if(vh.isBinded()){
+                vh.itemView.setOnClickListener(new IconOnClickListener(vh, this));
+                vh.itemView.setOnLongClickListener(new AppLongClickListener(vh.getApp(),vh.itemView));
+            }
+
             vh.itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {

@@ -25,6 +25,8 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
 
     private App mApp;
     private final AppDatabase mDatabase;
+    private boolean isBinded = false;
+
 
     public LauncherViewHolder(@NonNull View itemView, AppDatabase database, int icon_layout_id, int title_layout_id) {
         super(itemView);
@@ -51,6 +53,10 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
         mApp = app;
     }
 
+    public boolean isBinded() {
+        return isBinded;
+    }
+
     public AppDatabase getDatabase() {
         return mDatabase;
     }
@@ -71,6 +77,7 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
 
         mAppIcon.setImageDrawable(icon);
         mAppTitle.setText(appName);
+        isBinded = true;
     }
 
 //    public void onClick(View v) {

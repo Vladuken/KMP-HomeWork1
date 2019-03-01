@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,8 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.main.SquareView;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconLongClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
-import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 
@@ -152,7 +147,7 @@ public class DesktopFragment extends Fragment {
 //                    }
 //
 //                viewHolder.itemView.setOnClickListener(new IconOnClickListener(viewHolder,this));
-//                    viewHolder.itemView.setOnLongClickListener(new IconLongClickListener(viewHolder));
+//                    viewHolder.itemView.setOnLongClickListener(new AppLongClickListener(viewHolder));
 //                }else if(desktopItem.itemType.equals(SCREEN_ITEM_EMPTY_TYPE)){
 //
 //                }

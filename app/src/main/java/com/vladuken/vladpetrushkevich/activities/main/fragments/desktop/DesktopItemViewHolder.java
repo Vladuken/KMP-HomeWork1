@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
@@ -119,6 +120,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             mAppTitle.setText(appName);
 
             mView.setOnClickListener(new DesktopAppOnClickListener(mDatabase,app));
+            mView.setOnLongClickListener(new AppLongClickListener(app,mView));
 
             mDesktopItem.itemType = "app";
             mDesktopItem.itemData = app.package_name;

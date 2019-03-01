@@ -10,12 +10,16 @@ import android.widget.PopupMenu;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
+import com.vladuken.vladpetrushkevich.db.entity.App;
 
-public class IconLongClickListener implements View.OnLongClickListener {
-    protected LauncherViewHolder mViewHolder;
+public class AppLongClickListener implements View.OnLongClickListener {
 
-    public IconLongClickListener(LauncherViewHolder viewHolder) {
-        mViewHolder = viewHolder;
+    protected App mApp;
+    protected View mView;
+
+    public AppLongClickListener(App app, View view) {
+        mApp = app;
+        mView = view;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class IconLongClickListener implements View.OnLongClickListener {
         });
 
         MenuItem launchCountMenu = popup.getMenu().findItem(R.id.action_count_app_launches);
-        launchCountMenu.setTitle(v.getResources().getString(R.string.launched) + " " + mViewHolder.getApp().launches_count + " " + v.getResources().getString(R.string.times));
+        launchCountMenu.setTitle(v.getResources().getString(R.string.launched) + " " + mApp.launches_count + " " + v.getResources().getString(R.string.times));
         launchCountMenu.setEnabled(false);
         popup.show();
         return true;
@@ -50,17 +54,17 @@ public class IconLongClickListener implements View.OnLongClickListener {
 
     protected void uninstallApp() {
         Intent i = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
-        i.setData(Uri.parse("package:" + mViewHolder.getResolveInfo().activityInfo.packageName));
+        i.setData(Uri.parse("package:" + mApp.package_name));
         //TODO StartactivityFor Result to update on gridview ondelete app
-        mViewHolder.itemView.getContext().startActivity(i);
+        mView.getContext().startActivity(i);
 
     }
 
     protected void openAppSettings() {
         Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        i.setData(Uri.parse("package:" + mViewHolder.getResolveInfo().activityInfo.packageName));
+        i.setData(Uri.parse("package:" + mApp.package_name));
         //TODO StartactivityFor Result to update on gridview ondelete app
-        mViewHolder.itemView.getContext().startActivity(i);
+        mView.getContext().startActivity(i);
 
     }
 }
