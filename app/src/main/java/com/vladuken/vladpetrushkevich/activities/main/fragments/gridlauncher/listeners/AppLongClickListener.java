@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 
 public class AppLongClickListener implements View.OnLongClickListener {

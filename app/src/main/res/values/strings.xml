@@ -89,4 +89,10 @@
     <string name="times">times</string>
 
 
+    <!--DESKTOP POPUP-->
+    <string name="desktop_item_remove">Remove</string>
+    <string name="desktop_item_add_link">Add link</string>
+    <string name="desktop_item_add_contact">Add contact</string>
+
+
 </resources>

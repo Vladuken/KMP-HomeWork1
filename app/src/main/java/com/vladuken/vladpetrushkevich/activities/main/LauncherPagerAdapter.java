@@ -3,7 +3,6 @@ package com.vladuken.vladpetrushkevich.activities.main;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.GridLayoutManager;
 
 import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFragment;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;

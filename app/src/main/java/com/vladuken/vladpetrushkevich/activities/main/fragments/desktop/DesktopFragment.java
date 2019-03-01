@@ -3,7 +3,6 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +20,6 @@ import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 
-import java.util.List;
 
 public class DesktopFragment extends Fragment {
 
@@ -49,8 +47,6 @@ public class DesktopFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mRows = getArguments().getInt(ARG_ROWS);
-//        mColumns = getArguments().getInt(ARG_COLUMNS);
         mViewPagerPosition = getArguments().getInt(ARG_VP_POSITION);
         mDatabase = SingletonDatabase.getInstance(getContext());
     }
@@ -101,7 +97,7 @@ public class DesktopFragment extends Fragment {
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         PackageManager pm = getActivity().getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
+//        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
 
 
 
@@ -110,7 +106,6 @@ public class DesktopFragment extends Fragment {
             for(int c = 0; c < colums; c++){
 
                 View myview =  View.inflate(getContext(),R.layout.desctop_icon_view,null);
-//                SquareView imageView = myview.findViewById(R.id.grid_app_icon);
 
                 DesktopItem desktopItem = mDatabase.desckopAppDao().getByIds(mDesktopScreen.viewPagerPosition,r,c);
                 if(desktopItem == null){
@@ -123,6 +118,7 @@ public class DesktopFragment extends Fragment {
 
                 DesktopItemViewHolder viewHolder = new DesktopItemViewHolder(
                         myview,
+                        this,
                         desktopItem,
                         SingletonDatabase.getInstance(getContext()),
                         R.id.grid_app_icon,
@@ -131,27 +127,6 @@ public class DesktopFragment extends Fragment {
 
 
                 viewHolder.bind(desktopItem);
-
-//                if(desktopItem.itemType.equals(SCREEN_ITEM_APP_TYPE)){
-
-//                    App app = mDatabase.appDao().getById(desktopItem.itemData);
-//                    ResolveInfo buffResolveInfo = null;
-//                    for(ResolveInfo resolveInfo: activities){
-//                        if(resolveInfo.activityInfo.packageName.equals(app.package_name)){
-//                            buffResolveInfo = resolveInfo;
-//                        }
-//                    }
-//
-//                    if(app != null){
-//                        viewHolder.bind(buffResolveInfo,buffResolveInfo.loadIcon(pm));
-//                    }
-//
-//                viewHolder.itemView.setOnClickListener(new IconOnClickListener(viewHolder,this));
-//                    viewHolder.itemView.setOnLongClickListener(new AppLongClickListener(viewHolder));
-//                }else if(desktopItem.itemType.equals(SCREEN_ITEM_EMPTY_TYPE)){
-//
-//                }
-
 
                 //TODO add to lover api
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams(
@@ -172,8 +147,6 @@ public class DesktopFragment extends Fragment {
     public static DesktopFragment newInstance(int viewPagerPosition){
 
         Bundle bundle = new Bundle();
-//        bundle.putInt(ARG_COLUMNS,columns);
-//        bundle.putInt(ARG_ROWS,rows);
         bundle.putInt(ARG_VP_POSITION,viewPagerPosition);
 
 
@@ -182,4 +155,5 @@ public class DesktopFragment extends Fragment {
 
         return fragment;
     }
+
 }

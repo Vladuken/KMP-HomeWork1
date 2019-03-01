@@ -22,13 +22,8 @@ import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 import com.microsoft.appcenter.distribute.Distribute;
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.GridLauncherFragment;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.ListLauncherFragment;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.SettingsFragment;
 import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
-import com.yandex.metrica.YandexMetrica;
-import com.yandex.metrica.YandexMetricaConfig;
 
 import io.fabric.sdk.android.Fabric;
 

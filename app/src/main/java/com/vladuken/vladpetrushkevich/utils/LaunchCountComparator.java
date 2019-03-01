@@ -1,7 +1,6 @@
 package com.vladuken.vladpetrushkevich.utils;
 
 import android.content.pm.ResolveInfo;
-import android.util.Log;
 
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;

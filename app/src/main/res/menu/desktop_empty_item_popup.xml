@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/desktop_item_add_contact"
+        android:orderInCategory="100"
+        android:title="@string/desktop_item_add_contact"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/desktop_item_add_link"
+        android:orderInCategory="200"
+        android:title="@string/desktop_item_add_link"
+        app:showAsAction="never" />
+</menu>

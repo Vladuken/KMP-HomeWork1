@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
-import com.vladuken.vladpetrushkevich.db.entity.App;
 
 import java.util.Map;
 
@@ -38,7 +37,5 @@ public class LoadIconTask extends AsyncTask<Void,Void, Drawable> {
         mViewHolder.bind(mAppInfo,drawable);
         mViewHolder.itemView.setOnClickListener(new IconOnClickListener(mViewHolder, mAdapter));
         mViewHolder.itemView.setOnLongClickListener(new AppLongClickListener(mViewHolder.getApp(),mViewHolder.itemView));
-
-//        mAdapter.notifyDataSetChanged();
     }
 }

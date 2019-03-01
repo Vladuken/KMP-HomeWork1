@@ -6,8 +6,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
@@ -26,21 +27,21 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mAppIcon;
     private final TextView mAppTitle;
 
-//    private int mIconLayoutId;
-//    private int mTitleLayoutId;
-
+    private DesktopFragment mDesktopFragment;
     private final View mView;
 
     private DesktopItem mDesktopItem;
     private final AppDatabase mDatabase;
 
     public DesktopItemViewHolder(@NonNull View itemView,
+                                 DesktopFragment fragment,
                                  DesktopItem desktopItem,
                                  AppDatabase database,
                                  int iconLayoutId,
                                  int titleLayoutId){
         super(itemView);
         mView = itemView;
+        mDesktopFragment = fragment;
         mDesktopItem = desktopItem;
         mAppIcon = itemView.findViewById(iconLayoutId);
         mAppTitle = itemView.findViewById(titleLayoutId);
@@ -48,14 +49,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(DesktopItem item){
-
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(mView,item.screenPosition + " " + item.row + " " + item.column,Snackbar.LENGTH_SHORT)
-                        .show();
-            }
-        });
 
         mView.setOnDragListener(new View.OnDragListener() {
             @Override
@@ -99,9 +92,39 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 bind(app);
                 break;
             case "link":
+                bindItemView(item);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void bindItemView(DesktopItem item){
+        if(item.itemType.equals("link")){
+            String appName = item.itemData;
+
+            String link = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
+            Picasso.get().load(link).into(mAppIcon);
+            mAppTitle.setText(appName);
+
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    String url = appName;
+                    if (!url.startsWith("http://") && !url.startsWith("https://")){
+                        url = "http://" + url;
+                    }
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    mDesktopFragment.startActivity(i);
+                }
+            });
+
+            //            mView.setOnLongClickListener(new AppLongClickListener(app,mView));
+
+            mDatabase.desckopAppDao().update(mDesktopItem);
         }
     }
 
@@ -132,9 +155,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void bind(){
-
-        //mView.setOnClickListener();
+        mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem));
     }
-
-
 }
