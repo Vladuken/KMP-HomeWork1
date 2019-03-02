@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vladuken.vladpetrushkevich.activities.main.MyScrollGestureListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
@@ -175,13 +174,13 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             mView.setOnClickListener(new DesktopAppOnClickListener(mDatabase,app));
             mView.setOnLongClickListener(new AppLongClickListener(app,mView));
 
+            GestureDetector detector = new GestureDetector(
+                    mView.getContext(),
+                    new AppGestureDetectorListener(app,mView,this));
             mView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    return new GestureDetector(
-                            mView.getContext(),
-                            new AppGestureDetectorListener(app,mView)
-                    ).onTouchEvent(event);
+                    return detector.onTouchEvent(event);
                 }
             });
 
