@@ -40,7 +40,7 @@ public class AppLongClickListener implements View.OnLongClickListener {
             }
         });
 
-        YandexMetrica.reportEvent("App icon long clicked");
+//        YandexMetrica.reportEvent("App icon long clicked");
 
 
         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

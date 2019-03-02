@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.view.DragEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,8 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
     private DesktopItem mDesktopItem;
     private DesktopItemViewHolder mViewHolder;
 
+    private PopupMenu mPopupMenu;
+
 
     public DesktopEmptyOnLongClickListener(DesktopItemViewHolder viewHolder,AppDatabase database, DesktopItem desktopItem) {
         mDatabase = database;
@@ -33,11 +36,22 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
 
     @Override
     public boolean onLongClick(View v) {
-        PopupMenu popup = new PopupMenu(v.getContext(), v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.desktop_empty_item_popup, popup.getMenu());
+        mPopupMenu = new PopupMenu(v.getContext(), v);
+        MenuInflater inflater = mPopupMenu.getMenuInflater();
+        inflater.inflate(R.menu.desktop_empty_item_popup, mPopupMenu.getMenu());
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        mViewHolder.itemView.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                if(event.getAction() == DragEvent.ACTION_DRAG_EXITED){
+                    mPopupMenu.dismiss();
+                }
+                return true;
+            }
+        });
+
+
+        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -59,7 +73,7 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
             }
         });
 
-        popup.show();
+        mPopupMenu.show();
         return true;
     }
 

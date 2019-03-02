@@ -18,8 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vladuken.vladpetrushkevich.activities.main.MyScrollGestureLinstener;
+import com.vladuken.vladpetrushkevich.activities.main.MyScrollGestureListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
+import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
@@ -56,14 +57,17 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(DesktopItem item){
-        final GestureDetector gestureDetector = new GestureDetector(mView.getContext(), new MyScrollGestureLinstener(this,mView));
-
-        mView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        });
+//        final GestureDetector gestureDetector = new GestureDetector(
+//                mView.getContext(),
+//                new MyScrollGestureListener(this,mView)
+//        );
+//
+//        mView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return gestureDetector.onTouchEvent(event);
+//            }
+//        });
 
 
         mView.setOnDragListener(new View.OnDragListener() {
@@ -82,7 +86,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                         Log.d(TAG,"Drag Exited"+ " r:" +item.row + " c:" + item.column);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        bind(mDesktopItem);
+//                        bind(mDesktopItem);
 
                         Log.d(TAG,"Drag Ended"+ " r:" +item.row + " c:" + item.column);
                         break;
@@ -127,18 +131,18 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     private void bindItemView(DesktopItem item){
         if(item.itemType.equals("link")){
-            String appName = item.itemData;
+            String linkTitle = item.itemData;
 
-            String link = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
-            Picasso.get().load(link).into(mAppIcon);
-            mAppTitle.setText(appName);
+            String linkPhoto = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
+            Picasso.get().load(linkPhoto).into(mAppIcon);
+            mAppTitle.setText(linkTitle);
 
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
-                    String url = appName;
+                    String url = linkTitle;
                     if (!url.startsWith("http://") && !url.startsWith("https://")){
                         url = "http://" + url;
                     }
@@ -170,6 +174,16 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
             mView.setOnClickListener(new DesktopAppOnClickListener(mDatabase,app));
             mView.setOnLongClickListener(new AppLongClickListener(app,mView));
+
+            mView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return new GestureDetector(
+                            mView.getContext(),
+                            new AppGestureDetectorListener(app,mView)
+                    ).onTouchEvent(event);
+                }
+            });
 
             mDesktopItem.itemType = "app";
             mDesktopItem.itemData = app.package_name;

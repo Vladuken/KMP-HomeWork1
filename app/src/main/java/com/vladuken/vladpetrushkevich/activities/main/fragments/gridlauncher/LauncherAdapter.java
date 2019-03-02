@@ -19,7 +19,9 @@ import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
+import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
+import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
@@ -148,45 +150,41 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
 
-            final GestureDetector gestureDetector = new GestureDetector(vh.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
-                boolean isDragging = false;
-                @Override
-                public void onLongPress(MotionEvent e) {
-
-                    Log.d(TAG,"GestureDetector long press");
-
-//                    isDragging = true;
-
-
-
-                    //                    Snackbar.make(vh.itemView, "Longpress", Snackbar.LENGTH_SHORT).show();
-                    //TODO CLIPDATA TO ONE PLACE
-                    ClipData.Item type = new ClipData.Item("app");
-                    ClipData.Item data = new ClipData.Item(resolveInfo.activityInfo.packageName);
-
-                    String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-
-                    ClipDescription description = new ClipDescription("",mimeTypes);
-
-                    ClipData dragData = new ClipData(description,type);
-                    dragData.addItem(data);
-
-                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
-                    vh.itemView.startDragAndDrop(dragData,shadowBuilder,vh.itemView,0);
-
-
-                    YandexMetrica.reportEvent("Started app drag and drop");
-
-
-
-                    super.onLongPress(e);
-                }
-
-                @Override
-                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                    return super.onScroll(e1, e2, distanceX, distanceY);
-                }
-            });
+//            final GestureDetector gestureDetector = new GestureDetector(vh.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+//                @Override
+//                public void onLongPress(MotionEvent e) {
+//                    Log.d(TAG,"GestureDetector long press");
+//                    //TODO CLIPDATA TO ONE PLACE
+//                    ClipData.Item type = new ClipData.Item("app");
+//                    ClipData.Item data = new ClipData.Item(resolveInfo.activityInfo.packageName);
+//
+//                    String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
+//
+//                    ClipDescription description = new ClipDescription("",mimeTypes);
+//
+//                    ClipData dragData = new ClipData(description,type);
+//                    dragData.addItem(data);
+//
+//                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
+//                    vh.itemView.startDragAndDrop(dragData,shadowBuilder,vh.itemView,0);
+//
+//                    YandexMetrica.reportEvent("Started app drag and drop");
+//
+//                    super.onLongPress(e);
+//                }
+//
+//                @Override
+//                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+//                    return super.onScroll(e1, e2, distanceX, distanceY);
+//                }
+//            });
+            final GestureDetector gestureDetector = new GestureDetector(
+                    vh.itemView.getContext(),
+                    new AppGestureDetectorListener(new App(
+                            resolveInfo.activityInfo.packageName,
+                            -1
+                    ),vh.itemView)
+            );
 
 
             if(vh.isBinded()){
