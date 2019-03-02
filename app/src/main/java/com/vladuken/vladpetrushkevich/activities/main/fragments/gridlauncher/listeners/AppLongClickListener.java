@@ -3,6 +3,7 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.li
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
+import android.view.DragEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ public class AppLongClickListener implements View.OnLongClickListener {
 
     protected App mApp;
     protected View mView;
+    private PopupMenu mPopupMenu;
 
     public AppLongClickListener(App app, View view) {
         mApp = app;
@@ -24,14 +26,24 @@ public class AppLongClickListener implements View.OnLongClickListener {
 
     @Override
     public boolean onLongClick(View v) {
-        PopupMenu popup = new PopupMenu(v.getContext(), v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.app_popup, popup.getMenu());
+        mPopupMenu = new PopupMenu(v.getContext(), v);
+        MenuInflater inflater = mPopupMenu.getMenuInflater();
+        inflater.inflate(R.menu.app_popup, mPopupMenu.getMenu());
+
+        mView.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                if(event.getAction() == DragEvent.ACTION_DRAG_EXITED){
+                    mPopupMenu.dismiss();
+                }
+                return true;
+            }
+        });
 
         YandexMetrica.reportEvent("App icon long clicked");
 
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -50,10 +62,10 @@ public class AppLongClickListener implements View.OnLongClickListener {
             }
         });
 
-        MenuItem launchCountMenu = popup.getMenu().findItem(R.id.action_count_app_launches);
+        MenuItem launchCountMenu = mPopupMenu.getMenu().findItem(R.id.action_count_app_launches);
         launchCountMenu.setTitle(v.getResources().getString(R.string.launched) + " " + mApp.launches_count + " " + v.getResources().getString(R.string.times));
         launchCountMenu.setEnabled(false);
-        popup.show();
+        mPopupMenu.show();
         return true;
     }
 

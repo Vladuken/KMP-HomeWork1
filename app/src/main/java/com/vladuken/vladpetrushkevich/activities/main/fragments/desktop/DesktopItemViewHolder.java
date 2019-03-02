@@ -71,15 +71,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()){
                     case DragEvent.ACTION_DRAG_STARTED:
-
-//                        mDatabase.desckopAppDao().update(mDesktopItem);
-//                        bind(mDesktopItem);
                         Log.d(TAG,"Drag Started" + " r:" +item.row + " c:" + item.column);
-
-//                        mDesktopItem.itemType = "empty";
-//                        mDesktopItem.itemType = "";
-//                        mDatabase.desckopAppDao().update(mDesktopItem);
-//                        bind(mDesktopItem);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         itemView.setBackgroundColor(Color.RED);
@@ -96,16 +88,12 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                         break;
                     case DragEvent.ACTION_DROP:
                         itemView.setBackgroundColor(Color.TRANSPARENT);
-                        //                        itemView.setBackgroundColor(Color.GREEN);
                         ClipData.Item clipType = event.getClipData().getItemAt(0);
                         ClipData.Item clipData = event.getClipData().getItemAt(1);
 
                         mDesktopItem.itemType = clipType.getText().toString();
                         mDesktopItem.itemData = clipData.getText().toString();
                         bind(mDesktopItem);
-//                        String packageName = clipData.getText().toString();
-//                        bind(mDatabase.appDao().getById(packageName));
-//                        Snackbar.make(v,clipData.getText(),Snackbar.LENGTH_LONG).show();
 
                         Log.d(TAG,"Drag Dropped"+ " r:" +item.row + " c:" + item.column);
                         break;
@@ -159,7 +147,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                     mDesktopFragment.startActivity(i);
                 }
             });
-            //            mView.setOnLongClickListener(new AppLongClickListener(app,mView));
+
             mDatabase.desckopAppDao().update(mDesktopItem);
         }else if(item.itemType.equals("contact")){
 

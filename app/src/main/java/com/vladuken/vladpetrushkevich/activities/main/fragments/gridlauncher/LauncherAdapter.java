@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -27,6 +28,10 @@ import java.util.List;
 import java.util.Map;
 
 public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+
+    private static final String TAG = "LauncherAdapter";
+
 
     private static final int POPULAR_APP_SIZE = 5;
     private static final int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = POPULAR_APP_SIZE + 1;
@@ -144,15 +149,17 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
             final GestureDetector gestureDetector = new GestureDetector(vh.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+                boolean isDragging = false;
                 @Override
                 public void onLongPress(MotionEvent e) {
-//                    Snackbar.make(vh.itemView, "Longpress", Snackbar.LENGTH_SHORT).show();
-                    super.onLongPress(e);
-                }
 
-                @Override
-                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                    Log.d(TAG,"GestureDetector long press");
 
+//                    isDragging = true;
+
+
+
+                    //                    Snackbar.make(vh.itemView, "Longpress", Snackbar.LENGTH_SHORT).show();
                     //TODO CLIPDATA TO ONE PLACE
                     ClipData.Item type = new ClipData.Item("app");
                     ClipData.Item data = new ClipData.Item(resolveInfo.activityInfo.packageName);
@@ -170,7 +177,13 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     YandexMetrica.reportEvent("Started app drag and drop");
 
-//                    Snackbar.make(vh.itemView, "Scrolling detected", Snackbar.LENGTH_SHORT).show();
+
+
+                    super.onLongPress(e);
+                }
+
+                @Override
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                     return super.onScroll(e1, e2, distanceX, distanceY);
                 }
             });
@@ -185,18 +198,6 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     return gestureDetector.onTouchEvent(event);
-                }
-            });
-
-            vh.itemView.setOnDragListener(new View.OnDragListener() {
-                @Override
-                public boolean onDrag(View v, DragEvent event) {
-                    if (event.getAction() == DragEvent.ACTION_DRAG_STARTED) {
-//                        Snackbar.make(v, "dragstarted", Snackbar.LENGTH_SHORT);
-                        return true;
-                    }
-
-                    return true;
                 }
             });
         }

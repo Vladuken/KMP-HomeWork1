@@ -51,7 +51,6 @@ public class MyScrollGestureLinstener extends GestureDetector.SimpleOnGestureLis
 
 
         if(!mViewHolder.getDesktopItem().itemType.equals("empty")){
-
             AppDatabase database = SingletonDatabase.getInstance(mView.getContext());
             mViewHolder.getDesktopItem().itemType = "empty";
             mViewHolder.getDesktopItem().itemData ="";

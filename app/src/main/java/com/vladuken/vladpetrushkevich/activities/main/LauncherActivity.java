@@ -120,9 +120,9 @@ public class LauncherActivity extends AppCompatActivity {
         mFramePager.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
-                if(event.getAction() == DragEvent.ACTION_DRAG_STARTED){
-                    mFramePager.setCurrentItem(1);
-                }
+//                if(event.getAction() == DragEvent.ACTION_DRAG_STARTED){
+//                    mFramePager.setCurrentItem(1);
+//                }
                 return true;
             }
         });
