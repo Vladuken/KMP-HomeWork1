@@ -1,6 +1,7 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher;
 
 import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -151,10 +152,22 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 @Override
                 public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                    ClipData data = ClipData.newPlainText("text", resolveInfo.activityInfo.packageName);
-                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
 
-                    vh.itemView.startDragAndDrop(data, shadowBuilder, vh.itemView, 0);
+                    //TODO CLIPDATA TO ONE PLACE
+                    ClipData.Item type = new ClipData.Item("app");
+                    ClipData.Item data = new ClipData.Item(resolveInfo.activityInfo.packageName);
+
+                    String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
+
+                    ClipDescription description = new ClipDescription("",mimeTypes);
+
+                    ClipData dragData = new ClipData(description,type);
+                    dragData.addItem(data);
+
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
+                    vh.itemView.startDragAndDrop(dragData,shadowBuilder,vh.itemView,0);
+
+
                     YandexMetrica.reportEvent("Started app drag and drop");
 
 //                    Snackbar.make(vh.itemView, "Scrolling detected", Snackbar.LENGTH_SHORT).show();

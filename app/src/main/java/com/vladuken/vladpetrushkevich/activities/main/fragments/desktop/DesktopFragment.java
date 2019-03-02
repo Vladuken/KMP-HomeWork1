@@ -1,11 +1,14 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -13,10 +16,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
@@ -47,6 +53,7 @@ public class DesktopFragment extends Fragment {
     protected AppDatabase mDatabase;
     protected DesktopScreen mDesktopScreen;
 
+    private LinearLayout mTopRemoveBar;
     private int mViewPagerPosition;
     int mRows;
     int mColumns;
@@ -64,6 +71,32 @@ public class DesktopFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.desktop_table_layout,container,false);
 
+        mTopRemoveBar = v.findViewById(R.id.desktop_top_remove_bar);
+        TextView textView = v.findViewById(R.id.desktop_top_remove_text_view);
+        v.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                switch (event.getAction()){
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        mTopRemoveBar.setVisibility(View.VISIBLE);
+                        textView.setTextSize(20);
+                        break;
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        textView.setTextSize(40);
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        textView.setTextSize(20);
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        mTopRemoveBar.setVisibility(View.GONE);
+                        break;
+                    case DragEvent.ACTION_DROP:
+                        break;
+                }
+
+                return true;
+            }
+        });
         SharedPreferences preferences = v.getContext().getSharedPreferences(getString(R.string.preference_file),0);
         boolean isCompactLayout = preferences.getBoolean(getString(R.string.preference_key_layout),false);
 

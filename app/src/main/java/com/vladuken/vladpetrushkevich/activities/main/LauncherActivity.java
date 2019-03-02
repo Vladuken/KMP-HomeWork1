@@ -107,7 +107,6 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
 //                mNavigationView.setCheckedItem(i);
-                if(i < 3)
                 mNavigationView.getMenu().getItem(i).setChecked(true);
 
             }
@@ -122,7 +121,7 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 if(event.getAction() == DragEvent.ACTION_DRAG_STARTED){
-                    mFramePager.setCurrentItem(3);
+                    mFramePager.setCurrentItem(1);
                 }
                 return true;
             }
@@ -136,6 +135,10 @@ public class LauncherActivity extends AppCompatActivity {
             MenuItem menuItem = mNavigationView.getMenu().findItem(menuId);
 
             mNavigationView.setCheckedItem(menuId);
+            onNavigationItemSelected(menuItem);
+        }else {
+            MenuItem menuItem = mNavigationView.getMenu().findItem(R.id.nav_desktop);
+            mNavigationView.setCheckedItem(R.id.nav_desktop);
             onNavigationItemSelected(menuItem);
         }
 
@@ -166,10 +169,12 @@ public class LauncherActivity extends AppCompatActivity {
 
         if(id == R.id.nav_launcher_activity){
             mFramePager.setCurrentItem(0);
-        }else if(id == R.id.nav_list_activity){
+        }else if(id == R.id.nav_desktop) {
             mFramePager.setCurrentItem(1);
-        }else if(id == R.id.nav_settings){
+        }else if(id == R.id.nav_list_activity){
             mFramePager.setCurrentItem(2);
+        }else if(id == R.id.nav_settings){
+            mFramePager.setCurrentItem(3);
         }else if(id == R.id.nav_none){
             //TODO
         }

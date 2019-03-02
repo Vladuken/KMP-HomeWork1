@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_action_name"
             android:title="@string/launcher_activity" />
         <item
+            android:id="@+id/nav_desktop"
+            android:icon="@drawable/ic_action_name"
+            android:title="@string/desktop" />
+        <item
             android:id="@+id/nav_list_activity"
             android:icon="@drawable/ic_list_launcher"
             android:title="@string/list_activity" />

@@ -22,13 +22,11 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return GridLauncherFragment.newInstance();
             case 1:
-                return ListLauncherFragment.newInstance();
+                return DesktopFragment.newInstance(position);
             case 2:
-                return SettingsFragment.newInstance();
+                return ListLauncherFragment.newInstance();
             case 3:
-                return DesktopFragment.newInstance(position);
-            case 4:
-                return DesktopFragment.newInstance(position);
+                return SettingsFragment.newInstance();
             default:
                 return null;
         }
@@ -36,6 +34,6 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 4;
     }
 }

@@ -11,11 +11,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vladuken.vladpetrushkevich.activities.main.MyScrollGestureLinstener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
@@ -53,11 +56,31 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(DesktopItem item){
+        final GestureDetector gestureDetector = new GestureDetector(mView.getContext(), new MyScrollGestureLinstener(this,mView));
+
+        mView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
 
         mView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()){
+                    case DragEvent.ACTION_DRAG_STARTED:
+
+//                        mDatabase.desckopAppDao().update(mDesktopItem);
+//                        bind(mDesktopItem);
+                        Log.d(TAG,"Drag Started" + " r:" +item.row + " c:" + item.column);
+
+//                        mDesktopItem.itemType = "empty";
+//                        mDesktopItem.itemType = "";
+//                        mDatabase.desckopAppDao().update(mDesktopItem);
+//                        bind(mDesktopItem);
+                        break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         itemView.setBackgroundColor(Color.RED);
                         Log.d(TAG,"Drag Entered" + " r:" +item.row + " c:" + item.column);
@@ -67,13 +90,21 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                         Log.d(TAG,"Drag Exited"+ " r:" +item.row + " c:" + item.column);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
+                        bind(mDesktopItem);
+
                         Log.d(TAG,"Drag Ended"+ " r:" +item.row + " c:" + item.column);
                         break;
                     case DragEvent.ACTION_DROP:
-//                        itemView.setBackgroundColor(Color.GREEN);
-                        ClipData.Item clipData = event.getClipData().getItemAt(0);
-                        String packageName = clipData.getText().toString();
-                        bind(mDatabase.appDao().getById(packageName));
+                        itemView.setBackgroundColor(Color.TRANSPARENT);
+                        //                        itemView.setBackgroundColor(Color.GREEN);
+                        ClipData.Item clipType = event.getClipData().getItemAt(0);
+                        ClipData.Item clipData = event.getClipData().getItemAt(1);
+
+                        mDesktopItem.itemType = clipType.getText().toString();
+                        mDesktopItem.itemData = clipData.getText().toString();
+                        bind(mDesktopItem);
+//                        String packageName = clipData.getText().toString();
+//                        bind(mDatabase.appDao().getById(packageName));
 //                        Snackbar.make(v,clipData.getText(),Snackbar.LENGTH_LONG).show();
 
                         Log.d(TAG,"Drag Dropped"+ " r:" +item.row + " c:" + item.column);
@@ -163,5 +194,11 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     private void bind(){
         mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem));
+        mAppIcon.setImageDrawable(null);
+        mAppTitle.setText(null);
+    }
+
+    public DesktopItem getDesktopItem() {
+        return mDesktopItem;
     }
 }
