@@ -3,6 +3,7 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.li
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import com.yandex.metrica.YandexMetrica;
 
 public class AppLongClickListener implements View.OnLongClickListener {
 
+    private static final String TAG = "AppLongClickListener";
     protected App mApp;
     protected View mView;
     private PopupMenu mPopupMenu;
@@ -30,14 +32,18 @@ public class AppLongClickListener implements View.OnLongClickListener {
         MenuInflater inflater = mPopupMenu.getMenuInflater();
         inflater.inflate(R.menu.app_popup, mPopupMenu.getMenu());
 
-        mView.setOnDragListener(new View.OnDragListener() {
+        v.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
+                if(event.getAction() == DragEvent.ACTION_DRAG_STARTED){
+                    Log.d(TAG,"DRAGSTARTED" + mView);
+                }
                 if(event.getAction() == DragEvent.ACTION_DRAG_EXITED){
                     mPopupMenu.dismiss();
                 }
                 return true;
             }
+
         });
 
 //        YandexMetrica.reportEvent("App icon long clicked");

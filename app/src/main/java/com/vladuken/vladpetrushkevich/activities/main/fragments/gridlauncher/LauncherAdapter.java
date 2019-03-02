@@ -180,10 +180,11 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //            });
             final GestureDetector gestureDetector = new GestureDetector(
                     vh.itemView.getContext(),
-                    new AppGestureDetectorListener(new App(
-                            resolveInfo.activityInfo.packageName,
-                            -1
-                    ),vh.itemView)
+                    new AppGestureDetectorListener(
+                            new App(
+                                resolveInfo.activityInfo.packageName,
+                                -1),
+                            vh.itemView)
             );
 
 

@@ -3,7 +3,9 @@ package com.vladuken.vladpetrushkevich.activities.main;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -36,6 +38,8 @@ public class LauncherActivity extends AppCompatActivity {
     protected FrameLayout mFrameLayout;
 
     protected NavigationView mNavigationView;
+
+    protected NestedScrollView mNestedScrollView;
 
     protected Toolbar mToolbar;
     protected ViewPager mFramePager;
@@ -91,8 +95,88 @@ public class LauncherActivity extends AppCompatActivity {
 
         //mFrameLayout = findViewById(R.id.launcher_container_fragments);
 
-        NestedScrollView nestedScrollView = findViewById(R.id.nested_scrollview);
-        nestedScrollView.setFillViewport(true);
+        mNestedScrollView = findViewById(R.id.nested_scrollview);
+        mNestedScrollView.setFillViewport(true);
+
+        View leftBar = mNestedScrollView.findViewById(R.id.left_vertical_viewpager_scroller);
+
+        leftBar.setOnDragListener(new View.OnDragListener() {
+            final Handler handler = new Handler();
+
+            final Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    mFramePager.setCurrentItem(mFramePager.getCurrentItem()-1);
+                }
+            };
+
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                switch (event.getAction()){
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        handler.postDelayed(r, 600);
+
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+
+                        handler.removeCallbacks(r);
+                        break;
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
+        View rightBar = mNestedScrollView.findViewById(R.id.right_vertical_viewpager_scroller);
+        rightBar.setOnDragListener(new View.OnDragListener() {
+            final Handler handler = new Handler();
+
+            final Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    mFramePager.setCurrentItem(mFramePager.getCurrentItem()+1);
+                }
+            };
+
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                switch (event.getAction()) {
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        handler.postDelayed(r, 600);
+
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+
+                        handler.removeCallbacks(r);
+                        break;
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
+        mNestedScrollView.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                switch (event.getAction()){
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        leftBar.setVisibility(View.VISIBLE);
+                        rightBar.setVisibility(View.VISIBLE);
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        leftBar.setVisibility(View.GONE);
+                        rightBar.setVisibility(View.GONE);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+
+
 
 
         FragmentManager fm = getSupportFragmentManager();

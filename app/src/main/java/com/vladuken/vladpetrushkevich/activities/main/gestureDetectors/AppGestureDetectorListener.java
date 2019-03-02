@@ -16,6 +16,7 @@ import com.yandex.metrica.YandexMetrica;
 
 public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
 
+    private static final String TAG = "AppGestureDetector";
     private App mApp;
     private View mView;
 
@@ -34,7 +35,6 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
 
     @Override
     public void onLongPress(MotionEvent e) {
-//        Log.d(TAG,"GestureDetector long press");
         //TODO CLIPDATA TO ONE PLACE
         ClipData.Item type = new ClipData.Item("app");
         ClipData.Item data = new ClipData.Item(mApp.package_name);

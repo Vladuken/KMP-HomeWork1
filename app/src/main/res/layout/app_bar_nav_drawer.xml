@@ -14,12 +14,40 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/launcher_fragment_viewpager"
+        <LinearLayout
+            android:id="@+id/main_activity_relative_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:background="@color/primaryLightColor">
-        </android.support.v4.view.ViewPager>
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:weightSum="1">
+
+
+
+            <View
+                android:id="@+id/left_vertical_viewpager_scroller"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="?attr/colorAccent"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/launcher_fragment_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                tools:background="@color/primaryLightColor">
+            </android.support.v4.view.ViewPager>
+
+
+
+            <View
+                android:id="@+id/right_vertical_viewpager_scroller"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="?attr/colorAccent" />
+        </LinearLayout>
 
         <!--<FrameLayout-->
             <!--android:id="@+id/launcher_container_fragments"-->

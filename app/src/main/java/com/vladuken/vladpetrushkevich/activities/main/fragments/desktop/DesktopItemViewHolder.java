@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
+import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopItemGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
@@ -115,7 +116,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 if(app == null){
                     app = new App(item.itemType,0);
                 }
-                bind(app);
+                bindApp(app);
                 break;
             case "link":
                 bindItemView(item);
@@ -151,13 +152,26 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 }
             });
 
+//            mView.setOnLongClickListener(new DesktopItemOnLongClickListener());
             mDatabase.desckopAppDao().update(mDesktopItem);
+
+            GestureDetector detector = new GestureDetector(
+                    mView.getContext(),
+                    new DesktopItemGestureDetectorListener(item,mView,this)
+            );
+
+            mView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return detector.onTouchEvent(event);
+                }
+            });
         }else if(item.itemType.equals("contact")){
 
         }
     }
 
-    private void bind(App app){
+    private void bindApp(App app){
         ResolveInfo resolveInfo = null;
         PackageManager pm = mView.getContext().getPackageManager();
 
@@ -176,7 +190,12 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
             GestureDetector detector = new GestureDetector(
                     mView.getContext(),
-                    new AppGestureDetectorListener(app,mView,this));
+                    new AppGestureDetectorListener(
+                            app,
+                            mView,
+                            this)
+            );
+
             mView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -194,6 +213,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void bind(){
+        mView.setOnClickListener(null);
         mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem));
         mAppIcon.setImageDrawable(null);
         mAppTitle.setText(null);
