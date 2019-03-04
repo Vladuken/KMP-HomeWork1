@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
@@ -214,7 +215,16 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     private void bind(){
         mView.setOnClickListener(null);
+//        mView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Snackbar.make(v,"Empty " + mDesktopItem.itemType + " "+ mDesktopItem.itemData,Snackbar.LENGTH_SHORT)
+//                        .show();
+//            }
+//        });
+        mView.setOnTouchListener(null);
         mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem));
+//        mDatabase.desckopAppDao().update(mDesktopItem);
         mAppIcon.setImageDrawable(null);
         mAppTitle.setText(null);
     }

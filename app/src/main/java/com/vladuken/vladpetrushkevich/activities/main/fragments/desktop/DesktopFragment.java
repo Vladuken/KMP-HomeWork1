@@ -1,19 +1,28 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
 import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.ClipData;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.DragEvent;
@@ -24,11 +33,17 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
+import com.vladuken.vladpetrushkevich.utils.picasso.BackgroundTarget;
+import com.vladuken.vladpetrushkevich.utils.picasso.LoadImageJobService;
+import com.vladuken.vladpetrushkevich.utils.picasso.SetBackgroundAsynkTask;
 
 
 public class DesktopFragment extends Fragment {
@@ -110,6 +125,8 @@ public class DesktopFragment extends Fragment {
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
 
+        setupBackground();
+
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
         if(mDesktopScreen == null){
             mDesktopScreen = new DesktopScreen(mViewPagerPosition,mRows,mColumns);
@@ -130,6 +147,30 @@ public class DesktopFragment extends Fragment {
 
 
         return v;
+    }
+
+    private void setupBackground(){
+        ComponentName componentName = new ComponentName(getContext(), LoadImageJobService.class);
+
+        PersistableBundle bundle = new PersistableBundle();
+
+        String fullpath = getContext().getFilesDir().toString() + "backgroundfile.png";
+        bundle.putString("link", "https://picsum.photos/720/1080/?random");
+        bundle.putString("path", fullpath);
+
+        JobInfo jobInfo = new JobInfo.Builder(0, componentName)
+                .setOverrideDeadline(0)
+//                .setPeriodic(1000)
+                .setExtras(bundle)
+                .build();
+
+
+
+        JobScheduler jobScheduler = (JobScheduler) getContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(jobInfo);
+        new SetBackgroundAsynkTask(mTableLayout,fullpath).execute();
+
+
     }
 
     private void setupGridLayout(int rows, int colums){

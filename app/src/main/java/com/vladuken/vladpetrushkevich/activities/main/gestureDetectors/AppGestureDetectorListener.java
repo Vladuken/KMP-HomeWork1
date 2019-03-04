@@ -58,6 +58,7 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
 //            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
             mViewHolder.bind(createEmptyDesctopItem(mViewHolder.getDesktopItem()));
 
+//            mView.setOnDragListener(null);
         }else {
             mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
         }
