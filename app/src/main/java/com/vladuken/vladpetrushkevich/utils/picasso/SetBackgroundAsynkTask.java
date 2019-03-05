@@ -20,6 +20,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.Lau
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,7 +44,6 @@ public class SetBackgroundAsynkTask extends AsyncTask<Void,Void, Drawable> {
 
     @Override
     protected Drawable doInBackground(Void... voids) {
-
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap bitmap = BitmapFactory.decodeFile(mPath, options);

@@ -7,6 +7,7 @@ import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -37,10 +38,13 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.vladuken.vladpetrushkevich.R;
+import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
+import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
 import com.vladuken.vladpetrushkevich.utils.picasso.BackgroundTarget;
 import com.vladuken.vladpetrushkevich.utils.picasso.LoadImageJobService;
 import com.vladuken.vladpetrushkevich.utils.picasso.SetBackgroundAsynkTask;
@@ -72,6 +76,8 @@ public class DesktopFragment extends Fragment {
     private int mViewPagerPosition;
     int mRows;
     int mColumns;
+
+    private BackgroundReceiver mBackgroundReceiver;
 
 
     @Override
@@ -125,7 +131,6 @@ public class DesktopFragment extends Fragment {
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
 
-        setupBackground();
 
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
         if(mDesktopScreen == null){
@@ -133,6 +138,7 @@ public class DesktopFragment extends Fragment {
             mDatabase.desktopScreenDao().insertAll(mDesktopScreen);
         }
 
+        setupBackground();
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
@@ -150,27 +156,9 @@ public class DesktopFragment extends Fragment {
     }
 
     private void setupBackground(){
-        ComponentName componentName = new ComponentName(getContext(), LoadImageJobService.class);
-
-        PersistableBundle bundle = new PersistableBundle();
-
-        String fullpath = getContext().getFilesDir().toString() + "backgroundfile.png";
-        bundle.putString("link", "https://picsum.photos/720/1080/?random");
-        bundle.putString("path", fullpath);
-
-        JobInfo jobInfo = new JobInfo.Builder(0, componentName)
-                .setOverrideDeadline(0)
-//                .setPeriodic(1000)
-                .setExtras(bundle)
-                .build();
-
-
-
-        JobScheduler jobScheduler = (JobScheduler) getContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobScheduler.schedule(jobInfo);
-        new SetBackgroundAsynkTask(mTableLayout,fullpath).execute();
-
-
+        String fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
+        BackgroundManager.setupBackground(mTableLayout,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(mTableLayout,fullpath);
     }
 
     private void setupGridLayout(int rows, int colums){
@@ -224,6 +212,20 @@ public class DesktopFragment extends Fragment {
                 mTableLayout.addView(myview);
             }
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(BackgroundReceiver.UPDATE_BACKGROUND);
+        getContext().registerReceiver(mBackgroundReceiver,filter);
+        getContext().sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getContext().unregisterReceiver(mBackgroundReceiver);
     }
 
     public static DesktopFragment newInstance(int viewPagerPosition){
