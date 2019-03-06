@@ -66,8 +66,15 @@ public class ListLauncherFragment extends Fragment {
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
 
+        String fullpath = "";
 
-        String fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
+        if(mSharedPreferences.getBoolean(getString(R.string.preference_one_background_for_all_screens),false)){
+            fullpath = mRecyclerView.getContext().getFilesDir().toString()  + getString(R.string.global_image_title) + ".png";
+        }else {
+            fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
+        }
+
+
         BackgroundManager.setupBackground(mRecyclerView,fullpath);
         mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
 

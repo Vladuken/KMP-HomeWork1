@@ -81,6 +81,9 @@
     <string name="pref_popular_apps">Show popular apps</string>
     <string name="pref_background_update_button">Update background right now</string>
 
+    <string name="pref_one_background_for_all_screens">One background for all screens</string>
+
+
     <!--SORT-->
     <string name="sort_no">No sort</string>
     <string name="sort_title">By title</string>

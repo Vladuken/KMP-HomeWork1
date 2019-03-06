@@ -34,6 +34,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
+        Preference globalBackgroundPreference = findPreference(getString(R.string.preference_one_background_for_all_screens));
+        globalBackgroundPreference.setOnPreferenceClickListener(this::onPreferenceClick);
+
+
+        Preference backgroundUpdateFreq = findPreference(getString(R.string.preference_background_renew_frequency));
+        backgroundUpdateFreq.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                ThemeChanger.reloadActivity(getActivity());
+                return false;
+            }
+        });
         Preference backUpdateButton = findPreference(getString(R.string.preference_button));
         backUpdateButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

@@ -149,35 +149,6 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 vh.bind(resolveInfo, mIcons.get(resolveInfo));
             }
 
-
-//            final GestureDetector gestureDetector = new GestureDetector(vh.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
-//                @Override
-//                public void onLongPress(MotionEvent e) {
-//                    Log.d(TAG,"GestureDetector long press");
-//                    //TODO CLIPDATA TO ONE PLACE
-//                    ClipData.Item type = new ClipData.Item("app");
-//                    ClipData.Item data = new ClipData.Item(resolveInfo.activityInfo.packageName);
-//
-//                    String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-//
-//                    ClipDescription description = new ClipDescription("",mimeTypes);
-//
-//                    ClipData dragData = new ClipData(description,type);
-//                    dragData.addItem(data);
-//
-//                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(vh.itemView);
-//                    vh.itemView.startDragAndDrop(dragData,shadowBuilder,vh.itemView,0);
-//
-//                    YandexMetrica.reportEvent("Started app drag and drop");
-//
-//                    super.onLongPress(e);
-//                }
-//
-//                @Override
-//                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//                    return super.onScroll(e1, e2, distanceX, distanceY);
-//                }
-//            });
             final GestureDetector gestureDetector = new GestureDetector(
                     vh.itemView.getContext(),
                     new AppGestureDetectorListener(

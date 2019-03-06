@@ -34,6 +34,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory>
+        <SwitchPreference
+            android:key="@string/preference_one_background_for_all_screens"
+            android:title="@string/pref_one_background_for_all_screens"/>
         <ListPreference
             android:title="How often renew"
             android:defaultValue="900000"

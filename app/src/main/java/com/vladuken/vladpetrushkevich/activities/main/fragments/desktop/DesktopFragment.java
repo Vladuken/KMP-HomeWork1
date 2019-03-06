@@ -142,8 +142,14 @@ public class DesktopFragment extends Fragment {
         }
 
 
+        String fullpath = "";
 
-        String fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
+        if(preferences.getBoolean(getString(R.string.preference_one_background_for_all_screens),false)){
+            fullpath = mTableLayout.getContext().getFilesDir().toString()  + getString(R.string.global_image_title) + ".png";
+        }else {
+            fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
+        }
+
         BackgroundManager.setupBackground(mTableLayout,fullpath);
         mBackgroundReceiver = new BackgroundReceiver(mTableLayout,fullpath);
 
