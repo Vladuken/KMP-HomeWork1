@@ -13,6 +13,7 @@ import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.utils.picasso.LoadImageJobService;
 
 import java.io.File;
+import java.util.Calendar;
 
 public class BackgroundManager {
 
@@ -67,6 +68,54 @@ public class BackgroundManager {
         return preferences.getString(context.getString(
                 R.string.preference_source_link),
                 "https://loremflickr.com/720/1080");
+    }
+
+    public static void setupBackground(View view, String fullPath){
+        if(!new File(fullPath).exists()){
+            setupBackgroundWithOffset(view,fullPath,0L);
+        }else {
+            Long offset = getOffset(view.getContext());
+            setupBackgroundWithOffset(view,fullPath,offset);
+        }
+//        mBackgroundReceiver = new BackgroundReceiver(view,fullpath);
+    }
+
+    private static Long getOffset(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.preference_file), 0);
+        String stringPeriod = sharedPreferences.getString(context.getString(R.string.preference_background_renew_frequency), "900000");
+        Calendar calendar = Calendar.getInstance();
+        int currentMinute = calendar.get(Calendar.MINUTE);
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+
+//        long period = Long.decode(stringPeriod);
+
+        Integer minutesLeft;
+        Integer hoursLeft;
+
+        switch (stringPeriod) {
+            case "900000":
+                minutesLeft = 15 - (currentMinute % 15);
+                hoursLeft = 0;
+                break;
+            case "3600000":
+                minutesLeft = 60 - currentMinute;
+                hoursLeft = 0;
+                break;
+            case "28800000":
+                minutesLeft = 60 - currentMinute;
+                hoursLeft = 8 - (currentHour % 8);
+                break;
+            case "86400000":
+                minutesLeft = 60 - currentMinute;
+                hoursLeft = 24 - currentHour;
+                break;
+            default:
+                minutesLeft = Integer.MAX_VALUE;
+                hoursLeft = Integer.MAX_VALUE;
+                break;
+        }
+        return minutesLeft.longValue() * 60000L + hoursLeft.longValue() * 24L * 60L * 60L * 1000L;
+
     }
 
 }

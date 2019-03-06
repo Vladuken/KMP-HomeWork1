@@ -17,10 +17,12 @@ import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
+import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 
@@ -33,6 +35,8 @@ public class ListLauncherFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected SharedPreferences mSharedPreferences;
     protected AppDatabase mDatabase;
+
+    protected BackgroundReceiver mBackgroundReceiver;
 
     protected AppBroadcastReceiver mBroadcastReceiver;
 
@@ -60,6 +64,13 @@ public class ListLauncherFragment extends Fragment {
 
         int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
+
+
+
+        String fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
+        BackgroundManager.setupBackground(mRecyclerView,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
+
 
 
         IntentFilter filter = new IntentFilter();
@@ -119,6 +130,22 @@ public class ListLauncherFragment extends Fragment {
         mRecyclerView.setAdapter(launcherAdapter);
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(BackgroundReceiver.UPDATE_BACKGROUND);
+        filter.addAction(BackgroundReceiver.UPDATE_BACKGROUND_ONCE);
+        getContext().registerReceiver(mBackgroundReceiver,filter);
+        getContext().sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getContext().unregisterReceiver(mBackgroundReceiver);
+
+    }
 
     @Override
     public void onDestroyView() {

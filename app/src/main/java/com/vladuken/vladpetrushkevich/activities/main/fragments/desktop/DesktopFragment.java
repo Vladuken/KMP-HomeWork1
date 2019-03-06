@@ -141,7 +141,13 @@ public class DesktopFragment extends Fragment {
             mDatabase.desktopScreenDao().insertAll(mDesktopScreen);
         }
 
-        setupBackground();
+
+
+        String fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
+        BackgroundManager.setupBackground(mTableLayout,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(mTableLayout,fullpath);
+
+
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
@@ -156,57 +162,6 @@ public class DesktopFragment extends Fragment {
 
 
         return v;
-    }
-
-    private void setupBackground(){
-        String fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
-        if(!new File(fullpath).exists()){
-            BackgroundManager.setupBackgroundWithOffset(mTableLayout,fullpath,0L);
-        }else {
-            Long offset = getOffset(mTableLayout.getContext());
-            BackgroundManager.setupBackgroundWithOffset(mTableLayout,fullpath,offset);
-        }
-        mBackgroundReceiver = new BackgroundReceiver(mTableLayout,fullpath);
-    }
-    private Long getOffset(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(getString(R.string.preference_file),0);
-        String stringPeriod = sharedPreferences.getString(getString(R.string.preference_background_renew_frequency),"900000");
-        Calendar calendar = Calendar.getInstance();
-        int currentMinute = calendar.get(Calendar.MINUTE);
-        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-//        long period = Long.decode(stringPeriod);
-
-        Integer minutesLeft;
-        Integer hoursLeft;
-
-        switch (stringPeriod){
-            case "900000":
-                minutesLeft = 15 - (currentMinute % 15);
-                hoursLeft = 0;
-                break;
-            case "3600000":
-                minutesLeft = 60 - currentMinute;
-                hoursLeft = 0;
-                break;
-            case "28800000":
-                minutesLeft = 60 - currentMinute;
-                hoursLeft = 8 - (currentHour % 8);
-                break;
-            case "86400000":
-                minutesLeft = 60 - currentMinute;
-                hoursLeft = 24 - currentHour;
-                break;
-            default:
-                minutesLeft = Integer.MAX_VALUE;
-                hoursLeft = Integer.MAX_VALUE;
-                break;
-        }
-
-
-
-//        return 0L;
-        return minutesLeft.longValue() * 60000L + hoursLeft.longValue() * 24L*60L*60L*1000L;
     }
 
     private void setupGridLayout(int rows, int colums){
@@ -263,6 +218,7 @@ public class DesktopFragment extends Fragment {
     public void onStart() {
         super.onStart();
         IntentFilter filter = new IntentFilter(BackgroundReceiver.UPDATE_BACKGROUND);
+        filter.addAction(BackgroundReceiver.UPDATE_BACKGROUND_ONCE);
         getContext().registerReceiver(mBackgroundReceiver,filter);
         getContext().sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
     }

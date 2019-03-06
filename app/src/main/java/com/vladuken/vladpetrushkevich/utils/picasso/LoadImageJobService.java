@@ -43,7 +43,6 @@ public class LoadImageJobService extends JobService {
 
                     sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
                     Log.d(TAG,"update background broadcast sent");
-
 //                    File file = File.createTempFile(mPath);
                 }
                 catch (IOException e){
