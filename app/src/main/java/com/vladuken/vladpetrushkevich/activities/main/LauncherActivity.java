@@ -181,7 +181,9 @@ public class LauncherActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         mFramePager = findViewById(R.id.launcher_fragment_viewpager);
-        mFramePager.setAdapter(new LauncherPagerAdapter(fm));
+        LauncherPagerAdapter launcherPagerAdapter = new LauncherPagerAdapter(fm);
+        mFramePager.setAdapter(launcherPagerAdapter);
+        mFramePager.setOffscreenPageLimit(launcherPagerAdapter.getCount());
         mFramePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -227,6 +229,7 @@ public class LauncherActivity extends AppCompatActivity {
         }
 
     }
+
 
 
     @Override

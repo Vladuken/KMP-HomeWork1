@@ -33,6 +33,29 @@
         </ListPreference>
     </PreferenceCategory>
 
+    <PreferenceCategory>
+        <ListPreference
+            android:title="How often renew"
+            android:defaultValue="900000"
+            android:key="@string/preference_background_renew_frequency"
+            android:entries="@array/backgroundRenewFrequency"
+            android:entryValues="@array/backgroundRenewFrequencyValues">
+
+        </ListPreference>
+        <ListPreference
+            android:title="Source"
+            android:defaultValue="https://loremflickr.com/720/1080"
+            android:key="@string/preference_source_link"
+            android:entries="@array/sourceList"
+            android:entryValues="@array/sourceList">
+        </ListPreference>
+
+        <Preference
+            android:title="@string/pref_background_update_button"
+            android:key="@string/preference_button">
+
+        </Preference>
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

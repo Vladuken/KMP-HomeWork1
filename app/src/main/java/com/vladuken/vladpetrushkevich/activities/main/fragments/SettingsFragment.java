@@ -1,11 +1,15 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 
 import com.vladuken.vladpetrushkevich.R;
+import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
+import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -29,6 +33,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+        Preference backUpdateButton = findPreference(getString(R.string.preference_button));
+        backUpdateButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                getActivity().sendBroadcast(
+                        new Intent(BackgroundReceiver.UPDATE_BACKGROUND_ONCE)
+                );
+                return true;
+            }
+        });
     }
 
     public static SettingsFragment newInstance(){
@@ -38,6 +53,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private boolean onPreferenceClick(Preference preference) {
         Log.d("KEYPREF",preference.getKey());
         ThemeChanger.reloadActivity(getActivity());
+
+
         return true;
     }
 }

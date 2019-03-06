@@ -79,6 +79,7 @@
     <string name="pref_compat_layout">Compat layout</string>
     <string name="pref_intro_next_time">Show intro next time</string>
     <string name="pref_popular_apps">Show popular apps</string>
+    <string name="pref_background_update_button">Update background right now</string>
 
     <!--SORT-->
     <string name="sort_no">No sort</string>
@@ -94,6 +95,12 @@
     <string name="desktop_item_remove">Remove</string>
     <string name="desktop_item_add_link">Add link</string>
     <string name="desktop_item_add_contact">Add contact</string>
+
+    <!--FREQUENCY ENTRIES-->
+    <string name="background_renew_15min">15 minutes</string>
+    <string name="background_renew_1hour">1 hour</string>
+    <string name="background_renew_8hours">8 hours</string>
+    <string name="background_renew_24hours">24 hours</string>
 
 
 </resources>

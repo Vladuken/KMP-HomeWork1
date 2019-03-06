@@ -13,6 +13,12 @@
 
     <string name="preference_key_layout">com.vladuken.vladpetrushkevich.LAYOUT</string>
 
+    <string name="preference_source_link">com.vladuken.vladpetrushkevich.SOURCE</string>
+    <string name="preference_background_renew_frequency">
+        com.vladuken.vladpetrushkevich.BACKGROUND_RENEW_FREQUENCY
+    </string>
+
+    <string name="preference_button">com.vladuken.preferencebutton</string>
     <!--<string name="preference_landscape_rows">com.vladuken.vladpetrushkevich.PREFERENCE_LANDSCAPE</string>-->
     <!--<string name="preference_portrait_rows">com.vladuken.vladpetrushkevich.PREFERENCE_PORTRAIT</string>-->
 
