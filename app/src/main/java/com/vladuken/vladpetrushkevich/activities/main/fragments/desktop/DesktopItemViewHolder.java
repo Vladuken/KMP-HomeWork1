@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopItemGestureDetectorListener;
@@ -74,12 +75,22 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
         mView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
+
+//                int action = event.getAction();
+//                View dragView = (View) event.getLocalState();
+//                ImageView dragImage = dragView.findViewById(R.id.grid_app_icon);
+//                TextView textView = dragView.findViewById(R.id.grid_app_title);
+//
+//                ImageView placeForImage = v.findViewById(R.id.grid_app_icon);
+//                TextView placeForText = v.findViewById(R.id.grid_app_title);
+
+
                 switch (event.getAction()){
                     case DragEvent.ACTION_DRAG_STARTED:
                         Log.d(TAG,"Drag Started" + " r:" +item.row + " c:" + item.column);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        itemView.setBackgroundColor(Color.RED);
+                        itemView.setBackgroundColor(Color.argb(160,25,25,25));
                         Log.d(TAG,"Drag Entered" + " r:" +item.row + " c:" + item.column);
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:

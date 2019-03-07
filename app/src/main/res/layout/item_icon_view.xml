@@ -27,6 +27,8 @@
         android:textAlignment="center"
         android:maxLines="1"
         android:ellipsize="end"
+        android:shadowColor="?attr/colorBackgroundFloating"
+        android:shadowRadius="9"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="App title"/>
 

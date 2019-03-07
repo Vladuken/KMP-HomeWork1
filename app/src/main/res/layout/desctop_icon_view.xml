@@ -36,6 +36,8 @@
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:maxLines="1"
+                    android:shadowColor="?attr/colorBackgroundFloating"
+                    android:shadowRadius="9"
                     android:ellipsize="end"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     tools:text="App title"

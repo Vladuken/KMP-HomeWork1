@@ -74,6 +74,7 @@ public class LauncherActivity extends AppCompatActivity {
                 onNavigationItemSelected(R.id.nav_launcher_activity);
             }
         });
+//        mToolbar.setVisibility(View.GONE);
 
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
@@ -187,14 +188,24 @@ public class LauncherActivity extends AppCompatActivity {
         mFramePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
+//
+//                if(i == 1) {
+//                    mToolbar.setVisibility(View.GONE);
+//                }else {
+//                    mToolbar.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override
             public void onPageSelected(int i) {
 //                mNavigationView.setCheckedItem(i);
                 mNavigationView.getMenu().getItem(i).setChecked(true);
-
+//                //first screen and last two are visible
+//                if(i > 0 && i < mFramePager.getAdapter().getCount() - 2){
+//                    mToolbar.setVisibility(View.GONE);
+//                }else {
+////                    mToolbar.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override

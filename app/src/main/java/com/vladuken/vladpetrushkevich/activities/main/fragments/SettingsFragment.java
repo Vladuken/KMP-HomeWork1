@@ -25,6 +25,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference layoutPreference = findPreference(getString(R.string.preference_key_layout));
         layoutPreference.setOnPreferenceClickListener(this::onPreferenceClick);
 
+        Preference popularApps = findPreference(getString(R.string.preference_key_popular_apps));
+        popularApps.setOnPreferenceClickListener(this::onPreferenceClick);
+
         Preference sortPreference = findPreference(getString(R.string.preference_key_sort_method));
         sortPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

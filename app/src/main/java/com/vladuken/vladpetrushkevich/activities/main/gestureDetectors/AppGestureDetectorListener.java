@@ -2,7 +2,6 @@ package com.vladuken.vladpetrushkevich.activities.main.gestureDetectors;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,7 +55,7 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
             database.desckopAppDao().update(mViewHolder.getDesktopItem());
             mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
 //            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
-            mViewHolder.bind(createEmptyDesctopItem(mViewHolder.getDesktopItem()));
+            mViewHolder.bind(createEmptyDesktopItem(mViewHolder.getDesktopItem()));
 
 //            mView.setOnDragListener(null);
         }else {
@@ -77,7 +76,7 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
     }
 
 
-    private DesktopItem createEmptyDesctopItem(DesktopItem desktopItem){
+    private DesktopItem createEmptyDesktopItem(DesktopItem desktopItem){
         return new DesktopItem(desktopItem.screenPosition,desktopItem.row,desktopItem.column,"empty","");
     }
 
