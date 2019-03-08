@@ -1,14 +1,23 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
 import android.content.ClipData;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
@@ -26,6 +35,10 @@ import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopIt
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
+
+import java.io.InputStream;
+
+import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
 
 public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -180,7 +193,153 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             });
         }else if(item.itemType.equals("contact")){
 
+
+            mDatabase.desckopAppDao().update(item);
+            String contactPhone = item.itemData;
+
+            if (ActivityCompat.checkSelfPermission(mView.getContext(), android.Manifest.permission.READ_CONTACTS)
+                    == PackageManager.PERMISSION_GRANTED) {
+                getContactName(mView.getContext(),contactPhone);
+            } else {
+                Picasso.get().load(android.R.drawable.ic_menu_call).into(mAppIcon);
+                mAppTitle.setText(item.itemData);
+            }
+
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        String url = contactPhone;
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:"+url));
+
+                        mDesktopFragment.startActivity(intent);
+                }
+            });
+
+            GestureDetector detector = new GestureDetector(
+                    mView.getContext(),
+                    new DesktopItemGestureDetectorListener(item,mView,this)
+            );
+
+            mView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return detector.onTouchEvent(event);
+                }
+            });
+
         }
+    }
+
+
+
+    private void getContactName(Context context,final String phoneNumber) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentResolver cr = mView.getContext().getContentResolver();
+                Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+                Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME,
+                        ContactsContract.PhoneLookup._ID}, null, null, null);
+                if (cursor == null) {
+                    return;
+                }
+                String name = null;
+                String contactId = null;
+                InputStream input = null;
+                String contactName = null;
+                if(cursor.moveToFirst()) {
+                    contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
+                    contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+
+                    // Get photo of contactId as input stream:
+                    Uri uri1 = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
+                    input = ContactsContract.Contacts.openContactPhotoInputStream(mView.getContext().getContentResolver(), uri1);
+
+                }
+
+                if(input != null){
+                    final String contact = contactName;
+                    final Bitmap bitmap = BitmapFactory.decodeStream(input);
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            mAppIcon.setImageBitmap(bitmap);
+                            mAppTitle.setText(contact);
+                        }
+                    });
+//                    mAppIcon.setImageDrawable(new BitmapDrawable(mView.getResources(),BitmapFactory.decodeStream(input)));
+                }else {
+                    final String contact = contactName;
+                    final Bitmap bitmap = BitmapFactory.decodeStream(input);
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            mAppIcon.setImageResource(android.R.drawable.ic_menu_call);
+                            mAppTitle.setText(contact);
+                        }
+                    });
+                }
+                if(cursor != null && !cursor.isClosed()) {
+                    cursor.close();
+                }
+
+//                listener.contactName(contactName);
+            }
+        }).start();
+
+//
+////        Log.v("ffnet", "Started uploadcontactphoto...");
+//
+//        String name = null;
+//        String contactId = null;
+//        InputStream input = null;
+//
+//        // define the columns I want the query to return
+//        String[] projection = new String[] {
+//                ContactsContract.PhoneLookup.DISPLAY_NAME,
+//                ContactsContract.PhoneLookup._ID};
+//
+//        // encode the phone number and build the filter URI
+//        Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+//
+//        // query time
+//        Cursor cursor = context.getContentResolver().query(contactUri, projection, null, null, null);
+//
+//        if (cursor.moveToFirst()) {
+//
+//            // Get values from contacts database:
+//            contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
+//            name =      cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+//
+//            // Get photo of contactId as input stream:
+//            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
+//            input = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), uri);
+//
+////            Log.v("ffnet", "Started uploadcontactphoto: Contact Found @ " + number);
+////            Log.v("ffnet", "Started uploadcontactphoto: Contact name  = " + name);
+////            Log.v("ffnet", "Started uploadcontactphoto: Contact id    = " + contactId);
+//
+//        } else {
+//
+//            Log.v("ffnet", "Started uploadcontactphoto: Contact Not Found @ " + phoneNumber);
+//            return; // contact not found
+//
+//        }
+//
+//// Only continue if we found a valid contact photo:
+//        if (input == null) {
+//            Log.v("ffnet", "Started uploadcontactphoto: No photo found, id = " + contactId + " name = " + name);
+//            return; // no photo
+//        } else {
+////            this.type = contactId;
+//            Log.v("ffnet", "Started uploadcontactphoto: Photo found, id = " + contactId + " name = " + name);
+//        }
+
+
     }
 
     private void bindApp(App app){
@@ -234,7 +393,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 //            }
 //        });
         mView.setOnTouchListener(null);
-        mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem));
+        mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem,mDesktopFragment));
 //        mDatabase.desckopAppDao().update(mDesktopItem);
         mAppIcon.setImageDrawable(null);
         mAppTitle.setText(null);
@@ -243,4 +402,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     public DesktopItem getDesktopItem() {
         return mDesktopItem;
     }
+
+
 }

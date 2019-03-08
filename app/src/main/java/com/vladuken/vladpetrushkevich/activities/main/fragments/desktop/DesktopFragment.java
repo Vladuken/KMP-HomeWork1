@@ -1,29 +1,17 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
 import android.app.Activity;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ClipData;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.DragEvent;
@@ -34,23 +22,13 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
-import com.vladuken.vladpetrushkevich.utils.picasso.BackgroundTarget;
-import com.vladuken.vladpetrushkevich.utils.picasso.LoadImageJobService;
-import com.vladuken.vladpetrushkevich.utils.picasso.SetBackgroundAsynkTask;
-
-import java.io.File;
-import java.util.Calendar;
 
 
 public class DesktopFragment extends Fragment {
@@ -79,9 +57,15 @@ public class DesktopFragment extends Fragment {
     private int mViewPagerPosition;
     int mRows;
     int mColumns;
+    private DesktopItemViewHolder mViewHolder;
 
     private BackgroundReceiver mBackgroundReceiver;
 
+
+    private  int mLongClickedScreen;
+    private int mLongClickedRow;
+    protected int mLongClickedColumn;
+    protected DesktopItemViewHolder mLongClickedViewHolder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -192,7 +176,7 @@ public class DesktopFragment extends Fragment {
                     mDatabase.desckopAppDao().insertAll(desktopItem);
                 }
 
-                DesktopItemViewHolder viewHolder = new DesktopItemViewHolder(
+                mViewHolder = new DesktopItemViewHolder(
                         myview,
                         this,
                         desktopItem,
@@ -202,7 +186,7 @@ public class DesktopFragment extends Fragment {
                 );
 
 
-                viewHolder.bind(desktopItem);
+                mViewHolder.bind(desktopItem);
 
                 //TODO add to lover api
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams(
@@ -266,11 +250,29 @@ public class DesktopFragment extends Fragment {
                     int a = data.getIntExtra("HELP",-1);
                     Log.d("number",a +"");
 
-//                    mDatabase.
+
+                    DesktopItem item = new DesktopItem(mLongClickedScreen,mLongClickedRow,mLongClickedColumn,"contact",number);
+                    mLongClickedViewHolder.bind(item);
                 }
 
                 cursor.close();
             }
         }
+    }
+
+    public void setLongClickedScreen(int longClickedScreen) {
+        mLongClickedScreen = longClickedScreen;
+    }
+
+    public void setLongClickedRow(int longClickedRow) {
+        mLongClickedRow = longClickedRow;
+    }
+
+    public void setLongClickedColumn(int loncgClickedColumn) {
+        mLongClickedColumn = loncgClickedColumn;
+    }
+
+    public void setLongClickedViewHolder(DesktopItemViewHolder longClickedViewHolder) {
+        mLongClickedViewHolder = longClickedViewHolder;
     }
 }

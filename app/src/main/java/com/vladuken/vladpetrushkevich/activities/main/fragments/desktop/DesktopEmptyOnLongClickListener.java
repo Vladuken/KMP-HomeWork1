@@ -1,10 +1,11 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.DragEvent;
@@ -26,12 +27,15 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
     private DesktopItemViewHolder mViewHolder;
 
     private PopupMenu mPopupMenu;
+    private DesktopFragment mFragment;
 
 
-    public DesktopEmptyOnLongClickListener(DesktopItemViewHolder viewHolder,AppDatabase database, DesktopItem desktopItem) {
+
+    public DesktopEmptyOnLongClickListener(DesktopItemViewHolder viewHolder,AppDatabase database, DesktopItem desktopItem,DesktopFragment fragment) {
         mDatabase = database;
         mDesktopItem = desktopItem;
         mViewHolder = viewHolder;
+        mFragment = fragment;
     }
 
     @Override
@@ -56,7 +60,18 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.desktop_item_add_contact:
-                        startAddContact(mDesktopItem);
+
+                        if (ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.READ_CONTACTS)
+                                == PackageManager.PERMISSION_GRANTED) {
+//                        getContacts();
+                            startAddContact(mDesktopItem);
+                        } else {
+                            startAddContact(mDesktopItem);
+                            requestLocationPermission();
+                        }
+
+
+
                         YandexMetrica.reportEvent("Add contact in desktop pressed");
 
                         return true;
@@ -71,6 +86,19 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
                         return false;
                 }
             }
+
+            private void requestLocationPermission() {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(
+                        mFragment.getActivity(),
+                        android.Manifest.permission.READ_CONTACTS)) {
+                    // show UI part if you want here to show some rationale !!!
+
+                } else
+                    ActivityCompat.requestPermissions(
+                            mFragment.getActivity(),
+                            new String[]{android.Manifest.permission.READ_CONTACTS},
+                            1);
+            }
         });
 
         mPopupMenu.show();
@@ -80,16 +108,17 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
     private void startAddLinkDialog(DesktopItem desktopItem){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mViewHolder.itemView.getContext());
+        //TODO
         builder.setTitle("Title");
 
         // Set up the input
         final EditText input = new EditText(mViewHolder.itemView.getContext());
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 YandexMetrica.reportEvent("Positive button link added dialog pressed");
@@ -117,14 +146,23 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
 
     }
 
+
+
     private void startAddContact(DesktopItem desktopItem){
 
         Intent i=new Intent(Intent.ACTION_PICK);
         i.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
         i.putExtra("HELP",6);
-//        Activity h = new Activity();
-//        h.startActivityForResult(i, DesktopFragment.RESULT_CODE_PICK_PHONE);
+        mFragment.setLongClickedScreen(desktopItem.screenPosition);
+        mFragment.setLongClickedColumn(desktopItem.column);
+        mFragment.setLongClickedRow(desktopItem.row);
+        mFragment.setLongClickedViewHolder(mViewHolder);
+        //        Activity h = new Activity();
+        mFragment.startActivityForResult(i, DesktopFragment.RESULT_CODE_PICK_PHONE);
+
     }
+
+
 }
 
 
