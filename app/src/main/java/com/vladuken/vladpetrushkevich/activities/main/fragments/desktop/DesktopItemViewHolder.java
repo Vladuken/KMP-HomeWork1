@@ -18,6 +18,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
@@ -260,13 +262,19 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 if(input != null){
+                    //TODO put into separate class to create links icons
                     final String contact = contactName;
                     final Bitmap bitmap = BitmapFactory.decodeStream(input);
+                    Bitmap dst = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getWidth());
+                    final RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(context.getResources(), dst);
                     runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
-                            mAppIcon.setImageBitmap(bitmap);
+                            roundedBitmapDrawable.setCornerRadius(50.0f);
+                            roundedBitmapDrawable.setAntiAlias(true);
+                            mAppIcon.setImageDrawable(roundedBitmapDrawable);
+//                            mAppIcon.setImageBitmap(bitmap);
                             mAppTitle.setText(contact);
                         }
                     });
