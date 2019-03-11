@@ -19,7 +19,7 @@ public class AppLongClickListener implements View.OnLongClickListener {
     protected static final String TAG = "AppLongClickListener";
     protected App mApp;
     protected View mView;
-    private PopupMenu mPopupMenu;
+    protected PopupMenu mPopupMenu;
 
     public AppLongClickListener(App app, View view) {
         mApp = app;
@@ -56,7 +56,7 @@ public class AppLongClickListener implements View.OnLongClickListener {
                     case R.id.action_uninstall_app:
 
                         uninstallApp();
-
+                        return true;
                     case R.id.action_open_app_settings:
 
                         openAppSettings();
