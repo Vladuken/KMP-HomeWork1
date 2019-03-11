@@ -16,7 +16,7 @@
         <!-- Customize your mIsDarkTheme here. -->
         <item name="colorPrimary">@color/primaryColorDarkTheme</item>
         <item name="colorPrimaryDark">@color/primaryDarkColorDarkTheme</item>
-        <item name="colorAccent">@color/primaryLightColorDarkTheme</item>
+        <item name="colorAccent">@color/lightGrey</item>
 
         <!--<item name="android:windowBackground">@android:color/holo_blue_bright</item>-->
     </style>

@@ -18,6 +18,7 @@ public final class SingletonDatabase {
                 mDatabase = Room.databaseBuilder(context,
                         AppDatabase.class, "app_db")
                         .allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
                         .build();
             }
         }

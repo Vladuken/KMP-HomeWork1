@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:textAlignment="center"
+    android:padding="@dimen/offset"
+    android:weightSum="10">
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center">-->
+                <ImageView
+
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/grid_app_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height= "wrap_content"
+                    tools:background="@android:drawable/sym_def_app_icon"
+                    android:layout_weight="9">
+                </ImageView>
+                <TextView
+
+                    android:id="@+id/grid_app_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:maxLines="1"
+                    android:shadowColor="?attr/colorBackgroundFloating"
+                    android:shadowRadius="9"
+                    android:ellipsize="end"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    tools:text="App title"
+                    android:layout_weight="1" />
+        <!--</LinearLayout>-->
+
+</LinearLayout>

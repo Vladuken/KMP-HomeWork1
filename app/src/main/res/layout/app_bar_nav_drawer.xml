@@ -2,18 +2,57 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
 
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
-            android:id="@+id/launcher_container_fragments"
+
+        <LinearLayout
+            android:id="@+id/main_activity_relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:weightSum="1">
+
+
+
+            <View
+                android:id="@+id/left_vertical_viewpager_scroller"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="?attr/colorAccent"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/launcher_fragment_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                tools:background="@color/primaryLightColor">
+            </android.support.v4.view.ViewPager>
+
+
+
+            <View
+                android:id="@+id/right_vertical_viewpager_scroller"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="?attr/colorAccent" />
+        </LinearLayout>
+
+        <!--<FrameLayout-->
+            <!--android:id="@+id/launcher_container_fragments"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
         <!-- Your scrolling content -->
 
     </android.support.v4.widget.NestedScrollView>
@@ -27,21 +66,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="enterAlways|scroll|snap"
             />
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_nav_drawer" />-->
-
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
 </android.support.design.widget.CoordinatorLayout>

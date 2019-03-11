@@ -7,7 +7,7 @@
     <color name="primaryColorDarkTheme">#212121</color>
     <color name="primaryDarkColorDarkTheme">#000000</color>
     <color name="primaryLightColorDarkTheme">#484848</color>
-
+    <color name= "lightGrey">#aaaaaa</color>
 
 
 </resources>

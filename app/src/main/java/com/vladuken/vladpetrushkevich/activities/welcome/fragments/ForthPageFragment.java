@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.vladuken.vladpetrushkevich.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class ForthPageFragment extends Fragment {
 
@@ -35,6 +36,8 @@ public class ForthPageFragment extends Fragment {
                 } else if (selectedId == R.id.compact_layout_rdb) {
                     mIsCompactLayout = true;
                 }
+
+                YandexMetrica.reportEvent("Layout changed in welcome page");
                 savePreferences();
             }
         });

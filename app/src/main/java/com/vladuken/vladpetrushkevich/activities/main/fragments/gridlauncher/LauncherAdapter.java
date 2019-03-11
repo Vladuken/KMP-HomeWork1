@@ -4,15 +4,19 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconLongClickListener;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
+import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
+import com.vladuken.vladpetrushkevich.db.entity.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+
+//    private static final String TAG = "LauncherAdapter";
+
 
     private static final int POPULAR_APP_SIZE = 5;
     private static final int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = POPULAR_APP_SIZE + 1;
@@ -126,20 +134,37 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void bindLauncherViewHolder(RecyclerView.ViewHolder viewHolder,ResolveInfo resolveInfo){
-        if(viewHolder instanceof LauncherViewHolder){
+        if(viewHolder instanceof LauncherViewHolder) {
             LauncherViewHolder vh = (LauncherViewHolder) viewHolder;
-            if(mIcons.get(resolveInfo) == null){
-                new LoadIconTask(vh,mIcons,resolveInfo,viewHolder.itemView.getContext().getPackageManager()).execute();
+            if (mIcons.get(resolveInfo) == null) {
+                new LoadIconTask(this,vh, mIcons, resolveInfo, viewHolder.itemView.getContext().getPackageManager()).execute();
 
-            }else {
-                vh.bind(resolveInfo,mIcons.get(resolveInfo));
+            } else {
+                vh.bind(resolveInfo, mIcons.get(resolveInfo));
             }
 
-            vh.itemView.setOnClickListener(new IconOnClickListener(vh,this));
-            vh.itemView.setOnLongClickListener(new IconLongClickListener(vh));
+            final GestureDetector gestureDetector = new GestureDetector(
+                    vh.itemView.getContext(),
+                    new AppGestureDetectorListener(
+                            new App(
+                                resolveInfo.activityInfo.packageName,
+                                -1),
+                            vh.itemView)
+            );
 
+
+            if(vh.isBinded()){
+                vh.itemView.setOnClickListener(new IconOnClickListener(vh, this));
+                vh.itemView.setOnLongClickListener(new AppLongClickListener(vh.getApp(),vh.itemView));
+            }
+
+            vh.itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return gestureDetector.onTouchEvent(event);
+                }
+            });
         }
-
     }
 
     public boolean isGroupTitle(int position){

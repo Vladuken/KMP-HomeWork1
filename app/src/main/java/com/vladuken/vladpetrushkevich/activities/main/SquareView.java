@@ -21,6 +21,7 @@ public class SquareView extends AppCompatImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        int max = Math.max(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(max, max);
     }
 }

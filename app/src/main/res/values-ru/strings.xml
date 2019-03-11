@@ -33,10 +33,10 @@
     <string name="nav_header_title">Влад Петрушкевич</string>
     <string name="nav_header_subtitle" translatable="false">vladpetrushkevich1999@gmail.com</string>
     <string name="nav_header_desc">Заголовок навигации</string>
-    <string name="action_settings">настройки</string>
+    <string name="action_settings">Настройки</string>
 
-    <string name="launcher_activity">Активность запуска</string>
-    <string name="list_activity">Список активности</string>
+    <string name="launcher_activity">Меню приложений</string>
+    <string name="list_activity">Список приложений</string>
 
     <string name="settings">Настройки</string>
 
@@ -89,5 +89,17 @@
 
     <string name="launched">Запущено</string>
     <string name="times">раз</string>
+    <string name="desktop">Рабочий стол</string>
+    <string name="pref_background_update_button">Обновить обои сейчас</string>
+    <string name="pref_one_background_for_all_screens">Одни обои на все экраны</string>
+    <string name="desktop_item_remove">Убрать</string>
+    <string name="desktop_item_add_link">Добавить ссылку</string>
+    <string name="desktop_item_add_contact">Добавить контакт</string>
+    <string name="background_renew_15min">15 минут</string>
+    <string name="background_renew_1hour">1 час</string>
+    <string name="background_renew_8hours">8 часов</string>
+    <string name="background_renew_24hours">24 часа</string>
+    <string name="background_source">Источник</string>
+    <string name="background_update_freq">Как часто обновлять</string>
 
 </resources>

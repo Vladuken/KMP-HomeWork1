@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo;
 import android.support.v7.widget.RecyclerView;
 
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
             }
 
             if(appToRemove != null){
+                YandexMetrica.reportEvent("Get PACKAGE_REMOVED broadcast and remove app");
+
                 adapter.getInstalledAppInfo().remove(appToRemove);
                 adapter.getPopularAppInfo().remove(appToRemove);
                 adapter.notifyDataSetChanged();
@@ -81,6 +84,7 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
 
             if(appToAdd != null){
                 //TODO ADD SORTING
+                YandexMetrica.reportEvent("Get PACKAGE_ADDED broadcast and remove app");
                 adapter.getInstalledAppInfo().add(appToAdd);
                 adapter.getPopularAppInfo().add(appToAdd);
                 adapter.notifyDataSetChanged();
