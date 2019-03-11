@@ -46,7 +46,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 ThemeChanger.reloadActivity(getActivity());
-                return false;
+                return true;
             }
         });
         Preference backUpdateButton = findPreference(getString(R.string.preference_button));

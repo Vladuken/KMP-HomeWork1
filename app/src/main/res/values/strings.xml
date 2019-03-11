@@ -99,6 +99,11 @@
     <string name="desktop_item_add_link">Add link</string>
     <string name="desktop_item_add_contact">Add contact</string>
 
+    <!--BACKGROUND SETTING-->
+    <string name="background_source">Source</string>
+    <string name="background_update_freq">How often to update</string>
+
+
     <!--FREQUENCY ENTRIES-->
     <string name="background_renew_15min">15 minutes</string>
     <string name="background_renew_1hour">1 hour</string>
