@@ -7,7 +7,6 @@
         <item>@string/sort_install_date</item>
         <item>@string/sort_launch_count</item>
     </string-array>
-
     <string-array name="sortMethodValues">
         <item>0</item>
         <item>1</item>
@@ -15,4 +14,30 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
+
+    <string-array name="sourceList">
+        <item>"https://loremflickr.com/720/1080"</item>
+        <item>"https://picsum.photos/720/1080/?random"</item>
+        <item>"http://lorempixel.com/720/1080/"</item>
+        <item>"https://placeimg.com/720/1080/any"</item>
+        <item>"https://placekitten.com/720/1080"</item>
+        <item>"https://source.unsplash.com/random/720x1080"</item>
+    </string-array>
+
+
+    <string-array name="backgroundRenewFrequency">
+        <item>@string/background_renew_15min</item>
+        <item>@string/background_renew_1hour</item>
+        <item>@string/background_renew_8hours</item>
+        <item>@string/background_renew_24hours</item>
+    </string-array>
+
+    <string-array name="backgroundRenewFrequencyValues">
+        <item>900000</item>
+        <item>3600000</item>
+        <item>28800000</item>
+        <item>86400000</item>
+    </string-array>
+
 </resources>

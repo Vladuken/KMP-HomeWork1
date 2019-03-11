@@ -5,6 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:textAlignment="center">
 
     <com.vladuken.vladpetrushkevich.activities.main.SquareView
@@ -13,7 +15,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/grid_app_icon"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:background="@android:drawable/sym_def_app_icon">
     </com.vladuken.vladpetrushkevich.activities.main.SquareView>
 
@@ -25,6 +27,8 @@
         android:textAlignment="center"
         android:maxLines="1"
         android:ellipsize="end"
+        android:shadowColor="?attr/colorBackgroundFloating"
+        android:shadowRadius="9"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="App title"/>
 

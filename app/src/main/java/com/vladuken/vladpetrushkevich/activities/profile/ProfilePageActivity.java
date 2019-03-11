@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
+import com.yandex.metrica.YandexMetrica;
 
 public class ProfilePageActivity extends AppCompatActivity {
 
@@ -43,6 +44,8 @@ public class ProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createIntentAndStart(v,R.id.text_view_phone_number,Intent.ACTION_DIAL,"tel:");
+                YandexMetrica.reportEvent("Profile page phone number pressed");
+
             }
         });
 
@@ -52,6 +55,7 @@ public class ProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createIntentAndStart(v,R.id.text_view_email,Intent.ACTION_SENDTO,"mailto:");
+                YandexMetrica.reportEvent("Profile page email pressed");
             }
         });
 
@@ -65,6 +69,9 @@ public class ProfilePageActivity extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("",cardNumber);
                 clipboard.setPrimaryClip(clip);
+
+                YandexMetrica.reportEvent("Profile page card number pressed and copied");
+
 
                 Snackbar.make(v,getString(R.string.copied),Snackbar.LENGTH_SHORT)
                         .setAction(getString(R.string.dismiss), new View.OnClickListener() {
@@ -82,6 +89,8 @@ public class ProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createIntentAndStart(v,R.id.text_view_instagram,Intent.ACTION_VIEW,"http:");
+                YandexMetrica.reportEvent("Profile page instagram link pressed");
+
             }
         });
 
@@ -90,6 +99,7 @@ public class ProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createIntentAndStart(v,R.id.text_view_github,Intent.ACTION_VIEW,"http:");
+                YandexMetrica.reportEvent("Profile page github link pressed");
             }
         });
 

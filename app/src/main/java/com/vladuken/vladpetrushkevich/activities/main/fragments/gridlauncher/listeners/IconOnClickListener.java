@@ -9,6 +9,7 @@ import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.Collections;
 
@@ -33,6 +34,9 @@ public class IconOnClickListener implements View.OnClickListener {
         mViewHolder.getApp().launches_count++;
         mViewHolder.getDatabase().appDao().update(mViewHolder.getApp());
         v.getContext().startActivity(i);
+
+        YandexMetrica.reportEvent("App start on icon click in launcher page");
+
 
         Collections.sort(mAdapter.getPopularAppInfo(),new LaunchCountComparator(mViewHolder.getDatabase()));
 

@@ -27,9 +27,9 @@ jobs:
 #      - run:
 #           name: Run Findbug Tests
 #           command: ./gradlew findbug
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
+#      - run:
+#          name: Run Tests
+#          command: ./gradlew lint test
 
       - save_cache:
           paths:

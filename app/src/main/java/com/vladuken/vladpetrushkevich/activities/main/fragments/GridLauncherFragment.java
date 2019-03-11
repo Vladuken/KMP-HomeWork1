@@ -19,12 +19,15 @@ import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
+import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +42,7 @@ public class GridLauncherFragment extends Fragment {
     protected SharedPreferences mSharedPreferences;
     protected AppDatabase mDatabase;
 
+    protected BackgroundReceiver mBackgroundReceiver;
     protected AppBroadcastReceiver mBroadcastReceiver;
 
     @Override
@@ -65,6 +69,19 @@ public class GridLauncherFragment extends Fragment {
 
 
 
+        String fullpath = "";
+
+        if(mSharedPreferences.getBoolean(getString(R.string.preference_one_background_for_all_screens),false)){
+            fullpath = mRecyclerView.getContext().getFilesDir().toString()  + getString(R.string.global_image_title) + ".png";
+        }else {
+            fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
+        }
+
+
+
+//        String fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
+        BackgroundManager.setupBackground(mRecyclerView,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
 
 
         IntentFilter filter = new IntentFilter();
@@ -98,16 +115,22 @@ public class GridLauncherFragment extends Fragment {
                 break;
             case 1:
                 Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
+                YandexMetrica.reportEvent("Sorted apps by name");
                 break;
             case 2:
                 Collections.sort(activities, new ResolveInfo.DisplayNameComparator(pm));
                 Collections.reverse(activities);
+                YandexMetrica.reportEvent("Sorted apps by name (reversed)");
+
                 break;
             case 3:
                 Collections.sort(activities, new InstallDateComparator(pm));
+                YandexMetrica.reportEvent("Sorted apps by install date");
+
                 break;
             case 4:
                 Collections.sort(activities, new LaunchCountComparator(mDatabase));
+                YandexMetrica.reportEvent("Sorted apps by launch count");
                 break;
 
             default:
@@ -176,6 +199,21 @@ public class GridLauncherFragment extends Fragment {
 
         timings.dumpToLog();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(BackgroundReceiver.UPDATE_BACKGROUND);
+        filter.addAction(BackgroundReceiver.UPDATE_BACKGROUND_ONCE);
+        getContext().registerReceiver(mBackgroundReceiver,filter);
+        getContext().sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getContext().unregisterReceiver(mBackgroundReceiver);
     }
 
     @Override
