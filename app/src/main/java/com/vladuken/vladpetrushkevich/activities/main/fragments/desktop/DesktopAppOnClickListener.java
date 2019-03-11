@@ -12,7 +12,7 @@ import com.yandex.metrica.YandexMetrica;
 
 public class DesktopAppOnClickListener implements View.OnClickListener {
 
-    private AppDatabase mDatabase;
+    private final AppDatabase mDatabase;
     private App mApp;
 
     public DesktopAppOnClickListener(AppDatabase database, App app) {

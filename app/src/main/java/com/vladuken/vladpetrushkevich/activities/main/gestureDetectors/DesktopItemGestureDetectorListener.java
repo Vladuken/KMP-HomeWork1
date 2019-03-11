@@ -14,10 +14,10 @@ import com.yandex.metrica.YandexMetrica;
 
 public class DesktopItemGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
 
-    private static final String TAG = "DesktopItemGesture";
-    private DesktopItem mDesktopItem;
-    private View mView;
-    private DesktopItemViewHolder mViewHolder;
+//    private static final String TAG = "DesktopItemGesture";
+    private final DesktopItem mDesktopItem;
+    private final View mView;
+    private final DesktopItemViewHolder mViewHolder;
 
     public DesktopItemGestureDetectorListener(DesktopItem desktopItem, View view, DesktopItemViewHolder viewHolder) {
         mDesktopItem = desktopItem;

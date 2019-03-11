@@ -1,14 +1,9 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,7 +17,6 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.lis
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
-import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +26,7 @@ import java.util.Map;
 public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
-    private static final String TAG = "LauncherAdapter";
+//    private static final String TAG = "LauncherAdapter";
 
 
     private static final int POPULAR_APP_SIZE = 5;

@@ -16,7 +16,7 @@ import com.yandex.metrica.YandexMetrica;
 
 public class AppLongClickListener implements View.OnLongClickListener {
 
-    private static final String TAG = "AppLongClickListener";
+    protected static final String TAG = "AppLongClickListener";
     protected App mApp;
     protected View mView;
     private PopupMenu mPopupMenu;
@@ -56,7 +56,6 @@ public class AppLongClickListener implements View.OnLongClickListener {
                     case R.id.action_uninstall_app:
 
                         uninstallApp();
-                        return true;
 
                     case R.id.action_open_app_settings:
 

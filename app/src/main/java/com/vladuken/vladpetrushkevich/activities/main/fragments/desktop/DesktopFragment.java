@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,13 +37,13 @@ public class DesktopFragment extends Fragment {
 
 
     private static final String SCREEN_ITEM_EMPTY_TYPE = "empty";
-    private static final String SCREEN_ITEM_APP_TYPE = "app";
-    private static final String SCREEN_ITEM_LINK_TYPE = "link";
+//    private static final String SCREEN_ITEM_APP_TYPE = "app";
+//    private static final String SCREEN_ITEM_LINK_TYPE = "link";
 
 
 
-    private static final String ARG_ROWS = "rows";
-    private static final String ARG_COLUMNS = "columns";
+//    private static final String ARG_ROWS = "rows";
+//    private static final String ARG_COLUMNS = "columns";
     private static final String ARG_VP_POSITION = "position";
 
 
@@ -53,7 +52,7 @@ public class DesktopFragment extends Fragment {
     protected AppDatabase mDatabase;
     protected DesktopScreen mDesktopScreen;
 
-    private LinearLayout mTopRemoveBar;
+    protected LinearLayout mTopRemoveBar;
     private int mViewPagerPosition;
     int mRows;
     int mColumns;
@@ -65,7 +64,7 @@ public class DesktopFragment extends Fragment {
     private  int mLongClickedScreen;
     private int mLongClickedRow;
     protected int mLongClickedColumn;
-    protected DesktopItemViewHolder mLongClickedViewHolder;
+//    protected DesktopItemViewHolder mLongClickedViewHolder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,6 +98,8 @@ public class DesktopFragment extends Fragment {
                         mTopRemoveBar.setVisibility(View.GONE);
                         break;
                     case DragEvent.ACTION_DROP:
+                        break;
+                    default:
                         break;
                 }
 
@@ -159,7 +160,7 @@ public class DesktopFragment extends Fragment {
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        PackageManager pm = getActivity().getPackageManager();
+//        PackageManager pm = getActivity().getPackageManager();
 //        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
 
 
@@ -233,30 +234,29 @@ public class DesktopFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == Activity.RESULT_OK){
-            if(requestCode == RESULT_CODE_PICK_PHONE){
+        if(resultCode == Activity.RESULT_OK && requestCode == RESULT_CODE_PICK_PHONE){
 
-                Uri contactUri = data.getData();
-                String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
-                Cursor cursor = getContext().getContentResolver().query(contactUri, projection,
-                        null, null, null);
+            Uri contactUri = data.getData();
+            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
+            Cursor cursor = getContext().getContentResolver().query(contactUri, projection,
+                    null, null, null);
 
-                // If the cursor returned is valid, get the phone number
-                if (cursor != null && cursor.moveToFirst()) {
-                    int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                    String number = cursor.getString(numberIndex);
-                    Log.d("number",number);
-                    // Do something with the phone number
-                    int a = data.getIntExtra("HELP",-1);
-                    Log.d("number",a +"");
+            // If the cursor returned is valid, get the phone number
+            if (cursor != null && cursor.moveToFirst()) {
+                int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String number = cursor.getString(numberIndex);
+                Log.d("number",number);
+                // Do something with the phone number
+                int a = data.getIntExtra("HELP",-1);
+                Log.d("number",a +"");
 
 
-                    DesktopItem item = new DesktopItem(mLongClickedScreen,mLongClickedRow,mLongClickedColumn,"contact",number);
-                    mLongClickedViewHolder.bind(item);
-                }
-
-                cursor.close();
+                DesktopItem item = new DesktopItem(mLongClickedScreen,mLongClickedRow,mLongClickedColumn,"contact",number);
+                mViewHolder.bind(item);
             }
+
+            cursor.close();
+
         }
     }
 
@@ -273,6 +273,6 @@ public class DesktopFragment extends Fragment {
     }
 
     public void setLongClickedViewHolder(DesktopItemViewHolder longClickedViewHolder) {
-        mLongClickedViewHolder = longClickedViewHolder;
+        mViewHolder = longClickedViewHolder;
     }
 }

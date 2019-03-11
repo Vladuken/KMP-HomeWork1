@@ -1,6 +1,5 @@
 package com.vladuken.vladpetrushkevich.activities.main.fragments;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
@@ -9,7 +8,6 @@ import android.util.Log;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
-import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 
 public class SettingsFragment extends PreferenceFragmentCompat {

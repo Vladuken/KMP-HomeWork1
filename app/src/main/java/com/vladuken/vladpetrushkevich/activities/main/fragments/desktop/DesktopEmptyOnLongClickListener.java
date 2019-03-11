@@ -3,7 +3,6 @@ package com.vladuken.vladpetrushkevich.activities.main.fragments.desktop;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -22,12 +21,12 @@ import com.yandex.metrica.YandexMetrica;
 
 public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener {
 
-    private AppDatabase mDatabase;
-    private DesktopItem mDesktopItem;
-    private DesktopItemViewHolder mViewHolder;
+    protected final AppDatabase mDatabase;
+    protected final DesktopItem mDesktopItem;
+    protected final DesktopItemViewHolder mViewHolder;
+    protected final DesktopFragment mFragment;
 
-    private PopupMenu mPopupMenu;
-    private DesktopFragment mFragment;
+    protected PopupMenu mPopupMenu;
 
 
 
@@ -62,15 +61,13 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
                     case R.id.desktop_item_add_contact:
 
                         if (ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.READ_CONTACTS)
-                                == PackageManager.PERMISSION_GRANTED) {
-//                        getContacts();
+                                == PackageManager.PERMISSION_GRANTED)
+                        {
                             startAddContact(mDesktopItem);
                         } else {
                             startAddContact(mDesktopItem);
                             requestLocationPermission();
                         }
-
-
 
                         YandexMetrica.reportEvent("Add contact in desktop pressed");
 
@@ -93,11 +90,12 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
                         android.Manifest.permission.READ_CONTACTS)) {
                     // show UI part if you want here to show some rationale !!!
 
-                } else
+                } else{
                     ActivityCompat.requestPermissions(
                             mFragment.getActivity(),
                             new String[]{android.Manifest.permission.READ_CONTACTS},
                             1);
+                }
             }
         });
 
@@ -105,7 +103,7 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
         return true;
     }
 
-    private void startAddLinkDialog(DesktopItem desktopItem){
+    protected void startAddLinkDialog(DesktopItem desktopItem){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mViewHolder.itemView.getContext());
         //TODO
@@ -138,7 +136,7 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
         builder.show();
     }
 
-    private void setIconForSite(String link, DesktopItem desktopItem){
+    protected void setIconForSite(String link, DesktopItem desktopItem){
         desktopItem.itemType = "link";
         desktopItem.itemData = link;
         mDatabase.desckopAppDao().update(desktopItem);
@@ -148,7 +146,7 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
 
 
 
-    private void startAddContact(DesktopItem desktopItem){
+    protected void startAddContact(DesktopItem desktopItem){
 
         Intent i=new Intent(Intent.ACTION_PICK);
         i.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);

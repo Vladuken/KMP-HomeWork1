@@ -2,6 +2,7 @@ package com.vladuken.vladpetrushkevich.activities.main.gestureDetectors;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.os.Build;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,9 +16,9 @@ import com.yandex.metrica.YandexMetrica;
 
 public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
 
-    private static final String TAG = "AppGestureDetector";
-    private App mApp;
-    private View mView;
+//    private static final String TAG = "AppGestureDetector";
+    private final App mApp;
+    private final View mView;
 
     private DesktopItemViewHolder mViewHolder;
 
@@ -53,13 +54,18 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
             mViewHolder.getDesktopItem().itemType = "empty";
             mViewHolder.getDesktopItem().itemData ="";
             database.desckopAppDao().update(mViewHolder.getDesktopItem());
-            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
+            }
 //            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
             mViewHolder.bind(createEmptyDesktopItem(mViewHolder.getDesktopItem()));
 
 //            mView.setOnDragListener(null);
         }else {
-            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
+            }
         }
 
 

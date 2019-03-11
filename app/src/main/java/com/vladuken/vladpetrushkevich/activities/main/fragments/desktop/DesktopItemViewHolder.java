@@ -11,12 +11,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -30,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopItemGestureDetectorListener;
@@ -44,14 +41,14 @@ import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
 
 public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
-    private static final String TAG = "DesktopItemViewHolder";
-    private final ImageView mAppIcon;
-    private final TextView mAppTitle;
+    protected static final String TAG = "DesktopItemViewHolder";
+    protected final ImageView mAppIcon;
+    protected final TextView mAppTitle;
 
-    private DesktopFragment mDesktopFragment;
-    private final View mView;
+    protected final DesktopFragment mDesktopFragment;
+    protected final View mView;
 
-    private DesktopItem mDesktopItem;
+    protected final DesktopItem mDesktopItem;
     private final AppDatabase mDatabase;
 
     public DesktopItemViewHolder(@NonNull View itemView,
@@ -74,48 +71,27 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(DesktopItem item){
-//        final GestureDetector gestureDetector = new GestureDetector(
-//                mView.getContext(),
-//                new MyScrollGestureListener(this,mView)
-//        );
-//
-//        mView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return gestureDetector.onTouchEvent(event);
-//            }
-//        });
-
 
         mView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
 
-//                int action = event.getAction();
-//                View dragView = (View) event.getLocalState();
-//                ImageView dragImage = dragView.findViewById(R.id.grid_app_icon);
-//                TextView textView = dragView.findViewById(R.id.grid_app_title);
-//
-//                ImageView placeForImage = v.findViewById(R.id.grid_app_icon);
-//                TextView placeForText = v.findViewById(R.id.grid_app_title);
-
-
                 switch (event.getAction()){
                     case DragEvent.ACTION_DRAG_STARTED:
-                        Log.d(TAG,"Drag Started" + " r:" +item.row + " c:" + item.column);
+                        Log.d(TAG,"Drag Started" + getPositionString(item) );
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         itemView.setBackgroundColor(Color.argb(160,25,25,25));
-                        Log.d(TAG,"Drag Entered" + " r:" +item.row + " c:" + item.column);
+                        Log.d(TAG,"Drag Entered" + getPositionString(item));
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
                         itemView.setBackgroundColor(Color.TRANSPARENT);
-                        Log.d(TAG,"Drag Exited"+ " r:" +item.row + " c:" + item.column);
+                        Log.d(TAG,"Drag Exited"+ getPositionString(item));
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
 //                        bind(mDesktopItem);
 
-                        Log.d(TAG,"Drag Ended"+ " r:" +item.row + " c:" + item.column);
+                        Log.d(TAG,"Drag Ended"+ getPositionString(item));
                         break;
                     case DragEvent.ACTION_DROP:
                         itemView.setBackgroundColor(Color.TRANSPARENT);
@@ -126,11 +102,17 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                         mDesktopItem.itemData = clipData.getText().toString();
                         bind(mDesktopItem);
 
-                        Log.d(TAG,"Drag Dropped"+ " r:" +item.row + " c:" + item.column);
+                        Log.d(TAG,"Drag Dropped"+ getPositionString(item));
+                        break;
+                    default:
                         break;
                 }
 
                 return true;
+            }
+
+            private String getPositionString(DesktopItem i){
+                return " r:" +item.row + " c:" + item.column;
             }
         });
 
@@ -157,7 +139,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void bindItemView(DesktopItem item){
-        if(item.itemType.equals("link")){
+        if("link".equals(item.itemType)){
             String linkTitle = item.itemData;
 
             String linkPhoto = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
@@ -193,7 +175,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                     return detector.onTouchEvent(event);
                 }
             });
-        }else if(item.itemType.equals("contact")){
+        }else if("contact".equals(item.itemType)){
 
 
             mDatabase.desckopAppDao().update(item);
@@ -247,7 +229,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 if (cursor == null) {
                     return;
                 }
-                String name = null;
+//                String name = null;
                 String contactId = null;
                 InputStream input = null;
                 String contactName = null;
@@ -281,7 +263,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 //                    mAppIcon.setImageDrawable(new BitmapDrawable(mView.getResources(),BitmapFactory.decodeStream(input)));
                 }else {
                     final String contact = contactName;
-                    final Bitmap bitmap = BitmapFactory.decodeStream(input);
+//                    final Bitmap bitmap = BitmapFactory.decodeStream(input);
                     runOnUiThread(new Runnable() {
 
                         @Override

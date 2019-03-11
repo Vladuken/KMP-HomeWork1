@@ -9,15 +9,17 @@ import android.os.PersistableBundle;
 import android.view.View;
 
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.utils.picasso.LoadImageJobService;
 
 import java.io.File;
 import java.util.Calendar;
 
-public class BackgroundManager {
+public final class BackgroundManager {
 
-    public static void setupBackgroundWithOffset(View view, String fullPath,Long offset){
+    private BackgroundManager() {
+    }
+
+    public static void setupBackgroundWithOffset(View view, String fullPath, Long offset){
 
         new Thread(new Runnable() {
             @Override
@@ -64,7 +66,7 @@ public class BackgroundManager {
         }).start();
     }
 
-    private static String getLink(Context context,SharedPreferences preferences){
+    static String getLink(Context context,SharedPreferences preferences){
         return preferences.getString(context.getString(
                 R.string.preference_source_link),
                 "https://loremflickr.com/720/1080");

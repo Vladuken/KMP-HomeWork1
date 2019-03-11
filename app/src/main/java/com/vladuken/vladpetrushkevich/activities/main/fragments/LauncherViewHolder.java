@@ -18,8 +18,8 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mAppIcon;
     private final TextView mAppTitle;
 
-    private int mIconLayoutId;
-    private int mTitleLayoutId;
+//    private int mIconLayoutId;
+//    private int mTitleLayoutId;
 
     private final View mView;
 
@@ -35,8 +35,8 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
         mAppTitle = itemView.findViewById(title_layout_id);
         mDatabase = database;
 
-        mIconLayoutId = icon_layout_id;
-        mTitleLayoutId = title_layout_id;
+//        mIconLayoutId = icon_layout_id;
+//        mTitleLayoutId = title_layout_id;
     }
 
     public ResolveInfo getResolveInfo() {

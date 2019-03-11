@@ -5,22 +5,20 @@ import android.app.job.JobService;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
 public class LoadImageJobService extends JobService {
 
-    private static final String TAG = "LoadImageJobService";
-    private String mLink;
-    private String mPath;
+    protected static final String TAG = "LoadImageJobService";
+    protected String mLink;
+    protected String mPath;
 
     @Override
     public boolean onStartJob(JobParameters params) {
