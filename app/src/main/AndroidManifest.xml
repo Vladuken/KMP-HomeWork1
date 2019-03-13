@@ -57,6 +57,10 @@
             <!--</intent-filter>-->
         <!--</receiver>-->
 
+        <provider
+            android:exported="true"
+            android:authorities="com.vladuken.vladpetrushkevich.providers.appinfos"
+            android:name=".db.providers.AppProvider"/>
     </application>
 
 </manifest>
