@@ -24,13 +24,13 @@ public class LaunchCountComparator implements Comparator<ResolveInfo> {
 
         //TODO move this code to database initialisation
         if (app1 == null) {
-            app1 = new App(a.activityInfo.packageName, 0);
+            app1 = new App(a.activityInfo.packageName, 0,System.currentTimeMillis());
             mDatabase.appDao().insertAll(app1);
         }
 
 
         if (app2 == null) {
-            app2 = new App(b.activityInfo.packageName, 0);
+            app2 = new App(b.activityInfo.packageName, 0, System.currentTimeMillis());
             mDatabase.appDao().insertAll(app2);
         }
 

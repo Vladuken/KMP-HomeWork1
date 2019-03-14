@@ -148,7 +148,8 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     new AppGestureDetectorListener(
                             new App(
                                 resolveInfo.activityInfo.packageName,
-                                -1),
+                                -1,
+                                    0),
                             vh.itemView)
             );
 

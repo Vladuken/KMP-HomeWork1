@@ -15,8 +15,12 @@ public class App {
     @ColumnInfo(name ="launches_count")
     public int launches_count;
 
-    public App(String package_name, int launches_count) {
+    @ColumnInfo(name = "last_time_launched")
+    public long last_time_launched;
+
+    public App(String package_name, int launches_count, long last_time_launched) {
         this.package_name = package_name;
         this.launches_count = launches_count;
+        this.last_time_launched = last_time_launched;
     }
 }

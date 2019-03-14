@@ -11,7 +11,7 @@ import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 
-@Database(entities = {App.class, DesktopScreen.class, DesktopItem.class}, version = 2, exportSchema = false)
+@Database(entities = {App.class, DesktopScreen.class, DesktopItem.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract AppDao appDao();
 

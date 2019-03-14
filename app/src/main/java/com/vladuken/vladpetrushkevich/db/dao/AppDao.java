@@ -32,4 +32,6 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE launches_count != 0")
     Cursor getAllUsed();
 
+    @Query("SELECT package, launches_count, MAX(last_time_launched) FROM app")
+    Cursor getLastLaunched();
 }

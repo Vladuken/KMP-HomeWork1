@@ -35,8 +35,9 @@ public class AppProvider extends ContentProvider {
 
         Cursor retCursor;
         switch (sUriMatcher.match(uri)){
-//            case LAST_LAUNCHED_APP:
-//                break;
+            case LAST_LAUNCHED_APP:
+                retCursor = mDatabase.appDao().getLastLaunched();
+                break;
             case ALL_USED_APPS:
                 retCursor = mDatabase.appDao().getAllUsed();
                 break;

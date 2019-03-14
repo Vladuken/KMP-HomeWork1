@@ -32,6 +32,7 @@ public class IconOnClickListener implements View.OnClickListener {
 
 
         mViewHolder.getApp().launches_count++;
+        mViewHolder.getApp().last_time_launched = System.currentTimeMillis();
         mViewHolder.getDatabase().appDao().update(mViewHolder.getApp());
         v.getContext().startActivity(i);
 
@@ -57,8 +58,6 @@ public class IconOnClickListener implements View.OnClickListener {
                     new LaunchCountComparator(mViewHolder.getDatabase())
             );
         }
-
-
 
 
         mAdapter.notifyDataSetChanged();
