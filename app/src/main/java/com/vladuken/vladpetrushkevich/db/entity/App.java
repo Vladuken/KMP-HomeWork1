@@ -7,14 +7,17 @@ import android.support.annotation.NonNull;
 
 @Entity
 public class App {
+    public static final String PACKAGE_NAME = "package";
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "package")
     public String package_name;
 
+    public static final String LAUNCH_COUNT = "launches_count";
     @ColumnInfo(name ="launches_count")
     public int launches_count;
 
+    public static final String LAST_TIME_LAUNCHED = "last_time_launched";
     @ColumnInfo(name = "last_time_launched")
     public long last_time_launched;
 

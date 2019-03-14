@@ -13,4 +13,6 @@ public final class AppInfoProviderContract {
 
     public static final String PATH_ALL_APPS = "apps";
     public static final String PATH_LAST_LAUNCHED_APP = "lastLaunchedApp";
+    public static final String PATH_UPDATE_APP = "updateApp";
+
 }
