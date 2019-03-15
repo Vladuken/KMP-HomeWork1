@@ -22,6 +22,7 @@ public class App {
 
     @Override
     public String toString() {
+
         return package_name;
     }
 }

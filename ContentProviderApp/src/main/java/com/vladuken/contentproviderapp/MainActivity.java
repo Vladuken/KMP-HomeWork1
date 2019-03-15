@@ -3,6 +3,8 @@ package com.vladuken.contentproviderapp;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
@@ -50,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         mTextView = findViewById(R.id.textView);
         mAppsButton = findViewById(R.id.all_app_btn);
+        mLastLaunchedButton = findViewById(R.id.last_launched_app_btn);
+        mSpinner = findViewById(R.id.spinner);
+        mUpdateButton = findViewById(R.id.update_button);
+        mEditText = findViewById(R.id.launch_count_edittext);
 
         mAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 mTextView.setText(getResString(yourURI));
             }
         });
-        mLastLaunchedButton = findViewById(R.id.last_launched_app_btn);
         mLastLaunchedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,21 +74,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mSpinner = findViewById(R.id.spinner);
 
         Uri yourURI = buildUri(AppInfoProviderContract.PATH_ALL_APPS);
         List<App> list = getAppList(yourURI);
 
-        mAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,list);
-        mSpinner.setAdapter(mAdapter);
 
-        mEditText = findViewById(R.id.launch_count_edittext);
+
         if(!list.isEmpty()){
             mEditText.setText("0");
         }
 
         //TODO add
-        mUpdateButton = findViewById(R.id.update_button);
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,11 +99,19 @@ public class MainActivity extends AppCompatActivity {
                 ContentResolver resolver = getContentResolver();
                 try{
                     resolver.update(buildUri(AppInfoProviderContract.PATH_UPDATE_APP),values,null,null);
+                    Uri yourURI = buildUri(AppInfoProviderContract.PATH_ALL_APPS);
+                    List<App> list = getAppList(yourURI);
+
+                    mAdapter = new ArrayAdapter<>(v.getContext(),android.R.layout.simple_spinner_dropdown_item,list);
+                    mSpinner.setAdapter(mAdapter);
                 }catch (SecurityException e){
                     mTextView.setText("No write permission");
                 }
+
             }
         });
+        mAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        mSpinner.setAdapter(mAdapter);
     }
 
     private Uri buildUri(String path){
@@ -117,14 +126,27 @@ public class MainActivity extends AppCompatActivity {
     private String getResString(Uri yourURI){
 
         List<App> list = getAppList(yourURI);
-        String resString = "";
+        StringBuilder resString = new StringBuilder();
+
+        final PackageManager pm = getApplicationContext().getPackageManager();
 
         for (App app:list){
-            resString += app.package_name + " " + app.launches_count + "\n";
+            resString.append(getAppLabel(app.package_name, pm)).append(" ").append(app.package_name).append(" ").append(app.launches_count).append("\n");
         }
 
 
-        return resString;
+        return resString.toString();
+    }
+
+    private String getAppLabel(String packageName, PackageManager pm){
+
+        ApplicationInfo ai;
+        try {
+            ai = pm.getApplicationInfo( packageName, 0);
+        } catch (final PackageManager.NameNotFoundException e) {
+            ai = null;
+        }
+        return  (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
     }
 
     private List<App> getAppList(Uri yourURI){
@@ -152,6 +174,9 @@ public class MainActivity extends AppCompatActivity {
             }catch (RemoteException e){
             }catch (NullPointerException e) {
             }catch (SecurityException e){
+                mUpdateButton.setEnabled(false);
+                mAppsButton.setEnabled(false);
+                mLastLaunchedButton.setEnabled(false);
                 mTextView.setText("No permissions");
             }finally {
                 yourCR.close();
