@@ -2,7 +2,6 @@ package com.vladuken.vladpetrushkevich.db;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
-import android.database.Cursor;
 
 import com.vladuken.vladpetrushkevich.db.dao.AppDao;
 import com.vladuken.vladpetrushkevich.db.dao.DesckopAppDao;

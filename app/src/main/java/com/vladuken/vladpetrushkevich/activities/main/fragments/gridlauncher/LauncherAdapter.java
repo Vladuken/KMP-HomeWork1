@@ -117,6 +117,8 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if(pos == 0){
                 //TODO
             }else if(pos < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
+
+                //TODO ERROR WHEN YOU INSTALL APP
                 resolveInfo = mPopularAppInfo.get(pos - 1);
                 bindLauncherViewHolder(viewHolder,resolveInfo);
             }else if(pos == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){

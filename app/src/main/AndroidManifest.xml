@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vladuken.vladpetrushkevich">
 
+
+
     <permission android:name="com.vladuken.vladpetrushkevich.READ_PERMISSION"
         android:protectionLevel="normal"/>
 

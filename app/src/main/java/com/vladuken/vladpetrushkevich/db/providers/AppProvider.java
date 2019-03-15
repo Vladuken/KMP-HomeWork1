@@ -73,23 +73,19 @@ public class AppProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri,@Nullable ContentValues values, @Nullable String selection,@Nullable String[] selectionArgs) {
-        switch (sUriMatcher.match(uri)){
-            case UPDATE_APP:
 
-                SingletonDatabase.getInstance(getContext()).appDao()
-                        .update(
-                                new App(values.getAsString(App.PACKAGE_NAME),
-                                        values.getAsInteger(App.LAUNCH_COUNT),
-                                        values.getAsLong(App.LAST_TIME_LAUNCHED))
-                        );
-                break;
-            default:
-                break;
+        if(sUriMatcher.match(uri) == UPDATE_APP){
+            SingletonDatabase.getInstance(getContext()).appDao()
+                    .update(
+                            new App(values.getAsString(App.PACKAGE_NAME),
+                                    values.getAsInteger(App.LAUNCH_COUNT),
+                                    values.getAsLong(App.LAST_TIME_LAUNCHED)));
+
+            return 1;
         }
+
         return 0;
     }
-
-   
 
     private static UriMatcher buildUriMatcher(){
         String authority = AppInfoProviderContract.AUTHORITY;

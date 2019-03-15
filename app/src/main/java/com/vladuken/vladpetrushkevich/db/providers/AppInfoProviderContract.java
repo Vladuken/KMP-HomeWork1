@@ -1,8 +1,6 @@
 package com.vladuken.vladpetrushkevich.db.providers;
 
-import android.content.ContentUris;
 import android.net.Uri;
-import android.provider.BaseColumns;
 
 public final class AppInfoProviderContract {
     public static final String AUTHORITY =

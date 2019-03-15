@@ -5,7 +5,7 @@
 
 
     <uses-permission android:name="com.vladuken.vladpetrushkevich.READ_PERMISSION"></uses-permission>
-    <!--<uses-permission android:name="com.vladuken.vladpetrushkevich.WRITE_PERMISSION"></uses-permission>-->
+    <uses-permission android:name="com.vladuken.vladpetrushkevich.WRITE_PERMISSION"></uses-permission>
 
     <application
         android:allowBackup="true"
