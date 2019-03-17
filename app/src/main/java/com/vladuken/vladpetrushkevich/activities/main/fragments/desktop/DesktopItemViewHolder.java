@@ -123,7 +123,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             case "app":
                 App app = mDatabase.appDao().getById(item.itemData);
                 if(app == null){
-                    app = new App(item.itemType,0);
+                    app = new App(item.itemType,0,System.currentTimeMillis());
                 }
                 bindApp(app);
                 break;

@@ -23,6 +23,7 @@ public class DesktopAppOnClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         mApp.launches_count++;
+        mApp.last_time_launched = System.currentTimeMillis();
         mDatabase.appDao().update(mApp);
         YandexMetrica.reportEvent("App start on icon click in desktop page");
 

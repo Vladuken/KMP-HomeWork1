@@ -69,7 +69,7 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
         //TODO move all this code to Adaper
         mApp = mDatabase.appDao().getById(mResolveInfo.activityInfo.packageName);
         if (mApp == null) {
-            mApp = new App(mResolveInfo.activityInfo.packageName, 0);
+            mApp = new App(mResolveInfo.activityInfo.packageName, 0,System.currentTimeMillis());
             mDatabase.appDao().insertAll(mApp);
         }
 
