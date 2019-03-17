@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.database.Cursor;
 
 import com.vladuken.vladpetrushkevich.db.entity.App;
 
@@ -28,4 +29,9 @@ public interface AppDao {
     @Delete
     void delete(App app);
 
+    @Query("SELECT * FROM app WHERE launches_count != 0")
+    Cursor getAllUsed();
+
+    @Query("SELECT package, launches_count, MAX(last_time_launched) FROM app")
+    Cursor getLastLaunched();
 }
