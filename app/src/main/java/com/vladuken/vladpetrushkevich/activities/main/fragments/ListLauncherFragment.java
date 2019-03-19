@@ -123,7 +123,11 @@ public class ListLauncherFragment extends Fragment {
             default:
                 break;
         }
-        LauncherAdapter launcherAdapter = new LauncherAdapter(mInstalledApps,mDatabase,false);
+
+        int popularLineSize = Integer.parseInt(
+                mSharedPreferences.getString(getString(R.string.preference_popular_apps_line_size_key),"1")
+        );
+        LauncherAdapter launcherAdapter = new LauncherAdapter(mInstalledApps,mDatabase,false,popularLineSize);
 
 
         boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);

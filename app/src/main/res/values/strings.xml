@@ -78,12 +78,14 @@
     <string name="pref_dark_theme">Dark theme</string>
     <string name="pref_compat_layout">Compat layout</string>
     <string name="pref_intro_next_time">Show intro next time</string>
-    <string name="pref_popular_apps">Show popular apps</string>
     <string name="pref_background_update_button">Update background right now</string>
 
     <string name="pref_one_background_for_all_screens">One background for all screens</string>
 
-
+    <!--POPULAR APPS-->
+    <!--TODO RENAME PLEASE to LINCEVOUNT WITHOUT PREFS-->
+    <string name="pref_popular_apps_line_size">Line count</string>
+    <string name="pref_popular_apps">Show popular apps</string>
     <!--SORT-->
     <string name="sort_no">No sort</string>
     <string name="sort_title">By title</string>

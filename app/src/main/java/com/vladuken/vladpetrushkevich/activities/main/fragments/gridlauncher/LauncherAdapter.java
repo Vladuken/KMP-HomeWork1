@@ -28,9 +28,8 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 //    private static final String TAG = "LauncherAdapter";
 
-
-    private static final int POPULAR_APP_SIZE = 5;
-    private static final int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = POPULAR_APP_SIZE + 1;
+    private int POPULAR_APP_SIZE;
+    private int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER;
 
 
     private static final int POPULAR_GROUP_TITLE = 1;
@@ -47,10 +46,13 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final boolean mIsGridView;
 
 
-    public LauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, boolean isGridView) {
+    public LauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, boolean isGridView, int popularAppSize) {
         mInstalledAppInfo =  installedAppsInfo;
         mDatabase = database;
         mIcons = new HashMap<>();
+
+        POPULAR_APP_SIZE = popularAppSize;
+        POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = POPULAR_APP_SIZE + 1;
 
         mIsGridView = isGridView;
     }

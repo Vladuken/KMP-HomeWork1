@@ -137,28 +137,6 @@ public class GridLauncherFragment extends Fragment {
                 break;
         }
 
-        timings.addSplit("Sorting");
-        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,true);
-        timings.addSplit("LauncherAdapter init");
-
-
-
-
-
-        boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
-        timings.addSplit("Get boolean Popular Apps from SharedPref");
-
-        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
-        timings.addSplit("Create new list of popular apps");
-        if(showPopApps){
-            Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
-            timings.addSplit("Sort popular apps");
-            launcherAdapter.setPopularAppInfo(popularActivities);
-            timings.addSplit("Set popular app info");
-        }
-
-
-
         boolean isCompactLayout =
                 mSharedPreferences.getBoolean(
                         getString(R.string.preference_key_layout),
@@ -182,6 +160,27 @@ public class GridLauncherFragment extends Fragment {
 
         }else {
             gridLayoutManager = new GridLayoutManager(getContext(), landscapeSpanCount);
+        }
+
+
+        timings.addSplit("Sorting");
+
+        int popularLineSize = Integer.parseInt(
+                mSharedPreferences.getString(getString(R.string.preference_popular_apps_line_size_key),"1")
+        );
+        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,true,gridLayoutManager.getSpanCount()*popularLineSize);
+        timings.addSplit("LauncherAdapter init");
+
+        boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
+        timings.addSplit("Get boolean Popular Apps from SharedPref");
+
+        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+        timings.addSplit("Create new list of popular apps");
+        if(showPopApps){
+            Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
+            timings.addSplit("Sort popular apps");
+            launcherAdapter.setPopularAppInfo(popularActivities);
+            timings.addSplit("Set popular app info");
         }
 
 

@@ -26,6 +26,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference popularApps = findPreference(getString(R.string.preference_key_popular_apps));
         popularApps.setOnPreferenceClickListener(this::onPreferenceClick);
 
+        Preference popularAppSizePreference = findPreference(getString(R.string.preference_popular_apps_line_size_key));
+        popularAppSizePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                ThemeChanger.reloadActivity(getActivity());
+                return true;
+            }
+        });
+
         Preference sortPreference = findPreference(getString(R.string.preference_key_sort_method));
         sortPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

@@ -79,6 +79,8 @@
     <string name="pref_compat_layout">Компактный тип макета</string>
     <string name="pref_intro_next_time">Включить интро при следующем запуске</string>
     <string name="pref_popular_apps">Окно популярных приложений</string>
+    <string name="pref_popular_apps_line_size">Количество строк</string>
+
 
     <!--SORTINGS-->
     <string name="sort_no">Без сортировки</string>

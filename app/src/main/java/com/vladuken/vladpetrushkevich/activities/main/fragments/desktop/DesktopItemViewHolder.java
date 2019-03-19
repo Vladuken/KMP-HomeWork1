@@ -151,6 +151,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
             Picasso.get()
                     .load(linkPhoto)
+                    .placeholder(R.drawable.ic_web)
                     .into(new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -165,11 +166,11 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
                         @Override
                         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
                         }
 
                         @Override
                         public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            mAppIcon.setImageResource(R.drawable.ic_web);
 
                         }
                     });

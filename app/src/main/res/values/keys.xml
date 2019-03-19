@@ -17,10 +17,14 @@
 
     <string name="preference_one_background_for_all_screens" translatable="false">com.vladuken.vladpetrushkevich.ONE_BACKGROUND</string>
 
+    <string name="preference_popular_apps_line_size_key" translatable="false">
+        com.vladuken.vladpetrushkevich.APPS_LINE_SIZE
+    </string>
 
     <string name="preference_background_renew_frequency" translatable="false">
         com.vladuken.vladpetrushkevich.BACKGROUND_RENEW_FREQUENCY
     </string>
+
 
 
 
