@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -28,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopItemGestureDetectorListener;
@@ -35,6 +38,7 @@ import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
@@ -143,7 +147,32 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             String linkTitle = item.itemData;
 
             String linkPhoto = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
-            Picasso.get().load(linkPhoto).into(mAppIcon);
+
+
+            Picasso.get()
+                    .load(linkPhoto)
+                    .into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            if(bitmap.getWidth() < 3 || bitmap.getHeight() < 3){
+
+
+                                mAppIcon.setImageResource(R.drawable.ic_web);
+                            }else {
+                                mAppIcon.setImageDrawable(new BitmapDrawable(mAppIcon.getResources(),bitmap));
+                            }
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
             mAppTitle.setText(linkTitle);
 
             mView.setOnClickListener(new View.OnClickListener() {
