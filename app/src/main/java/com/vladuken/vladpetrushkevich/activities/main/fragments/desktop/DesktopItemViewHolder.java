@@ -328,7 +328,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             mAppTitle.setText(appName);
 
             mView.setOnClickListener(new DesktopAppOnClickListener(mDatabase,app));
-//            mView.setOnLongClickListener(new AppLongClickListener(app,mView));
+            mView.setOnLongClickListener(null);
 
             GestureDetector detector = new GestureDetector(
                     mView.getContext(),
