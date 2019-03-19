@@ -238,6 +238,15 @@ public class LauncherActivity extends AppCompatActivity {
             onNavigationItemSelected(menuItem);
         }
 
+        //if was reload activity
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            int menuId = bundle.getInt(CHECKED_NAV_ID,R.id.nav_list_activity);
+            MenuItem menuItem = mNavigationView.getMenu().findItem(menuId);
+
+            mNavigationView.setCheckedItem(menuId);
+            onNavigationItemSelected(menuItem);
+        }
     }
 
 
@@ -280,4 +289,26 @@ public class LauncherActivity extends AppCompatActivity {
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public void restartActivity() {
+        Intent i = getIntent();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putInt(CHECKED_NAV_ID,mNavigationView.getCheckedItem().getItemId());
+
+        i.putExtras(bundle);
+
+        this.finish();
+        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        this.overridePendingTransition(0, 0);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+        //restart the activity without animation
+        this.overridePendingTransition(0, 0);
+        this.startActivity(i);
+    }
+
 }
