@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -15,8 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.crashlytics.android.Crashlytics;
 import com.microsoft.appcenter.AppCenter;
@@ -25,6 +28,7 @@ import com.microsoft.appcenter.crashes.Crashes;
 import com.microsoft.appcenter.distribute.Distribute;
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
+import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 import com.vladuken.vladpetrushkevich.utils.ThemeChanger;
 import com.yandex.metrica.YandexMetrica;
 
@@ -63,17 +67,19 @@ public class LauncherActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_nav_drawer);
 
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
-                onNavigationItemSelected(R.id.nav_launcher_activity);
-            }
-        });
+
+//        mToolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
+//                onNavigationItemSelected(R.id.nav_launcher_activity);
+//            }
+//        });
 //        mToolbar.setVisibility(View.GONE);
 
         mNavigationView = findViewById(R.id.nav_view);
@@ -183,6 +189,10 @@ public class LauncherActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         mFramePager = findViewById(R.id.launcher_fragment_viewpager);
         LauncherPagerAdapter launcherPagerAdapter = new LauncherPagerAdapter(fm);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(mFramePager, true);
+
         mFramePager.setAdapter(launcherPagerAdapter);
         mFramePager.setOffscreenPageLimit(launcherPagerAdapter.getCount());
         mFramePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -210,7 +220,11 @@ public class LauncherActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                //TODO
+                if(i == ViewPager.SCROLL_STATE_DRAGGING || i == ViewPager.SCROLL_STATE_SETTLING){
+                    AnimateUtils.animateToVisible(tabLayout,250);
+                }else {
+                    AnimateUtils.animateToGone(tabLayout,250);
+                }
             }
         });
 
