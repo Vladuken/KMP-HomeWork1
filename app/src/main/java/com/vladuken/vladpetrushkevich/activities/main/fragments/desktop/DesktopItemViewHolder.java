@@ -148,32 +148,14 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
             String linkPhoto = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
 
+            //Because Picasso store weak reference you should set tag to view
+            Target target = new IconImageViewTarger(mAppIcon);
+            mAppIcon.setTag(target);
 
             Picasso.get()
                     .load(linkPhoto)
                     .placeholder(R.drawable.ic_web)
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            if(bitmap.getWidth() < 3 || bitmap.getHeight() < 3){
-
-
-                                mAppIcon.setImageResource(R.drawable.ic_web);
-                            }else {
-                                mAppIcon.setImageDrawable(new BitmapDrawable(mAppIcon.getResources(),bitmap));
-                            }
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-                            mAppIcon.setImageResource(R.drawable.ic_web);
-
-                        }
-                    });
+                    .into(target);
             mAppTitle.setText(linkTitle);
 
             mView.setOnClickListener(new View.OnClickListener() {
