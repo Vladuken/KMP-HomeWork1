@@ -43,16 +43,6 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
         MenuInflater inflater = mPopupMenu.getMenuInflater();
         inflater.inflate(R.menu.desktop_empty_item_popup, mPopupMenu.getMenu());
 
-        mViewHolder.itemView.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                if(event.getAction() == DragEvent.ACTION_DRAG_EXITED){
-                    mPopupMenu.dismiss();
-                }
-                return true;
-            }
-        });
-
 
         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override

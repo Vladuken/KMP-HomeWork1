@@ -56,7 +56,7 @@
         </ListPreference>
         <ListPreference
             android:title="@string/background_source"
-            android:defaultValue="https://loremflickr.com/720/1080"
+            android:defaultValue="https://picsum.photos/720/1080/?random"
             android:key="@string/preference_source_link"
             android:entries="@array/sourceList"
             android:entryValues="@array/sourceList">
