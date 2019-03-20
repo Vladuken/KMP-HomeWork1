@@ -9,9 +9,10 @@
         android:id="@+id/desktop_top_remove_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:visibility="gone"
-        android:background="?attr/colorPrimaryDark"
+        android:layout_weight="20"
+        android:animateLayoutChanges="true"
+        android:alpha="0"
+        android:background="#55000000"
         xmlns:tools="http://schemas.android.com/tools"
         tools:visibility="visible"
         android:orientation="horizontal">
@@ -21,6 +22,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="@dimen/title_text"
+            android:textColor="@android:color/white"
 
             android:text="@string/desktop_item_remove"/>
     </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -27,6 +28,7 @@ import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
+import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
 
 
@@ -81,21 +83,31 @@ public class DesktopFragment extends Fragment {
         mTopRemoveBar = v.findViewById(R.id.desktop_top_remove_bar);
         TextView textView = v.findViewById(R.id.desktop_top_remove_text_view);
         v.setOnDragListener(new View.OnDragListener() {
+            private static final int ACCENTCOLOR = Color.RED;
+            private static final int ANIMATIONDELAY =350;
+
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()){
                     case DragEvent.ACTION_DRAG_STARTED:
-                        mTopRemoveBar.setVisibility(View.VISIBLE);
+                        mTopRemoveBar.animate().alpha(1.0f);
+
                         textView.setTextSize(20);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        textView.setTextSize(40);
+
+                        AnimateUtils.animateBackground(textView,Color.TRANSPARENT,ACCENTCOLOR,ANIMATIONDELAY);
+
+//                        textView.setTextColor(Color.RED);
+//                        textView.setTextSize(40);
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        textView.setTextSize(20);
+//                        textView.setTextSize(20);
+                        AnimateUtils.animateBackground(textView,ACCENTCOLOR,Color.TRANSPARENT,ANIMATIONDELAY);
+
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        mTopRemoveBar.setVisibility(View.GONE);
+                        mTopRemoveBar.animate().alpha(0.0f);
                         break;
                     case DragEvent.ACTION_DROP:
                         break;
@@ -135,8 +147,8 @@ public class DesktopFragment extends Fragment {
             fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
         }
 
-        BackgroundManager.setupBackground(mTableLayout,fullpath);
-        mBackgroundReceiver = new BackgroundReceiver(mTableLayout,fullpath);
+        BackgroundManager.setupBackground(v,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(v,fullpath);
 
 
 
