@@ -10,6 +10,7 @@ import com.vladuken.vladpetrushkevich.activities.main.fragments.desktop.DesktopI
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
+import com.vladuken.vladpetrushkevich.utils.DragUtils;
 import com.yandex.metrica.YandexMetrica;
 
 public class DesktopItemGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
@@ -42,7 +43,7 @@ public class DesktopItemGestureDetectorListener extends GestureDetector.SimpleOn
 
 
         AppDatabase database = SingletonDatabase.getInstance(mView.getContext());
-        mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
+        DragUtils.startDrag(dragData,shadowBuilder,mView,0);
 
         mViewHolder.getDesktopItem().itemType = "empty";
         mViewHolder.getDesktopItem().itemData ="";

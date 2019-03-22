@@ -12,6 +12,7 @@ import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
+import com.vladuken.vladpetrushkevich.utils.DragUtils;
 import com.yandex.metrica.YandexMetrica;
 
 public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
@@ -55,26 +56,22 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
             mViewHolder.getDesktopItem().itemData ="";
             database.desckopAppDao().update(mViewHolder.getDesktopItem());
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
-            }
+            DragUtils.startDrag(dragData,shadowBuilder,mView,0);
+
 //            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
             mViewHolder.bind(createEmptyDesktopItem(mViewHolder.getDesktopItem()));
 
 //            mView.setOnDragListener(null);
         }else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
-            }
+            DragUtils.startDrag(dragData,shadowBuilder,mView,0);
         }
-
-
-
 //        mView = null;
         YandexMetrica.reportEvent("Started app drag and drop");
 
         super.onLongPress(e);
     }
+
+
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
