@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,12 +25,15 @@ import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerListener;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
 import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
+import com.vladuken.vladpetrushkevich.utils.DragUtils;
 
 
 public class DesktopFragment extends Fragment {
@@ -131,6 +135,11 @@ public class DesktopFragment extends Fragment {
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
 
+        v.setOnDragListener(new DragUtils.DebugDragListener());
+        mTopRemoveBar.setOnDragListener(new DragUtils.DebugDragListener());
+        textView.setOnDragListener(new DragUtils.DebugDragListener());
+        mTableLayout.setOnDragListener(new DragUtils.DebugDragListener());
+
 
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
         if(mDesktopScreen == null){
@@ -163,6 +172,16 @@ public class DesktopFragment extends Fragment {
         }
 
 
+
+        View leftBar = v.findViewById(R.id.left_vertical_viewpager_scroller);
+        leftBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.LEFT)));
+
+        View rightBar = v.findViewById(R.id.right_vertical_viewpager_scroller);
+        rightBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.RIGHT)));
 
         return v;
     }
