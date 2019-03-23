@@ -28,13 +28,21 @@ public class SwipeFramePagerListener implements View.OnDragListener {
     @Override
     public boolean onDrag(View v, DragEvent event) {
         switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                break;
+//                v.setVisibility(View.VISIBLE);
+//                break;
             case DragEvent.ACTION_DRAG_ENTERED:
+//                v.setVisibility(View.VISIBLE);
                 handler.postDelayed(mRunnable, 600);
 
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
 
                 handler.removeCallbacks(mRunnable);
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+//                v.setVisibility(View.INVISIBLE);
                 break;
             default:
                 break;

@@ -70,7 +70,8 @@ public class AppLongClickListener implements View.OnLongClickListener {
         MenuItem launchCountMenu = mPopupMenu.getMenu().findItem(R.id.action_count_app_launches);
         launchCountMenu.setTitle(v.getResources().getString(R.string.launched) + " " + mApp.launches_count + " " + v.getResources().getString(R.string.times));
         launchCountMenu.setEnabled(false);
-        mPopupMenu.show();
+        //TODO AAAAAAAAAAAAAAAAAAAAAAaa
+//        mPopupMenu.show();
         return true;
     }
 

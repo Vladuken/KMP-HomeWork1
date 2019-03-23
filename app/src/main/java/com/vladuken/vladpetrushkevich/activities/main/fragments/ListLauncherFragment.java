@@ -19,6 +19,8 @@ import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerListener;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
@@ -85,6 +87,17 @@ public class ListLauncherFragment extends Fragment {
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
 
         filter.addDataScheme("package");
+
+        View leftBar = v.findViewById(R.id.left_vertical_viewpager_scroller);
+        leftBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.LEFT)));
+
+        View rightBar = v.findViewById(R.id.right_vertical_viewpager_scroller);
+        rightBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.RIGHT)));
+
 
         getContext().registerReceiver(mBroadcastReceiver, filter);
 
