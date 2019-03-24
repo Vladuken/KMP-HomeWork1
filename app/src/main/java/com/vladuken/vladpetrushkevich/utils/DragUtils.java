@@ -24,19 +24,20 @@ public class DragUtils {
         public boolean onDrag(View v, DragEvent event) {
             switch (event.getAction()){
                 case DragEvent.ACTION_DRAG_STARTED:
-                    v.setBackgroundColor(Color.rgb(220,220,200));
+//                    v.setBackgroundColor(Color.rgb(220,220,200));
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    v.setBackgroundColor(Color.GREEN);
-                    return false;
+//                    v.setBackgroundColor(Color.GREEN);
+//                    return false;
+                    break;
                 case DragEvent.ACTION_DRAG_EXITED:
-                    v.setBackgroundColor(Color.RED);
+//                    v.setBackgroundColor(Color.RED);
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    v.setBackgroundColor(Color.BLACK);
+//                    v.setBackgroundColor(Color.BLACK);
                     break;
                 case DragEvent.ACTION_DROP:
-                    v.setBackgroundColor(Color.YELLOW);
+//                    v.setBackgroundColor(Color.YELLOW);
                     break;
                 default:
                     break;
