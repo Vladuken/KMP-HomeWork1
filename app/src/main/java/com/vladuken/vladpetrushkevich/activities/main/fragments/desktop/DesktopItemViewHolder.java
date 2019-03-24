@@ -155,6 +155,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             Picasso.get()
                     .load(linkPhoto)
                     .placeholder(R.drawable.ic_web)
+                    .error(R.drawable.ic_web)
                     .into(target);
             mAppTitle.setText(linkTitle);
 
