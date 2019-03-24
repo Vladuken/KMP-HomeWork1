@@ -86,7 +86,7 @@ public class DesktopFragment extends Fragment {
 
         mTopRemoveBar = v.findViewById(R.id.desktop_top_remove_bar);
         TextView textView = v.findViewById(R.id.desktop_top_remove_text_view);
-        v.setOnDragListener(new View.OnDragListener() {
+        mTopRemoveBar.setOnDragListener(new View.OnDragListener() {
             private static final int ACCENTCOLOR = Color.RED;
             private static final int ANIMATIONDELAY =350;
 
@@ -114,6 +114,8 @@ public class DesktopFragment extends Fragment {
                         mTopRemoveBar.animate().alpha(0.0f);
                         break;
                     case DragEvent.ACTION_DROP:
+                        AnimateUtils.animateBackground(textView,ACCENTCOLOR,Color.TRANSPARENT,ANIMATIONDELAY);
+
                         break;
                     default:
                         break;
@@ -135,10 +137,10 @@ public class DesktopFragment extends Fragment {
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
 
-        v.setOnDragListener(new DragUtils.DebugDragListener());
-        mTopRemoveBar.setOnDragListener(new DragUtils.DebugDragListener());
-        textView.setOnDragListener(new DragUtils.DebugDragListener());
-        mTableLayout.setOnDragListener(new DragUtils.DebugDragListener());
+//        v.setOnDragListener(new DragUtils.DebugDragListener());
+//        mTopRemoveBar.setOnDragListener(new DragUtils.DebugDragListener());
+//        textView.setOnDragListener(new DragUtils.DebugDragListener());
+//        mTableLayout.setOnDragListener(new DragUtils.DebugDragListener());
 
 
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);

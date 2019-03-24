@@ -82,8 +82,8 @@ public class GridLauncherFragment extends Fragment {
 
 
 //        String fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
-        BackgroundManager.setupBackground(mRecyclerView,fullpath);
-        mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
+        BackgroundManager.setupBackground(v,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(v,fullpath);
 
 
         IntentFilter filter = new IntentFilter();
@@ -92,11 +92,11 @@ public class GridLauncherFragment extends Fragment {
 
         filter.addDataScheme("package");
 
-
-        View leftBar = v.findViewById(R.id.left_vertical_viewpager_scroller);
-        leftBar.setOnDragListener(new SwipeFramePagerListener(
-                getContext(),
-                new Intent(SwipeFramePagerReceiver.LEFT)));
+//
+//        View leftBar = v.findViewById(R.id.left_vertical_viewpager_scroller);
+//        leftBar.setOnDragListener(new SwipeFramePagerListener(
+//                getContext(),
+//                new Intent(SwipeFramePagerReceiver.LEFT)));
 
         View rightBar = v.findViewById(R.id.right_vertical_viewpager_scroller);
         rightBar.setOnDragListener(new SwipeFramePagerListener(

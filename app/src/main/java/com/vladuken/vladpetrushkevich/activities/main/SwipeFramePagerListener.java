@@ -11,7 +11,7 @@ import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 
 public class SwipeFramePagerListener implements View.OnDragListener {
 
-    private static final int COLORTO = Color.argb(120,255,255,255);
+    private static final int COLORTO = Color.argb(180,255,255,255);
 
 
     final Handler handler = new Handler();
@@ -49,6 +49,9 @@ public class SwipeFramePagerListener implements View.OnDragListener {
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
 
+                handler.removeCallbacks(mRunnable);
+                break;
+            case DragEvent.ACTION_DROP:
                 handler.removeCallbacks(mRunnable);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:

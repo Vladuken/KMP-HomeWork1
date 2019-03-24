@@ -77,8 +77,8 @@ public class ListLauncherFragment extends Fragment {
         }
 
 
-        BackgroundManager.setupBackground(mRecyclerView,fullpath);
-        mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
+        BackgroundManager.setupBackground(v,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(v,fullpath);
 
 
 
