@@ -27,6 +27,7 @@ import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerListener;
 import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.TopBarDragUtil;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
@@ -66,6 +67,8 @@ public class DesktopFragment extends Fragment {
 
     private BackgroundReceiver mBackgroundReceiver;
 
+    protected LinearLayout mTopBar;
+
 
     private  int mLongClickedScreen;
     private int mLongClickedRow;
@@ -84,46 +87,11 @@ public class DesktopFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.desktop_table_layout,container,false);
 
-        mTopRemoveBar = v.findViewById(R.id.desktop_top_remove_bar);
-        TextView textView = v.findViewById(R.id.desktop_top_remove_text_view);
-        mTopRemoveBar.setOnDragListener(new View.OnDragListener() {
-            private static final int ACCENTCOLOR = Color.RED;
-            private static final int ANIMATIONDELAY =350;
 
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                switch (event.getAction()){
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        mTopRemoveBar.animate().alpha(1.0f);
+        mTopBar = v.findViewById(R.id.top_recyclerview_menu);
 
-                        textView.setTextSize(20);
-                        break;
-                    case DragEvent.ACTION_DRAG_ENTERED:
+        TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
 
-                        AnimateUtils.animateBackground(textView,Color.TRANSPARENT,ACCENTCOLOR,ANIMATIONDELAY);
-
-//                        textView.setTextColor(Color.RED);
-//                        textView.setTextSize(40);
-                        break;
-                    case DragEvent.ACTION_DRAG_EXITED:
-//                        textView.setTextSize(20);
-                        AnimateUtils.animateBackground(textView,ACCENTCOLOR,Color.TRANSPARENT,ANIMATIONDELAY);
-
-                        break;
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        mTopRemoveBar.animate().alpha(0.0f);
-                        break;
-                    case DragEvent.ACTION_DROP:
-                        AnimateUtils.animateBackground(textView,ACCENTCOLOR,Color.TRANSPARENT,ANIMATIONDELAY);
-
-                        break;
-                    default:
-                        break;
-                }
-
-                return true;
-            }
-        });
         SharedPreferences preferences = v.getContext().getSharedPreferences(getString(R.string.preference_file),0);
         boolean isCompactLayout = preferences.getBoolean(getString(R.string.preference_key_layout),false);
 

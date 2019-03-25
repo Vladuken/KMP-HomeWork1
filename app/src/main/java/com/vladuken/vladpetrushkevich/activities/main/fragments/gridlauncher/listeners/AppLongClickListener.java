@@ -32,19 +32,19 @@ public class AppLongClickListener implements View.OnLongClickListener {
         MenuInflater inflater = mPopupMenu.getMenuInflater();
         inflater.inflate(R.menu.app_popup, mPopupMenu.getMenu());
 
-        v.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                if(event.getAction() == DragEvent.ACTION_DRAG_STARTED){
-                    Log.d(TAG,"DRAGSTARTED" + mView);
-                }
-                if(event.getAction() == DragEvent.ACTION_DRAG_EXITED){
-                    mPopupMenu.dismiss();
-                }
-                return true;
-            }
-
-        });
+//        v.setOnDragListener(new View.OnDragListener() {
+//            @Override
+//            public boolean onDrag(View v, DragEvent event) {
+//                if(event.getAction() == DragEvent.ACTION_DRAG_STARTED){
+//                    Log.d(TAG,"DRAGSTARTED" + mView);
+//                }
+//                if(event.getAction() == DragEvent.ACTION_DRAG_EXITED){
+//                    mPopupMenu.dismiss();
+//                }
+//                return true;
+//            }
+//
+//        });
 
 //        YandexMetrica.reportEvent("App icon long clicked");
 

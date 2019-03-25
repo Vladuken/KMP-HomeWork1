@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
@@ -44,6 +45,8 @@ public class ListLauncherFragment extends Fragment {
 
     protected List<ResolveInfo> mInstalledApps;
 
+    protected LinearLayout mTopBar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
@@ -54,6 +57,11 @@ public class ListLauncherFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_list,container,false);
+
+        mTopBar = v.findViewById(R.id.top_recyclerview_menu);
+
+        TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
+
 
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
         mRecyclerView = v.findViewById(R.id.list_recycler_view);

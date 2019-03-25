@@ -5,27 +5,15 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/desktop_top_remove_bar"
+    <include
+        android:id="@+id/top_recyclerview_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="20"
-        android:animateLayoutChanges="true"
-        android:alpha="0"
-        android:background="#55000000"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:visibility="visible"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/desktop_top_remove_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/title_text"
-            android:textColor="@android:color/white"
-
-            android:text="@string/desktop_item_remove"/>
-    </LinearLayout>
+        android:animateLayoutChanges="true"
+        android:layout_weight="20"
+        android:visibility="visible"
+        layout="@layout/top_menu_bar" />
 
 
     <LinearLayout

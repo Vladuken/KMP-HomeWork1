@@ -20,6 +20,10 @@
     <dimen name="title_text">20sp</dimen>
     <dimen name="title_small_text">16sp</dimen>
 
+
+    <!--TOP BAR-->
+    <dimen name="top_bar_text">10sp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TimingLogger;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.LinearLayout;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
@@ -26,7 +30,9 @@ import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
+import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
+import com.vladuken.vladpetrushkevich.utils.DragUtils;
 import com.vladuken.vladpetrushkevich.utils.InstallDateComparator;
 import com.vladuken.vladpetrushkevich.utils.LaunchCountComparator;
 import com.yandex.metrica.YandexMetrica;
@@ -46,6 +52,9 @@ public class GridLauncherFragment extends Fragment {
 
     protected BackgroundReceiver mBackgroundReceiver;
     protected AppBroadcastReceiver mBroadcastReceiver;
+
+
+    protected LinearLayout mTopBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +79,41 @@ public class GridLauncherFragment extends Fragment {
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
 
+        mTopBar = v.findViewById(R.id.top_recyclerview_menu);
 
+        TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
+
+//        mTopBar.animate().translationY(-mTopBar.getHeight());
+//        mTopBar.setOnDragListener(new DragUtils.DebugDragListener());
+//        mTopBar.setOnDragListener(new View.OnDragListener() {
+//            @Override
+//            public boolean onDrag(View v, DragEvent event) {
+//
+//                switch (event.getAction()){
+//                    case DragEvent.ACTION_DRAG_STARTED:
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                                LinearLayout.LayoutParams.MATCH_PARENT);
+//                        params.weight = 20;
+//                        v.setLayoutParams(params);
+//                        break;
+//                    case DragEvent.ACTION_DRAG_ENDED:
+//                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//
+//                                0);;
+//                        v.setLayoutParams(params2);
+////                        mTopBar.animate().translationY(-mTopBar.getHeight());
+////                        AnimateUtils.animateToGone(mTopBar,300);
+////                        mTopBar.setVisibility(View.GONE);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//
+//                return true;
+//            }
+//        });
+
+//        mTopBar.setOnDragListener(new TopBarOnDragListener(mTopBar));
         String fullpath = "";
 
         if(mSharedPreferences.getBoolean(getString(R.string.preference_one_background_for_all_screens),false)){

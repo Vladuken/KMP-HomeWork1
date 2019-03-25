@@ -96,6 +96,13 @@
     <string name="times">times</string>
 
 
+    <!--TOP_BAR-->
+    <string name="top_bar_remove">Remove</string>
+    <string name="top_bar_delete">Delete</string>
+    <string name="top_bar_settings">App settings</string>
+    <string name="top_bar_launchcount">Count launches</string>
+
+
     <!--DESKTOP POPUP-->
     <string name="desktop_item_remove">Remove</string>
     <string name="desktop_item_add_link">Add link</string>
