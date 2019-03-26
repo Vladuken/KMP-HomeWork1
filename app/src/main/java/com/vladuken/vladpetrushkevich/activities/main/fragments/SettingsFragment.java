@@ -23,39 +23,24 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference layoutPreference = findPreference(getString(R.string.preference_key_layout));
         layoutPreference.setOnPreferenceClickListener(this::onPreferenceClick);
 
+        Preference animationTypePreference = findPreference(getString(R.string.preference_key_animation_type));
+        animationTypePreference.setOnPreferenceChangeListener(this::onPreferenceChange);
+
         Preference popularApps = findPreference(getString(R.string.preference_key_popular_apps));
         popularApps.setOnPreferenceClickListener(this::onPreferenceClick);
 
         Preference popularAppSizePreference = findPreference(getString(R.string.preference_popular_apps_line_size_key));
-        popularAppSizePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                ThemeChanger.reloadActivity(getActivity());
-                return true;
-            }
-        });
+        popularAppSizePreference.setOnPreferenceChangeListener(this::onPreferenceChange);
 
         Preference sortPreference = findPreference(getString(R.string.preference_key_sort_method));
-        sortPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                ThemeChanger.reloadActivity(getActivity());
-                return true;
-            }
-        });
+        sortPreference.setOnPreferenceChangeListener(this::onPreferenceChange);
 
         Preference globalBackgroundPreference = findPreference(getString(R.string.preference_one_background_for_all_screens));
         globalBackgroundPreference.setOnPreferenceClickListener(this::onPreferenceClick);
 
 
         Preference backgroundUpdateFreq = findPreference(getString(R.string.preference_background_renew_frequency));
-        backgroundUpdateFreq.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                ThemeChanger.reloadActivity(getActivity());
-                return true;
-            }
-        });
+        backgroundUpdateFreq.setOnPreferenceChangeListener(this::onPreferenceChange);
         Preference backUpdateButton = findPreference(getString(R.string.preference_button));
         backUpdateButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -75,8 +60,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private boolean onPreferenceClick(Preference preference) {
         Log.d("KEYPREF",preference.getKey());
         ThemeChanger.reloadActivity(getActivity());
+        return true;
+    }
 
-
+    public boolean onPreferenceChange(Preference preference, Object o) {
+        ThemeChanger.reloadActivity(getActivity());
         return true;
     }
 }

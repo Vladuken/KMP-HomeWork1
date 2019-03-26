@@ -92,4 +92,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
 
+    // viewpagetransformers
+    implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
+
+
 }

@@ -3,9 +3,9 @@
     <!-- Base application mIsDarkTheme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your mIsDarkTheme here. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="colorPrimary">@color/primaryColorDarkTheme</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorDarkTheme</item>
+        <item name="colorAccent">@color/lightGrey</item>
 
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <!--<item name="android:windowBackground">@android:color/holo_red_dark</item>-->

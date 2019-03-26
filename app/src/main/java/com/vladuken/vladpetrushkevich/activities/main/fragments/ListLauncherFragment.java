@@ -60,10 +60,9 @@ public class ListLauncherFragment extends Fragment {
 
         mTopBar = v.findViewById(R.id.top_recyclerview_menu);
 
+        mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
         TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
 
-
-        mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
         mRecyclerView = v.findViewById(R.id.list_recycler_view);
 
         mBroadcastReceiver = new AppBroadcastReceiver(getContext(),mRecyclerView);

@@ -1,12 +1,9 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -14,17 +11,25 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.crashlytics.android.Crashlytics;
+import com.eftimoff.viewpagertransformers.AccordionTransformer;
+import com.eftimoff.viewpagertransformers.CubeInTransformer;
+import com.eftimoff.viewpagertransformers.DrawFromBackTransformer;
+import com.eftimoff.viewpagertransformers.FlipHorizontalTransformer;
+import com.eftimoff.viewpagertransformers.ParallaxPageTransformer;
+import com.eftimoff.viewpagertransformers.RotateDownTransformer;
+import com.eftimoff.viewpagertransformers.RotateUpTransformer;
+import com.eftimoff.viewpagertransformers.TabletTransformer;
+import com.eftimoff.viewpagertransformers.ZoomInTransformer;
+import com.eftimoff.viewpagertransformers.ZoomOutSlideTransformer;
+import com.eftimoff.viewpagertransformers.ZoomOutTranformer;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -60,6 +65,9 @@ public class LauncherActivity extends AppCompatActivity {
         boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
         ThemeChanger.onCreateSetTheme(this, theme);
         super.onCreate(savedInstanceState);
+
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
@@ -144,6 +152,9 @@ public class LauncherActivity extends AppCompatActivity {
 
         mFramePager.setAdapter(launcherPagerAdapter);
         mFramePager.setOffscreenPageLimit(launcherPagerAdapter.getCount());
+
+        setupAnimation(mFramePager,mSharedPreferences);
+
         mFramePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -213,6 +224,33 @@ public class LauncherActivity extends AppCompatActivity {
 
             mNavigationView.setCheckedItem(menuId);
             onNavigationItemSelected(menuItem);
+        }
+    }
+
+    private void setupAnimation(ViewPager viewPager,SharedPreferences sharedPreferences){
+
+
+        int animationType = Integer.parseInt(
+                sharedPreferences.getString(getString(R.string.preference_key_animation_type), "1")
+        );
+
+        switch (animationType){
+            case 1:
+                break;
+            case 2:
+                viewPager.setPageTransformer(true, new AccordionTransformer());
+                break;
+            case 3:
+                viewPager.setPageTransformer(true, new RotateDownTransformer());
+                break;
+            case 4:
+                viewPager.setPageTransformer(true, new RotateUpTransformer());
+                break;
+//            case 5:
+//                viewPager.setPageTransformer(true, new ZoomOutSlideTransformer());
+//                break;
+            default:
+                break;
         }
     }
 

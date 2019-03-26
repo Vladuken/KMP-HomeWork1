@@ -8,6 +8,15 @@
         <SwitchPreference
             android:key="@string/preference_key_layout"
             android:title="@string/pref_compat_layout" />
+
+        <ListPreference
+            android:title="@string/animation"
+            android:defaultValue="1"
+            android:key="@string/preference_key_animation_type"
+            android:entries="@array/animateMethodList"
+            android:entryValues="@array/animateMethodValues">
+
+        </ListPreference>
     </PreferenceCategory>
 
     <PreferenceCategory>

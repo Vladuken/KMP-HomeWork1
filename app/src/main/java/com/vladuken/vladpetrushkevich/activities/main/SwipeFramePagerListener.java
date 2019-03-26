@@ -11,7 +11,9 @@ import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 
 public class SwipeFramePagerListener implements View.OnDragListener {
 
-    private static final int COLORTO = Color.argb(180,255,255,255);
+    private static final int LIGHTCOLORTO = Color.argb(90,255,255,255);
+    private static final int COLORTO = Color.argb(220,255,255,255);
+    private static final int DURATION = 300;
 
 
     final Handler handler = new Handler();
@@ -36,19 +38,14 @@ public class SwipeFramePagerListener implements View.OnDragListener {
 
         switch (event.getAction()) {
             case DragEvent.ACTION_DRAG_STARTED:
-//                v.setBackgroundColor(Color.argb(55,255,255,255));
-//                v.animate().alpha(1f).start();
-                AnimateUtils.animateBackground(v,Color.TRANSPARENT,COLORTO,300);
+                AnimateUtils.animateBackground(v,Color.TRANSPARENT,LIGHTCOLORTO,DURATION);
                 break;
-//                v.setVisibility(View.VISIBLE);
-//                break;
             case DragEvent.ACTION_DRAG_ENTERED:
-//                v.setVisibility(View.VISIBLE);
+                AnimateUtils.animateBackground(v,LIGHTCOLORTO,COLORTO,DURATION);
                 handler.postDelayed(mRunnable, 600);
-
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
-
+                AnimateUtils.animateBackground(v,COLORTO,LIGHTCOLORTO,DURATION);
                 handler.removeCallbacks(mRunnable);
                 break;
             case DragEvent.ACTION_DROP:
@@ -56,9 +53,7 @@ public class SwipeFramePagerListener implements View.OnDragListener {
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 v.setBackgroundColor(Color.TRANSPARENT);
-                AnimateUtils.animateBackground(v,COLORTO,Color.TRANSPARENT,300);
-
-//                v.setVisibility(View.INVISIBLE);
+                AnimateUtils.animateBackground(v,LIGHTCOLORTO,Color.TRANSPARENT,DURATION);
                 break;
             default:
                 break;

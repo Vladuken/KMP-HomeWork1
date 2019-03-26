@@ -103,5 +103,16 @@
     <string name="background_renew_24hours">24 часа</string>
     <string name="background_source">Источник</string>
     <string name="background_update_freq">Как часто обновлять</string>
+    <string name="animation">Анимация</string>
+    <string name="top_bar_remove">Убрать</string>
+    <string name="top_bar_delete">Удалить</string>
+    <string name="top_bar_settings">О приложении</string>
+    <string name="top_bar_launchcount">Кол-во запусков</string>
+    <string name="animation_accordion">Аккордион</string>
+    <string name="animation_rotate_down">Прокрутка снизу</string>
+    <string name="animation_rotate_up">Прокрутка сверху</string>
+    <string name="animation_zoom_out">Отдаление</string>
+    <string name="animation_inner_cube">Грань куба</string>
+    <string name="animation_none">Без анимации</string>
 
 </resources>
