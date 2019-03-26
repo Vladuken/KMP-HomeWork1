@@ -91,6 +91,8 @@ public class DesktopFragment extends Fragment {
         mTopBar = v.findViewById(R.id.top_recyclerview_menu);
 
         TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
+        mTopBar.findViewById(R.id.top_bar_settings).setVisibility(View.GONE);
+        mTopBar.findViewById(R.id.top_bar_launch_count).setVisibility(View.GONE);
 
         SharedPreferences preferences = v.getContext().getSharedPreferences(getString(R.string.preference_file),0);
         boolean isCompactLayout = preferences.getBoolean(getString(R.string.preference_key_layout),false);

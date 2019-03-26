@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -28,6 +29,12 @@ public class TopBarDragUtil {
     private static final int ANIMATIONDELAY = 300;
 
     public static void setupTopBarDraggable(LinearLayout mTopBar, AppDatabase database){
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0);
+        mTopBar.setLayoutParams(params);
+
         mTopBar.setOnDragListener(new TopBarOnDragListener());
 
         TextView remove = mTopBar.findViewById(R.id.top_bar_remove);
@@ -49,9 +56,20 @@ public class TopBarDragUtil {
 
         private void dispatchToChildren(LinearLayout v,DragEvent event){
             LinearLayout linearLayout = v;//
-            for(int i = 0; i< linearLayout.getChildCount(); i++){
-                View child = linearLayout.getChildAt(i);
-                child.dispatchDragEvent(event);
+
+
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                for(int i = 0; i< linearLayout.getChildCount(); i++){
+                    View child = linearLayout.getChildAt(i);
+                    if(isTouchPointInView(child,event)){
+                        child.dispatchDragEvent(event);
+                    }
+                }
+            }else{
+                for(int i = 0; i< linearLayout.getChildCount(); i++){
+                    View child = linearLayout.getChildAt(i);
+                    child.dispatchDragEvent(event);
+                }
             }
         }
         @Override
@@ -62,7 +80,7 @@ public class TopBarDragUtil {
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT);
-                    params.weight = 20;
+                    params.weight = v.getResources().getInteger(R.integer.top_bar_layout_weight);
                     v.setLayoutParams(params);
 
                     break;

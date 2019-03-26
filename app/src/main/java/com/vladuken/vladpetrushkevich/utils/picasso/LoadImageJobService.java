@@ -43,6 +43,9 @@ public class LoadImageJobService extends JobService {
                     Log.d(TAG,"update background broadcast sent");
 //                    File file = File.createTempFile(mPath);
                 }
+                catch (NullPointerException e){
+                    return;
+                }
                 catch (IOException e){
                     return;
                 }

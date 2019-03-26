@@ -2,7 +2,6 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="20"
     android:animateLayoutChanges="true"
     android:background="#55000000"
     android:orientation="horizontal"
@@ -15,7 +14,6 @@
         android:lines="1"
 
         android:gravity="center"
-        android:layout_margin="1dp"
         android:textSize="@dimen/top_bar_text"
         android:textColor="@android:color/white"
 
@@ -25,7 +23,6 @@
         android:id="@+id/top_bar_delete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="1dp"
         android:layout_weight="1"
         android:lines="1"
 
@@ -39,7 +36,6 @@
         android:id="@+id/top_bar_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="1dp"
 
         android:layout_weight="1"
         android:lines="1"
@@ -54,7 +50,6 @@
         android:id="@+id/top_bar_launch_count"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="1dp"
         android:layout_weight="1"
         android:gravity="center"
         android:lines="1"

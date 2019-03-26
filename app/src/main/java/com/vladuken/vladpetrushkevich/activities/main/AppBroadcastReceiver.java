@@ -67,6 +67,7 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
             adapter.getInstalledAppInfo();
 
             Intent startupIntent = new Intent(Intent.ACTION_MAIN);
+
             startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
             PackageManager pm = context.getPackageManager();
@@ -86,7 +87,9 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
                 //TODO ADD SORTING
                 YandexMetrica.reportEvent("Get PACKAGE_ADDED broadcast and remove app");
                 adapter.getInstalledAppInfo().add(appToAdd);
-                adapter.getPopularAppInfo().add(appToAdd);
+                if(!adapter.getPopularAppInfo().isEmpty()){
+                    adapter.getPopularAppInfo().add(appToAdd);
+                }
                 adapter.notifyDataSetChanged();
             }
         }
