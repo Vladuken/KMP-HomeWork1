@@ -17,6 +17,15 @@
             android:entryValues="@array/animateMethodValues">
 
         </ListPreference>
+
+        <ListPreference
+            android:title="@string/pref_desktop_screen_count"
+            android:defaultValue="1"
+            android:key="@string/preference_key_desktop_screen_count"
+            android:entries="@array/lineSizeList"
+            android:entryValues="@array/lineSizeList">
+
+        </ListPreference>
     </PreferenceCategory>
 
     <PreferenceCategory>

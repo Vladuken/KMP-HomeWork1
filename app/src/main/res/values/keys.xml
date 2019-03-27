@@ -7,6 +7,8 @@
 
     <string name="preference_key_theme" translatable="false">com.vladuken.vladpetrushkevich.PREFERENCE_THEME</string>
     <string name="preference_key_is_first_launch" translatable="false">com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH</string>
+    <string name="preference_key_desktop_screen_count" translatable="false">com.vladuken.vladpetrushkevich.DESKTOP_COUNT</string>
+
     <string name="preference_key_sort_method" translatable="false">com.vladuken.vladpetrushkevich.SORT_METHOD</string>
 
     <string name="preference_key_animation_type" translatable="false">com.vladuken.vladpetrushkevich.ANIMATION_TYPE</string>

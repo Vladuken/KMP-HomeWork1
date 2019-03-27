@@ -119,5 +119,6 @@
     <string name="dialog_link_add">Добавить</string>
     <string name="dialog_link_cancel">Отмена</string>
     <string name="app_group_title">Приложения</string>
+    <string name="pref_desktop_screen_count">Количество рабочих столов</string>
 
 </resources>

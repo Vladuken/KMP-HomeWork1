@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.DragEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -30,20 +31,27 @@ import io.fabric.sdk.android.Fabric;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    private static final String CHECKED_NAV_ID = "CheckedNavId";
+    private static final String CHECKED_POSITION = "CheckedNavId";
 
     protected SharedPreferences mSharedPreferences;
     protected NavigationView mNavigationView;
     protected NestedScrollView mNestedScrollView;
     protected ViewPager mFramePager;
 
+    private int mDesktopCount;
     private SwipeFramePagerReceiver mPagerReceiver;
+
+    private int mCheckedItemPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mSharedPreferences = getSharedPreferences(getString(R.string.preference_file), 0);
         boolean theme = mSharedPreferences.getBoolean(getString(R.string.preference_key_theme), false);
         ThemeChanger.onCreateSetTheme(this, theme);
+
+        String desktopCountString = mSharedPreferences.getString(
+                getString(R.string.preference_key_desktop_screen_count), "1");
+        mDesktopCount = Integer.parseInt(desktopCountString);
 
         super.onCreate(savedInstanceState);
 
@@ -54,6 +62,8 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nav_drawer);
 
         mNavigationView = findViewById(R.id.nav_view);
+        setupMenu(mNavigationView,mDesktopCount);
+
         mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         View headerView = mNavigationView.getHeaderView(0);
@@ -62,9 +72,7 @@ public class LauncherActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), ProfilePageActivity.class);
                 startActivity(i);
-                onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_none));
                 YandexMetrica.reportEvent("Profile page started from launcher page");
-
             }
         });
 
@@ -76,38 +84,64 @@ public class LauncherActivity extends AppCompatActivity {
 
         mPagerReceiver = new SwipeFramePagerReceiver(mFramePager);
 
-        mNavigationView.setCheckedItem(R.id.nav_launcher_activity);
-        onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_launcher_activity));
-
-        if (savedInstanceState != null) {
-            int menuId = savedInstanceState.getInt(CHECKED_NAV_ID, R.id.nav_list_activity);
-            MenuItem menuItem = mNavigationView.getMenu().findItem(menuId);
-
-            mNavigationView.setCheckedItem(menuId);
-            onNavigationItemSelected(menuItem);
-        }else {
-            MenuItem menuItem = mNavigationView.getMenu().findItem(R.id.nav_desktop);
-            mNavigationView.setCheckedItem(R.id.nav_desktop);
-            onNavigationItemSelected(menuItem);
-        }
-
         //if was reload activity
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            int menuId = bundle.getInt(CHECKED_NAV_ID,R.id.nav_list_activity);
-            MenuItem menuItem = mNavigationView.getMenu().findItem(menuId);
-
-            mNavigationView.setCheckedItem(menuId);
+            int id = bundle.getInt(CHECKED_POSITION,1);
+            MenuItem menuItem = mNavigationView.getMenu().getItem(id);
             onNavigationItemSelected(menuItem);
         }
+    }
+
+    private void setupMenu(NavigationView navigationView,int desktopCount){
+        Menu menu = navigationView.getMenu();
+        for(int i = 0; i < desktopCount + 3; i++){
+            if(i == 0){
+                addMenuItem(menu,i,R.string.launcher_activity,R.drawable.ic_action_name,false);
+            }else if(i == desktopCount + 1){
+                addMenuItem(menu,i,R.string.list_activity,R.drawable.ic_list_launcher,false);
+            }else if(i == desktopCount + 2){
+                addMenuItem(menu,i,R.string.settings,R.drawable.ic_menu_launcher,false);
+            }else {
+                addMenuItem(menu,i,R.string.desktop,R.drawable.ic_action_name,true);
+            }
+        }
+        navigationView.invalidate();
+    }
+
+    private void addMenuItem(Menu menu, int i, int stringResource,int drawableRecource,boolean isDesktop){
+        String title = getResources().getString(stringResource);
+        if(isDesktop){
+            menu.add(0,i,0,title + " " + i);
+        }else {
+            menu.add(0,i,0,title);
+        }
+        menu.getItem(i+1).setIcon(drawableRecource);
+    }
+
+    private void uncheckAllMenuItems(NavigationView navigationView){
+        int size = navigationView.getMenu().size();
+        for (int i = 0; i < size; i++) {
+            navigationView.getMenu().getItem(i).setChecked(false);
+        }
+    }
+    public boolean onNavigationItemSelected(MenuItem item){
+        uncheckAllMenuItems(mNavigationView);
+        item.setChecked(true);
+        mFramePager.setCurrentItem(item.getItemId());
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private ViewPager setupViewPager(SharedPreferences preferences){
         ViewPager framePager = findViewById(R.id.launcher_fragment_viewpager);
         framePager.setOnDragListener(new DragUtils.DebugDragListener());
 
+
         LauncherPagerAdapter launcherPagerAdapter = new LauncherPagerAdapter(
-                getSupportFragmentManager()
+                getSupportFragmentManager(),
+                mDesktopCount
         );
 
         TabLayout tabLayout = findViewById(R.id.tabDots);
@@ -126,7 +160,8 @@ public class LauncherActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int i) {
-                mNavigationView.getMenu().getItem(i).setChecked(true);
+                uncheckAllMenuItems(mNavigationView);
+                mNavigationView.getMenu().getItem(i+1).setChecked(true);
             }
 
             @Override
@@ -182,36 +217,7 @@ public class LauncherActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(CHECKED_NAV_ID,mNavigationView.getCheckedItem().getItemId());
         super.onSaveInstanceState(outState);
-    }
-
-    public boolean onNavigationItemSelected(MenuItem item){
-        int id = item.getItemId();
-        onNavigationItemSelected(id);
-
-        return true;
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    public boolean onNavigationItemSelected(int id) {
-
-        if(id == R.id.nav_launcher_activity){
-            mFramePager.setCurrentItem(0);
-        }else if(id == R.id.nav_desktop) {
-            mFramePager.setCurrentItem(1);
-        }else if(id == R.id.nav_list_activity){
-            mFramePager.setCurrentItem(2);
-        }else if(id == R.id.nav_settings){
-            mFramePager.setCurrentItem(3);
-        }else if(id == R.id.nav_none){
-            //TODO
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
     }
 
     @Override
@@ -234,8 +240,7 @@ public class LauncherActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(CHECKED_NAV_ID,mNavigationView.getCheckedItem().getItemId());
-
+        bundle.putInt(CHECKED_POSITION,mCheckedItemPosition);
         i.putExtras(bundle);
 
         this.finish();

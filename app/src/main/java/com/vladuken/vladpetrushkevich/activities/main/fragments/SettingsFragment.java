@@ -23,6 +23,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference layoutPreference = findPreference(getString(R.string.preference_key_layout));
         layoutPreference.setOnPreferenceClickListener(this::onPreferenceClick);
 
+        Preference desktopCountPreference = findPreference(getString(R.string.preference_key_desktop_screen_count));
+        desktopCountPreference.setOnPreferenceChangeListener(this::onPreferenceChange);
+
         Preference animationTypePreference = findPreference(getString(R.string.preference_key_animation_type));
         animationTypePreference.setOnPreferenceChangeListener(this::onPreferenceChange);
 

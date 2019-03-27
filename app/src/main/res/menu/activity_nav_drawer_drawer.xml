@@ -4,39 +4,10 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_launcher_activity"
-            android:icon="@drawable/ic_action_name"
-            android:title="@string/launcher_activity" />
-        <item
-            android:id="@+id/nav_desktop"
-            android:icon="@drawable/ic_action_name"
-            android:title="@string/desktop" />
-        <item
-            android:id="@+id/nav_list_activity"
-            android:icon="@drawable/ic_list_launcher"
-            android:title="@string/list_activity" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_launcher"
-            android:title="@string/settings" />
         <item
             android:id="@+id/nav_none"
             android:visible="false"/>
     </group>
 
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu>-->
-    <!--</item>-->
 
 </menu>
