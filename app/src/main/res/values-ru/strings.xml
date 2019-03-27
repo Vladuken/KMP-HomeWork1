@@ -118,5 +118,6 @@
     <string name="dialog_link_title">Ссылка</string>
     <string name="dialog_link_add">Добавить</string>
     <string name="dialog_link_cancel">Отмена</string>
+    <string name="app_group_title">Приложения</string>
 
 </resources>

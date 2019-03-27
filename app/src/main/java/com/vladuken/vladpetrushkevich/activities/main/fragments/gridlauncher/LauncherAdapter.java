@@ -70,7 +70,7 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(viewType == POPULAR_GROUP_TITLE){
             return new FooterViewHolder(inflateView(parent,R.layout.popular_group_title));
         }else if (viewType == DIVIDER){
-            return new FooterViewHolder(inflateView(parent,R.layout.horizontal_divider));
+            return new FooterViewHolder(inflateView(parent,R.layout.apps_group_title));
         }else{
             if(mIsGridView){
                 return new LauncherViewHolder(
@@ -101,7 +101,9 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         int pos = position;
         if(!mPopularAppInfo.isEmpty()){
-            if(pos < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
+            if(pos == 0){
+                //TODO
+            }else if(pos < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
                 resolveInfo = mPopularAppInfo.get(pos - 1);
                 bindLauncherViewHolder(viewHolder,resolveInfo);
             }else if(pos == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
