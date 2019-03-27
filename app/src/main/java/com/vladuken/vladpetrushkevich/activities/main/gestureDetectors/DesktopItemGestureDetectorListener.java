@@ -15,7 +15,6 @@ import com.yandex.metrica.YandexMetrica;
 
 public class DesktopItemGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
 
-//    private static final String TAG = "DesktopItemGesture";
     private final DesktopItem mDesktopItem;
     private final View mView;
     private final DesktopItemViewHolder mViewHolder;
@@ -29,28 +28,17 @@ public class DesktopItemGestureDetectorListener extends GestureDetector.SimpleOn
     @Override
     public void onLongPress(MotionEvent e) {
 
-        ClipData.Item type = new ClipData.Item(mDesktopItem.itemType);
-        ClipData.Item data = new ClipData.Item(mDesktopItem.itemData);
-
-        String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-
-        ClipDescription description = new ClipDescription("",mimeTypes);
-
-        ClipData dragData = new ClipData(description,type);
-        dragData.addItem(data);
-
+        ClipData dragData = DragUtils.createDragData(mDesktopItem.itemType,mDesktopItem.itemData);
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(mView);
 
-
         AppDatabase database = SingletonDatabase.getInstance(mView.getContext());
+
         DragUtils.startDrag(dragData,shadowBuilder,mView,0);
 
         mViewHolder.getDesktopItem().itemType = "empty";
         mViewHolder.getDesktopItem().itemData ="";
         database.desckopAppDao().update(mViewHolder.getDesktopItem());
-//            mView.startDragAndDrop(dragData,shadowBuilder,mView,0);
         mViewHolder.bind(createEmptyDesctopItem(mViewHolder.getDesktopItem()));
-
 
         YandexMetrica.reportEvent("Started desktopItem drag and drop");
 

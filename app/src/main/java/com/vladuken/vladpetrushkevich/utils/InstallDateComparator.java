@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class InstallDateComparator implements Comparator<ResolveInfo> {
 
-    PackageManager mPM;
+    private PackageManager mPM;
 
     public InstallDateComparator(PackageManager pm) {
         mPM = pm;

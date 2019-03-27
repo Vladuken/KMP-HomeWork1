@@ -13,7 +13,6 @@
         android:id="@+id/top_recyclerview_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:tools="http://schemas.android.com/tools"
         android:animateLayoutChanges="true"
         android:layout_weight="@integer/top_bar_layout_weight"
         android:visibility="visible"

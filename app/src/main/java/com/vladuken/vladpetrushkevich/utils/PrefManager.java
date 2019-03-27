@@ -13,13 +13,12 @@ public class PrefManager {
 
     int PRIVATE_MODE = 0;
 
-
     public PrefManager(Context context) {
         mContext = context;
 
-
         mPreferences = context.getSharedPreferences(mContext.getString(R.string.preference_file), PRIVATE_MODE);
         mEditor = mPreferences.edit();
+        mEditor.apply();
     }
 
     public void setFirstTimeLaunch(boolean isFirstTime){
@@ -29,14 +28,5 @@ public class PrefManager {
 
     public boolean isFirstTimeLaunch(){
         return mPreferences.getBoolean(mContext.getString(R.string.preference_key_is_first_launch),true);
-    }
-
-    public void setTheme(boolean isDarkTheme){
-        mEditor.putBoolean(mContext.getString(R.string.preference_key_theme),isDarkTheme);
-        mEditor.commit();
-    }
-
-    public boolean getTheme(){
-        return mPreferences.getBoolean(mContext.getString(R.string.preference_key_theme),false);
     }
 }

@@ -139,5 +139,10 @@
 
 
 
+    <!--ADD LINK DIALOG-->
+    <string name="dialog_link_title">Title</string>
+    <string name="dialog_link_add">Add</string>
+    <string name="dialog_link_cancel">Cancel</string>
+
 
 </resources>

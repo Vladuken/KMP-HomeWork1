@@ -1,15 +1,16 @@
 package com.vladuken.vladpetrushkevich.utils;
 
 import android.content.ClipData;
-import android.graphics.Color;
+import android.content.ClipDescription;
 import android.os.Build;
 import android.view.DragEvent;
 import android.view.View;
-import android.view.ViewParent;
-
-import java.util.ArrayList;
 
 public class DragUtils {
+
+    private DragUtils() {
+    }
+
     public static void startDrag(ClipData clipData, View.DragShadowBuilder shadowBuilder, View view, int flags){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             view.startDragAndDrop(clipData,shadowBuilder,view,flags);
@@ -18,6 +19,19 @@ public class DragUtils {
         }
     }
 
+    public static ClipData createDragData(String itemType, String itemData){
+        ClipData.Item type = new ClipData.Item(itemType);
+        ClipData.Item data = new ClipData.Item(itemData);
+
+        String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
+
+        ClipDescription description = new ClipDescription("",mimeTypes);
+
+        ClipData dragData = new ClipData(description,type);
+        dragData.addItem(data);
+
+        return dragData;
+    }
 
     public static class  DebugDragListener implements View.OnDragListener{
         @Override
@@ -44,46 +58,6 @@ public class DragUtils {
             }
 
             return true;
-        }
-    }
-
-    public class DropTarget implements View.OnDragListener {
-        private ArrayList<View> views=new ArrayList<>();
-        private View.OnDragListener listener;
-
-        public DropTarget on(View... views) {
-            for (View v : views) {
-                this.views.add(v);
-                v.setOnDragListener(this);
-            }
-
-            return(this);
-        }
-
-        public void to(View.OnDragListener listener) {
-            this.listener=listener;
-        }
-
-        @Override
-        public boolean onDrag(View view, DragEvent dragEvent) {
-            if (Build.VERSION.SDK_INT<Build.VERSION_CODES.N) {
-                return(listener.onDrag(view, dragEvent));
-            }
-
-            boolean result=listener.onDrag(view, dragEvent);
-            ViewParent parent=view.getParent();
-
-            while (parent!=null && parent instanceof View) {
-                View parentView=(View)parent;
-
-                if (views.contains(parentView)) {
-                    listener.onDrag(parentView, dragEvent);
-                }
-
-                parent=parentView.getParent();
-            }
-
-            return(result);
         }
     }
 }

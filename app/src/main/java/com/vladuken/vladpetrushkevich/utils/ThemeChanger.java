@@ -1,9 +1,6 @@
 package com.vladuken.vladpetrushkevich.utils;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherActivity;

@@ -14,17 +14,13 @@ import com.vladuken.vladpetrushkevich.db.entity.App;
 
 public class AppProvider extends ContentProvider {
 
-
     private AppDatabase mDatabase;
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
 
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static final int ALL_USED_APPS = 100;
     private static final int LAST_LAUNCHED_APP = 101;
-
     private static final int UPDATE_APP = 102;
-
-
 
     @Override
     public boolean onCreate() {
@@ -53,7 +49,6 @@ public class AppProvider extends ContentProvider {
         return retCursor;
     }
 
-
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
@@ -75,12 +70,13 @@ public class AppProvider extends ContentProvider {
     public int update(@NonNull Uri uri,@Nullable ContentValues values, @Nullable String selection,@Nullable String[] selectionArgs) {
 
         if(sUriMatcher.match(uri) == UPDATE_APP){
-            SingletonDatabase.getInstance(getContext()).appDao()
-                    .update(
-                            new App(values.getAsString(App.PACKAGE_NAME),
-                                    values.getAsInteger(App.LAUNCH_COUNT),
-                                    values.getAsLong(App.LAST_TIME_LAUNCHED)));
+            App newApp = new App(
+                    values.getAsString(App.PACKAGE_NAME),
+                    values.getAsInteger(App.LAUNCH_COUNT),
+                    values.getAsLong(App.LAST_TIME_LAUNCHED));
 
+            SingletonDatabase.getInstance(getContext()).appDao()
+                    .update(newApp);
             return 1;
         }
 

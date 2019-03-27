@@ -6,22 +6,18 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
@@ -32,9 +28,7 @@ import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopScreen;
-import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 import com.vladuken.vladpetrushkevich.utils.BackgroundManager;
-import com.vladuken.vladpetrushkevich.utils.DragUtils;
 
 
 public class DesktopFragment extends Fragment {
@@ -107,12 +101,6 @@ public class DesktopFragment extends Fragment {
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
 
-//        v.setOnDragListener(new DragUtils.DebugDragListener());
-//        mTopRemoveBar.setOnDragListener(new DragUtils.DebugDragListener());
-//        textView.setOnDragListener(new DragUtils.DebugDragListener());
-//        mTableLayout.setOnDragListener(new DragUtils.DebugDragListener());
-
-
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
         if(mDesktopScreen == null){
             mDesktopScreen = new DesktopScreen(mViewPagerPosition,mRows,mColumns);
@@ -163,15 +151,8 @@ public class DesktopFragment extends Fragment {
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-//        PackageManager pm = getActivity().getPackageManager();
-//        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
-
-
-
-
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < colums; c++){
-
                 View myview =  View.inflate(getContext(),R.layout.desctop_icon_view,null);
 
                 DesktopItem desktopItem = mDatabase.desckopAppDao().getByIds(mDesktopScreen.viewPagerPosition,r,c);
@@ -188,8 +169,6 @@ public class DesktopFragment extends Fragment {
                         R.id.grid_app_icon,
                         R.id.grid_app_title
                 );
-
-
                 mViewHolder.bind(desktopItem);
 
                 //TODO add to lover api
@@ -224,10 +203,8 @@ public class DesktopFragment extends Fragment {
     }
 
     public static DesktopFragment newInstance(int viewPagerPosition){
-
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_VP_POSITION,viewPagerPosition);
-
 
         DesktopFragment fragment = new DesktopFragment();
         fragment.setArguments(bundle);

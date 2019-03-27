@@ -11,41 +11,33 @@ import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
 
 public class SwipeFramePagerListener implements View.OnDragListener {
 
-    private static final int LIGHTCOLORTO = Color.argb(90,255,255,255);
-    private static final int COLORTO = Color.argb(220,255,255,255);
+    private static final int COLOR = Color.argb(220,255,255,255);
+    private static final int ACCENT_COLOR = Color.argb(90,255,255,255);
     private static final int DURATION = 300;
 
+    private final Handler handler = new Handler();
+    private final Context mContext;
+    private final Intent mIntent;
+    private final Runnable mRunnable;
 
-    final Handler handler = new Handler();
-
-    final Context mContext;
-    final Intent mIntent;
-    final Runnable mRunnable;
     public SwipeFramePagerListener(Context context, Intent intent) {
         mContext = context;
         mIntent = intent;
-
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mContext.sendBroadcast(mIntent);
-            }
-        };
+        mRunnable = () -> mContext.sendBroadcast(mIntent);
     }
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
-
         switch (event.getAction()) {
             case DragEvent.ACTION_DRAG_STARTED:
-                AnimateUtils.animateBackground(v,Color.TRANSPARENT,LIGHTCOLORTO,DURATION);
+                AnimateUtils.animateBackground(v,Color.TRANSPARENT, ACCENT_COLOR,DURATION);
                 break;
             case DragEvent.ACTION_DRAG_ENTERED:
-                AnimateUtils.animateBackground(v,LIGHTCOLORTO,COLORTO,DURATION);
+                AnimateUtils.animateBackground(v, ACCENT_COLOR, COLOR,DURATION);
                 handler.postDelayed(mRunnable, 600);
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
-                AnimateUtils.animateBackground(v,COLORTO,LIGHTCOLORTO,DURATION);
+                AnimateUtils.animateBackground(v, COLOR, ACCENT_COLOR,DURATION);
                 handler.removeCallbacks(mRunnable);
                 break;
             case DragEvent.ACTION_DROP:
@@ -53,7 +45,7 @@ public class SwipeFramePagerListener implements View.OnDragListener {
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
                 v.setBackgroundColor(Color.TRANSPARENT);
-                AnimateUtils.animateBackground(v,LIGHTCOLORTO,Color.TRANSPARENT,DURATION);
+                AnimateUtils.animateBackground(v, ACCENT_COLOR,Color.TRANSPARENT,DURATION);
                 break;
             default:
                 break;

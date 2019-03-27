@@ -7,7 +7,6 @@ import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
-import android.view.DragEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +27,6 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
 
     protected PopupMenu mPopupMenu;
 
-
-
     public DesktopEmptyOnLongClickListener(DesktopItemViewHolder viewHolder,AppDatabase database, DesktopItem desktopItem,DesktopFragment fragment) {
         mDatabase = database;
         mDesktopItem = desktopItem;
@@ -43,13 +40,11 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
         MenuInflater inflater = mPopupMenu.getMenuInflater();
         inflater.inflate(R.menu.desktop_empty_item_popup, mPopupMenu.getMenu());
 
-
         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.desktop_item_add_contact:
-
                         if (ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.READ_CONTACTS)
                                 == PackageManager.PERMISSION_GRANTED)
                         {
@@ -60,14 +55,10 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
                         }
 
                         YandexMetrica.reportEvent("Add contact in desktop pressed");
-
                         return true;
-
                     case R.id.desktop_item_add_link:
                         YandexMetrica.reportEvent("Add link in desktop pressed");
-
                         startAddLinkDialog(mDesktopItem);
-
                         return true;
                     default:
                         return false;
@@ -75,12 +66,9 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
             }
 
             private void requestLocationPermission() {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(
+                if(!ActivityCompat.shouldShowRequestPermissionRationale(
                         mFragment.getActivity(),
                         android.Manifest.permission.READ_CONTACTS)) {
-                    // show UI part if you want here to show some rationale !!!
-
-                } else{
                     ActivityCompat.requestPermissions(
                             mFragment.getActivity(),
                             new String[]{android.Manifest.permission.READ_CONTACTS},
@@ -94,19 +82,19 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
     }
 
     protected void startAddLinkDialog(DesktopItem desktopItem){
-
         AlertDialog.Builder builder = new AlertDialog.Builder(mViewHolder.itemView.getContext());
         //TODO
-        builder.setTitle("Title");
+        String title = mViewHolder.mView.getResources().getString(R.string.dialog_link_title);
+        builder.setTitle(title);
 
         // Set up the input
         final EditText input = new EditText(mViewHolder.itemView.getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        String addString = mViewHolder.mView.getResources().getString(R.string.dialog_link_add);
+        builder.setPositiveButton(addString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 YandexMetrica.reportEvent("Positive button link added dialog pressed");
@@ -115,7 +103,9 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
                 setIconForSite(link,desktopItem);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+        String cancelString = mViewHolder.mView.getResources().getString(R.string.dialog_link_cancel);
+        builder.setNegativeButton(cancelString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 YandexMetrica.reportEvent("Cancel button link added dialog pressed");
@@ -137,17 +127,13 @@ public class DesktopEmptyOnLongClickListener implements View.OnLongClickListener
 
 
     protected void startAddContact(DesktopItem desktopItem){
-
         Intent i=new Intent(Intent.ACTION_PICK);
         i.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-        i.putExtra("HELP",6);
         mFragment.setLongClickedScreen(desktopItem.screenPosition);
         mFragment.setLongClickedColumn(desktopItem.column);
         mFragment.setLongClickedRow(desktopItem.row);
         mFragment.setLongClickedViewHolder(mViewHolder);
-        //        Activity h = new Activity();
         mFragment.startActivityForResult(i, DesktopFragment.RESULT_CODE_PICK_PHONE);
-
     }
 
 

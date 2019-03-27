@@ -90,6 +90,7 @@
     <string name="sort_launch_count">По кол-ву запусков</string>
 
     <string name="launched">Запущено</string>
+    <!--TODO добавить перевод в зависимости от числа -->
     <string name="times">раз</string>
     <string name="desktop">Рабочий стол</string>
     <string name="pref_background_update_button">Обновить обои сейчас</string>
@@ -107,12 +108,15 @@
     <string name="top_bar_remove">Убрать</string>
     <string name="top_bar_delete">Удалить</string>
     <string name="top_bar_settings">О приложении</string>
-    <string name="top_bar_launchcount">Кол-во запусков</string>
+    <string name="top_bar_launchcount">Количество запусков</string>
     <string name="animation_accordion">Аккордион</string>
     <string name="animation_rotate_down">Прокрутка снизу</string>
     <string name="animation_rotate_up">Прокрутка сверху</string>
     <string name="animation_zoom_out">Отдаление</string>
     <string name="animation_inner_cube">Грань куба</string>
     <string name="animation_none">Без анимации</string>
+    <string name="dialog_link_title">Ссылка</string>
+    <string name="dialog_link_add">Добавить</string>
+    <string name="dialog_link_cancel">Отмена</string>
 
 </resources>

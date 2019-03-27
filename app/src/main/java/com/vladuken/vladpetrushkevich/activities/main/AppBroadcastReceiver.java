@@ -14,25 +14,20 @@ import java.util.List;
 
 public class AppBroadcastReceiver extends BroadcastReceiver {
 
-    Context context;
-
+    Context mContext;
     RecyclerView mRecyclerView;
 
     public AppBroadcastReceiver(Context context, RecyclerView recyclerView) {
-        this.context = context;
+        this.mContext = context;
         mRecyclerView = recyclerView;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        this.context = context;
+        this.mContext = context;
 
         // when package removed
         if (intent.getAction().equals("android.intent.action.PACKAGE_REMOVED")) {
-//            Log.e(" BroadcastReceiver ", "onReceive called "
-//                    + " PACKAGE_REMOVED ");
-
             int uid = intent.getIntExtra(Intent.EXTRA_UID,0);
             LauncherAdapter adapter = (LauncherAdapter) mRecyclerView.getAdapter();
 
@@ -54,13 +49,10 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
             }
 
         }
+
         // when package installed
         else if (intent.getAction().equals(
                 "android.intent.action.PACKAGE_ADDED")) {
-
-//            Log.e(" BroadcastReceiver ", "onReceive called " + "PACKAGE_ADDED");
-//            Toast.makeText(context, " onReceive !!!!." + "PACKAGE_ADDED",
-//                    Toast.LENGTH_LONG).show();
 
             int uid = intent.getIntExtra(Intent.EXTRA_UID,0);
             LauncherAdapter adapter = (LauncherAdapter) mRecyclerView.getAdapter();
@@ -77,13 +69,16 @@ public class AppBroadcastReceiver extends BroadcastReceiver {
             if(uid == 0){
                 return;
             }
+
             for(ResolveInfo resolveInfo:activities){
                 if(resolveInfo.activityInfo.applicationInfo.uid == uid){
                     appToAdd = resolveInfo;
                 }
             }
 
-            if(appToAdd != null){
+            if(appToAdd == null){
+                return;
+            }else {
                 //TODO ADD SORTING
                 YandexMetrica.reportEvent("Get PACKAGE_ADDED broadcast and remove app");
                 adapter.getInstalledAppInfo().add(appToAdd);

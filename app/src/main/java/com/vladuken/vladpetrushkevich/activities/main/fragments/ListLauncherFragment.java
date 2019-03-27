@@ -40,7 +40,6 @@ public class ListLauncherFragment extends Fragment {
     protected AppDatabase mDatabase;
 
     protected BackgroundReceiver mBackgroundReceiver;
-
     protected AppBroadcastReceiver mBroadcastReceiver;
 
     protected List<ResolveInfo> mInstalledApps;
@@ -59,14 +58,12 @@ public class ListLauncherFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_list,container,false);
 
         mTopBar = v.findViewById(R.id.top_recyclerview_menu);
-
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
+
         TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
 
         mRecyclerView = v.findViewById(R.id.list_recycler_view);
-
         mBroadcastReceiver = new AppBroadcastReceiver(getContext(),mRecyclerView);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         setupAdapter();
@@ -113,13 +110,11 @@ public class ListLauncherFragment extends Fragment {
     }
 
     private void setupAdapter() {
-
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         PackageManager pm = getActivity().getPackageManager();
         mInstalledApps = pm.queryIntentActivities(startupIntent, 0);
-
 
         int sortMethod = Integer.parseInt(
                 mSharedPreferences.getString(getString(R.string.preference_key_sort_method),"0"));
@@ -139,7 +134,6 @@ public class ListLauncherFragment extends Fragment {
             case 4:
                 Collections.sort(mInstalledApps, new LaunchCountComparator(mDatabase));
                 break;
-
             default:
                 break;
         }
@@ -148,7 +142,6 @@ public class ListLauncherFragment extends Fragment {
                 mSharedPreferences.getString(getString(R.string.preference_popular_apps_line_size_key),"1")
         );
         LauncherAdapter launcherAdapter = new LauncherAdapter(mInstalledApps,mDatabase,false,popularLineSize);
-
 
         boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
 

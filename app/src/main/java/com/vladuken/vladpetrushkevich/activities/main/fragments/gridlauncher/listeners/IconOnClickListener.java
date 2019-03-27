@@ -59,7 +59,6 @@ public class IconOnClickListener implements View.OnClickListener {
             );
         }
 
-
         mAdapter.notifyDataSetChanged();
     }
 }

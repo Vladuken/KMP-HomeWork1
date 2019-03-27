@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.LauncherViewHolder;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.IconOnClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
@@ -25,36 +24,26 @@ import java.util.Map;
 
 public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-
-//    private static final String TAG = "LauncherAdapter";
-
-    private int POPULAR_APP_SIZE;
-    private int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER;
-
+    private final int POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER;
 
     private static final int POPULAR_GROUP_TITLE = 1;
     private static final int POPULAR_APP = 2;
     private static final int DIVIDER = 3;
-
 
     private List<ResolveInfo> mPopularAppInfo = new ArrayList<>();
     private final List<ResolveInfo> mInstalledAppInfo;
     private final Map<ResolveInfo,Drawable> mIcons;
 
     private final AppDatabase mDatabase;
-
     private final boolean mIsGridView;
-
 
     public LauncherAdapter(List<ResolveInfo> installedAppsInfo, AppDatabase database, boolean isGridView, int popularAppSize) {
         mInstalledAppInfo =  installedAppsInfo;
         mDatabase = database;
         mIcons = new HashMap<>();
-
-        POPULAR_APP_SIZE = popularAppSize;
-        POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = POPULAR_APP_SIZE + 1;
-
         mIsGridView = isGridView;
+
+        POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER = popularAppSize + 1;
     }
 
     public List<ResolveInfo> getInstalledAppInfo() {
@@ -65,17 +54,15 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mPopularAppInfo;
     }
 
-    public void setPopularAppInfo(List<ResolveInfo> popularAppInfos){
-        mPopularAppInfo = popularAppInfos;
+    public void setPopularAppInfo(List<ResolveInfo> popularAppInfoList){
+        mPopularAppInfo = popularAppInfoList;
     }
 
-
-    public class FooterViewHolder extends RecyclerView.ViewHolder {
-        public FooterViewHolder(View itemView) {
+    private class FooterViewHolder extends RecyclerView.ViewHolder {
+        FooterViewHolder(View itemView) {
             super(itemView);
         }
     }
-
 
     @NonNull
     @Override
@@ -86,7 +73,6 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return new FooterViewHolder(inflateView(parent,R.layout.horizontal_divider));
         }else{
             if(mIsGridView){
-                //TODO use OOP to create two classes
                 return new LauncherViewHolder(
                         inflateView(parent,R.layout.item_icon_view),
                         mDatabase,
@@ -109,18 +95,13 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .inflate(id,parent,false);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ResolveInfo resolveInfo;
 
         int pos = position;
         if(!mPopularAppInfo.isEmpty()){
-            if(pos == 0){
-                //TODO
-            }else if(pos < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
-
-                //TODO ERROR WHEN YOU INSTALL APP
+            if(pos < POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER) {
                 resolveInfo = mPopularAppInfo.get(pos - 1);
                 bindLauncherViewHolder(viewHolder,resolveInfo);
             }else if(pos == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER){
@@ -134,33 +115,42 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             resolveInfo = mInstalledAppInfo.get(pos);
             bindLauncherViewHolder(viewHolder,resolveInfo);
         }
-
     }
 
     private void bindLauncherViewHolder(RecyclerView.ViewHolder viewHolder,ResolveInfo resolveInfo){
         if(viewHolder instanceof LauncherViewHolder) {
             LauncherViewHolder vh = (LauncherViewHolder) viewHolder;
-            if (mIcons.get(resolveInfo) == null) {
-                new LoadIconTask(this,vh, mIcons, resolveInfo, viewHolder.itemView.getContext().getPackageManager()).execute();
 
-            } else {
+            if (mIcons.get(resolveInfo) == null) {
+                new LoadIconTask(this,
+                        vh,
+                        mIcons,
+                        resolveInfo,
+                        viewHolder.itemView.getContext().getPackageManager()
+                ).execute();
+
+            }else {
                 vh.bind(resolveInfo, mIcons.get(resolveInfo));
             }
 
+
+            App buffApp = new App(
+                    resolveInfo.activityInfo.packageName,
+                    -1,
+                    0);
+
+            AppGestureDetectorListener gestureDetectorListener =
+                    new AppGestureDetectorListener(
+                            buffApp,
+                            vh.itemView);
+
             final GestureDetector gestureDetector = new GestureDetector(
                     vh.itemView.getContext(),
-                    new AppGestureDetectorListener(
-                            new App(
-                                resolveInfo.activityInfo.packageName,
-                                -1,
-                                    0),
-                            vh.itemView)
-            );
-
+                    gestureDetectorListener);
 
             if(vh.isBinded()){
                 vh.itemView.setOnClickListener(new IconOnClickListener(vh, this));
-                vh.itemView.setOnLongClickListener(new AppLongClickListener(vh.getApp(),vh.itemView));
+//                vh.itemView.setOnLongClickListener(new AppLongClickListener(vh.getApp(),vh.itemView));
             }
 
             vh.itemView.setOnTouchListener(new View.OnTouchListener() {
@@ -170,11 +160,6 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         }
-    }
-
-    public boolean isGroupTitle(int position){
-        return  !mPopularAppInfo.isEmpty() &&
-                (position == 0 || position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER);
     }
 
     @Override
@@ -208,5 +193,8 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-
+    public boolean isGroupTitle(int position){
+        return  !mPopularAppInfo.isEmpty() &&
+                (position == 0 || position == POPULAR_APP_SIZE_WITH_HEADER_AND_FOOTER);
+    }
 }

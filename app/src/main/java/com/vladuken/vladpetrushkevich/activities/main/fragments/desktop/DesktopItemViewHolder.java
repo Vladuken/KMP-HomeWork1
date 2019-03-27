@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -31,14 +30,12 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.vladuken.vladpetrushkevich.R;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopItemGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.App;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
@@ -70,12 +67,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
         mDatabase = database;
     }
 
-    public DesktopFragment getDesktopFragment() {
-        return mDesktopFragment;
-    }
-
     public void bind(DesktopItem item){
-
         mView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
@@ -93,8 +85,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                         Log.d(TAG,"Drag Exited"+ getPositionString(item));
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-//                        bind(mDesktopItem);
-
                         Log.d(TAG,"Drag Ended"+ getPositionString(item));
                         break;
                     case DragEvent.ACTION_DROP:
@@ -148,6 +138,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
             String linkTitle = item.itemData;
             String linkPhoto = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
+
             //Because Picasso store weak reference you should set tag to view
             Target target = new IconImageViewTarger(mAppIcon);
             mAppIcon.setTag(target);
@@ -240,7 +231,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 if (cursor == null) {
                     return;
                 }
-//                String name = null;
                 String contactId = null;
                 InputStream input = null;
                 String contactName = null;
