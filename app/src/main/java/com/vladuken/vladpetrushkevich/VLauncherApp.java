@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.yandex.metrica.YandexMetrica;
 import com.yandex.metrica.YandexMetricaConfig;
+import com.yandex.metrica.push.YandexMetricaPush;
 
 public class VLauncherApp extends Application {
 
@@ -16,5 +17,7 @@ public class VLauncherApp extends Application {
         YandexMetricaConfig config = YandexMetricaConfig.newConfigBuilder(APPMETRIKA_API_KEY).build();
         YandexMetrica.activate(getApplicationContext(),config);
         YandexMetrica.enableActivityAutoTracking(this);
+
+        YandexMetricaPush.init(getApplicationContext());
     }
 }
