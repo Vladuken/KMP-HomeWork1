@@ -17,5 +17,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract DesktopScreenDao desktopScreenDao();
 
     public abstract DesckopAppDao desckopAppDao();
-
 }

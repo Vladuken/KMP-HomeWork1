@@ -8,6 +8,24 @@
         <SwitchPreference
             android:key="@string/preference_key_layout"
             android:title="@string/pref_compat_layout" />
+
+        <ListPreference
+            android:title="@string/animation"
+            android:defaultValue="1"
+            android:key="@string/preference_key_animation_type"
+            android:entries="@array/animateMethodList"
+            android:entryValues="@array/animateMethodValues">
+
+        </ListPreference>
+
+        <ListPreference
+            android:title="@string/pref_desktop_screen_count"
+            android:defaultValue="1"
+            android:key="@string/preference_key_desktop_screen_count"
+            android:entries="@array/lineSizeList"
+            android:entryValues="@array/lineSizeList">
+
+        </ListPreference>
     </PreferenceCategory>
 
     <PreferenceCategory>
@@ -21,6 +39,15 @@
         <SwitchPreference
             android:key="@string/preference_key_popular_apps"
             android:title="@string/pref_popular_apps"/>
+        <ListPreference
+            android:title="@string/pref_popular_apps_line_size"
+            android:dependency="@string/preference_key_popular_apps"
+            android:defaultValue="1"
+            android:key="@string/preference_popular_apps_line_size_key"
+            android:entries="@array/lineSizeList"
+            android:entryValues="@array/lineSizeList">
+
+        </ListPreference>
     </PreferenceCategory>
 
     <PreferenceCategory>
@@ -47,7 +74,7 @@
         </ListPreference>
         <ListPreference
             android:title="@string/background_source"
-            android:defaultValue="https://loremflickr.com/720/1080"
+            android:defaultValue="https://picsum.photos/720/1080/?random"
             android:key="@string/preference_source_link"
             android:entries="@array/sourceList"
             android:entryValues="@array/sourceList">

@@ -11,8 +11,6 @@ public final class SingletonDatabase {
     }
 
     public static AppDatabase getInstance(Context context){
-
-
         synchronized (AppDatabase.class){
             if(mDatabase == null){
                 mDatabase = Room.databaseBuilder(context,

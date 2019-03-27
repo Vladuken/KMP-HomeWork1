@@ -79,6 +79,8 @@
     <string name="pref_compat_layout">Компактный тип макета</string>
     <string name="pref_intro_next_time">Включить интро при следующем запуске</string>
     <string name="pref_popular_apps">Окно популярных приложений</string>
+    <string name="pref_popular_apps_line_size">Количество строк</string>
+
 
     <!--SORTINGS-->
     <string name="sort_no">Без сортировки</string>
@@ -88,6 +90,7 @@
     <string name="sort_launch_count">По кол-ву запусков</string>
 
     <string name="launched">Запущено</string>
+    <!--TODO добавить перевод в зависимости от числа -->
     <string name="times">раз</string>
     <string name="desktop">Рабочий стол</string>
     <string name="pref_background_update_button">Обновить обои сейчас</string>
@@ -101,5 +104,21 @@
     <string name="background_renew_24hours">24 часа</string>
     <string name="background_source">Источник</string>
     <string name="background_update_freq">Как часто обновлять</string>
+    <string name="animation">Анимация</string>
+    <string name="top_bar_remove">Убрать</string>
+    <string name="top_bar_delete">Удалить</string>
+    <string name="top_bar_settings">О приложении</string>
+    <string name="top_bar_launchcount">Количество запусков</string>
+    <string name="animation_accordion">Аккордион</string>
+    <string name="animation_rotate_down">Прокрутка снизу</string>
+    <string name="animation_rotate_up">Прокрутка сверху</string>
+    <string name="animation_zoom_out">Отдаление</string>
+    <string name="animation_inner_cube">Грань куба</string>
+    <string name="animation_none">Без анимации</string>
+    <string name="dialog_link_title">Ссылка</string>
+    <string name="dialog_link_add">Добавить</string>
+    <string name="dialog_link_cancel">Отмена</string>
+    <string name="app_group_title">Приложения</string>
+    <string name="pref_desktop_screen_count">Количество рабочих столов</string>
 
 </resources>

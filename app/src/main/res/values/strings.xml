@@ -18,6 +18,7 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
 
+
     <string name="standard_layout">Standard layout</string>
     <string name="compact_layout">Compact layout</string>
 
@@ -72,18 +73,27 @@
 
 
     <string name="popular_app_group_title">Popular apps</string>
+    <string name="app_group_title">Apps</string>
 
 
     <!--PREFERENCES-->
     <string name="pref_dark_theme">Dark theme</string>
     <string name="pref_compat_layout">Compat layout</string>
     <string name="pref_intro_next_time">Show intro next time</string>
-    <string name="pref_popular_apps">Show popular apps</string>
     <string name="pref_background_update_button">Update background right now</string>
 
     <string name="pref_one_background_for_all_screens">One background for all screens</string>
+    <string name="pref_desktop_screen_count">Number of desktop screens</string>
+
+    <!--ANIMATIONS-->
+    <string name="animation">Animation</string>
 
 
+
+    <!--POPULAR APPS-->
+    <!--TODO RENAME PLEASE to LINCEVOUNT WITHOUT PREFS-->
+    <string name="pref_popular_apps_line_size">Line count</string>
+    <string name="pref_popular_apps">Show popular apps</string>
     <!--SORT-->
     <string name="sort_no">No sort</string>
     <string name="sort_title">By title</string>
@@ -92,6 +102,13 @@
     <string name="sort_launch_count">By launch count</string>
     <string name="launched">Launched</string>
     <string name="times">times</string>
+
+
+    <!--TOP_BAR-->
+    <string name="top_bar_remove">Remove</string>
+    <string name="top_bar_delete">Delete</string>
+    <string name="top_bar_settings">App settings</string>
+    <string name="top_bar_launchcount">Count launches</string>
 
 
     <!--DESKTOP POPUP-->
@@ -109,6 +126,25 @@
     <string name="background_renew_1hour">1 hour</string>
     <string name="background_renew_8hours">8 hours</string>
     <string name="background_renew_24hours">24 hours</string>
+
+
+
+    <!--ANIMATION ENTRIES-->
+    <string name="animation_none">None</string>
+
+    <string name="animation_accordion">Accordion</string>
+    <string name="animation_rotate_down">Rotate down</string>
+    <string name="animation_rotate_up">Rotate up</string>
+    <string name="animation_inner_cube">Inner cube</string>
+
+    <string name="animation_zoom_out">Zoom out</string>
+
+
+
+    <!--ADD LINK DIALOG-->
+    <string name="dialog_link_title">Title</string>
+    <string name="dialog_link_add">Add</string>
+    <string name="dialog_link_cancel">Cancel</string>
 
 
 </resources>

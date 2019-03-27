@@ -28,7 +28,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.listeners.AppLongClickListener;
+import com.squareup.picasso.Target;
+import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.AppGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.activities.main.gestureDetectors.DesktopItemGestureDetectorListener;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
@@ -66,12 +67,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
         mDatabase = database;
     }
 
-    public DesktopFragment getDesktopFragment() {
-        return mDesktopFragment;
-    }
-
     public void bind(DesktopItem item){
-
         mView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
@@ -89,8 +85,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                         Log.d(TAG,"Drag Exited"+ getPositionString(item));
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-//                        bind(mDesktopItem);
-
                         Log.d(TAG,"Drag Ended"+ getPositionString(item));
                         break;
                     case DragEvent.ACTION_DROP:
@@ -140,10 +134,20 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     private void bindItemView(DesktopItem item){
         if("link".equals(item.itemType)){
-            String linkTitle = item.itemData;
+            mDatabase.desckopAppDao().update(mDesktopItem);
 
+            String linkTitle = item.itemData;
             String linkPhoto = "https://favicon.yandex.net/favicon/" + item.itemData + "?size=120";
-            Picasso.get().load(linkPhoto).into(mAppIcon);
+
+            //Because Picasso store weak reference you should set tag to view
+            Target target = new IconImageViewTarger(mAppIcon);
+            mAppIcon.setTag(target);
+
+            Picasso.get()
+                    .load(linkPhoto)
+                    .placeholder(R.drawable.ic_web)
+                    .error(R.drawable.ic_web)
+                    .into(target);
             mAppTitle.setText(linkTitle);
 
             mView.setOnClickListener(new View.OnClickListener() {
@@ -161,8 +165,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 }
             });
 
-//            mView.setOnLongClickListener(new DesktopItemOnLongClickListener());
-            mDatabase.desckopAppDao().update(mDesktopItem);
+            mView.setOnLongClickListener(null);
 
             GestureDetector detector = new GestureDetector(
                     mView.getContext(),
@@ -176,8 +179,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 }
             });
         }else if("contact".equals(item.itemType)){
-
-
             mDatabase.desckopAppDao().update(item);
             String contactPhone = item.itemData;
 
@@ -185,7 +186,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                     == PackageManager.PERMISSION_GRANTED) {
                 getContactName(mView.getContext(),contactPhone);
             } else {
-                Picasso.get().load(android.R.drawable.ic_menu_call).into(mAppIcon);
+                Picasso.get().load(android.R.drawable.ic_menu_call).into(new IconImageViewTarger(mAppIcon));
                 mAppTitle.setText(item.itemData);
             }
 
@@ -205,6 +206,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                     new DesktopItemGestureDetectorListener(item,mView,this)
             );
 
+            mView.setOnLongClickListener(null);
             mView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -229,7 +231,6 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
                 if (cursor == null) {
                     return;
                 }
-//                String name = null;
                 String contactId = null;
                 InputStream input = null;
                 String contactName = null;
@@ -299,7 +300,7 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
             mAppTitle.setText(appName);
 
             mView.setOnClickListener(new DesktopAppOnClickListener(mDatabase,app));
-            mView.setOnLongClickListener(new AppLongClickListener(app,mView));
+            mView.setOnLongClickListener(null);
 
             GestureDetector detector = new GestureDetector(
                     mView.getContext(),
@@ -327,16 +328,8 @@ public class DesktopItemViewHolder extends RecyclerView.ViewHolder {
 
     private void bind(){
         mView.setOnClickListener(null);
-//        mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Snackbar.make(v,"Empty " + mDesktopItem.itemType + " "+ mDesktopItem.itemData,Snackbar.LENGTH_SHORT)
-//                        .show();
-//            }
-//        });
         mView.setOnTouchListener(null);
         mView.setOnLongClickListener(new DesktopEmptyOnLongClickListener(this,mDatabase,mDesktopItem,mDesktopFragment));
-//        mDatabase.desckopAppDao().update(mDesktopItem);
         mAppIcon.setImageDrawable(null);
         mAppTitle.setText(null);
     }

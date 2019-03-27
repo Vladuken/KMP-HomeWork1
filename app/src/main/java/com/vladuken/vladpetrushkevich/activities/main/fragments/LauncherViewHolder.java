@@ -18,9 +18,6 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mAppIcon;
     private final TextView mAppTitle;
 
-//    private int mIconLayoutId;
-//    private int mTitleLayoutId;
-
     private final View mView;
 
     private App mApp;
@@ -34,9 +31,6 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
         mAppIcon = itemView.findViewById(icon_layout_id);
         mAppTitle = itemView.findViewById(title_layout_id);
         mDatabase = database;
-
-//        mIconLayoutId = icon_layout_id;
-//        mTitleLayoutId = title_layout_id;
     }
 
     public ResolveInfo getResolveInfo() {
@@ -60,11 +54,9 @@ public class LauncherViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(ResolveInfo resolveInfo, Drawable icon) {
-
         mResolveInfo = resolveInfo;
         PackageManager pm = mView.getContext().getPackageManager();
         String appName = mResolveInfo.loadLabel(pm).toString();
-
 
         //TODO move all this code to Adaper
         mApp = mDatabase.appDao().getById(mResolveInfo.activityInfo.packageName);
