@@ -121,6 +121,7 @@ public class LauncherActivity extends AppCompatActivity {
         framePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
+                //TODO
             }
 
             @Override

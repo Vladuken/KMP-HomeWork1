@@ -1,7 +1,6 @@
 package com.vladuken.vladpetrushkevich.activities.main.gestureDetectors;
 
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
