@@ -91,7 +91,11 @@ public class MainActivity extends AppCompatActivity {
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                App app = mAdapter.getItem(mSpinner.getSelectedItemPosition());
+                int position = mSpinner.getSelectedItemPosition();
+                if(position == -1){
+                    return;
+                }
+                App app = mAdapter.getItem(position);
                 int launchCount = Integer.decode(mEditText.getText().toString());
                 app.launches_count = launchCount;
                 ContentValues values = new ContentValues();
