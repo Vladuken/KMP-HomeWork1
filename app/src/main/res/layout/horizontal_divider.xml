@@ -2,7 +2,9 @@
 <View android:id="@+id/horizontal_divider"
     android:layout_width="match_parent"
     android:layout_height="1dp"
+    android:shadowColor="?attr/colorBackgroundFloating"
+    android:shadowRadius="9"
     android:layout_gravity="center
 "
-    android:background="?android:attr/dividerVertical"
+    android:background="?attr/colorAccent"
     xmlns:android="http://schemas.android.com/apk/res/android" />

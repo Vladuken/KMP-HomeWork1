@@ -7,7 +7,11 @@
 
     <string name="preference_key_theme" translatable="false">com.vladuken.vladpetrushkevich.PREFERENCE_THEME</string>
     <string name="preference_key_is_first_launch" translatable="false">com.vladuken.vladpetrushkevich.IS_FIRST_TIME_LAUNCH</string>
+    <string name="preference_key_desktop_screen_count" translatable="false">com.vladuken.vladpetrushkevich.DESKTOP_COUNT</string>
+
     <string name="preference_key_sort_method" translatable="false">com.vladuken.vladpetrushkevich.SORT_METHOD</string>
+
+    <string name="preference_key_animation_type" translatable="false">com.vladuken.vladpetrushkevich.ANIMATION_TYPE</string>
 
     <string name="preference_key_popular_apps" translatable="false">com.vladuken.vladpetrushkevich.POPULAR_APPS</string>
 
@@ -17,10 +21,14 @@
 
     <string name="preference_one_background_for_all_screens" translatable="false">com.vladuken.vladpetrushkevich.ONE_BACKGROUND</string>
 
+    <string name="preference_popular_apps_line_size_key" translatable="false">
+        com.vladuken.vladpetrushkevich.APPS_LINE_SIZE
+    </string>
 
     <string name="preference_background_renew_frequency" translatable="false">
         com.vladuken.vladpetrushkevich.BACKGROUND_RENEW_FREQUENCY
     </string>
+
 
 
 

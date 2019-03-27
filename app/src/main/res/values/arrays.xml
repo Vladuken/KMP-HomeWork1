@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string-array name="lineSizeList">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+
+    </string-array>
+
+
+    <string-array name="animateMethodList">
+        <item>@string/animation_none</item>
+        <item>@string/animation_accordion</item>
+        <item>@string/animation_rotate_down</item>
+        <item>@string/animation_rotate_up</item>
+        <!--<item>@string/animation_zoom_out</item>-->
+    </string-array>
+
+    <string-array name="animateMethodValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <!--<item>5</item>-->
+    </string-array>
+
+
+
     <string-array name="sortMethodList">
         <item>@string/sort_no</item>
         <item>@string/sort_title</item>
@@ -17,7 +44,6 @@
 
 
     <string-array name="sourceList">
-        <item>"https://loremflickr.com/720/1080"</item>
         <item>"https://picsum.photos/720/1080/?random"</item>
         <item>"http://lorempixel.com/720/1080/"</item>
         <item>"https://placeimg.com/720/1080/any"</item>

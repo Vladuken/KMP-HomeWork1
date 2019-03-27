@@ -32,7 +32,18 @@
             android:name=".activities.profile.ProfilePageActivity"
             android:label="@string/title_activity_profile_page"
             android:parentActivityName=".activities.main.LauncherActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <!--<action android:name="maxim.drozd.action_start_profile_activity"/>-->
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="push"
+                    android:host="deeplink"/>
+            </intent-filter>
+
+        </activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -63,6 +74,15 @@
                 <!--<data android:scheme="package"/>-->
             <!--</intent-filter>-->
         <!--</receiver>-->
+
+        <receiver android:name=".SilentPushReceiver">
+            <intent-filter>
+                <!-- Получение silent push-уведомлений. -->
+                <action android:name="${applicationId}.action.ymp.SILENT_PUSH_RECEIVE"/>
+            </intent-filter>
+        </receiver>
+
+
 
         <provider
             android:readPermission="com.vladuken.vladpetrushkevich.READ_PERMISSION"

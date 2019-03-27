@@ -27,7 +27,6 @@ public class DesktopAppOnClickListener implements View.OnClickListener {
         mDatabase.appDao().update(mApp);
         YandexMetrica.reportEvent("App start on icon click in desktop page");
 
-
         PackageManager pm = v.getContext().getPackageManager();
 
         Intent i = pm.getLaunchIntentForPackage(mApp.package_name);

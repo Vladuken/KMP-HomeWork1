@@ -14,11 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerListener;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
@@ -37,10 +40,11 @@ public class ListLauncherFragment extends Fragment {
     protected AppDatabase mDatabase;
 
     protected BackgroundReceiver mBackgroundReceiver;
-
     protected AppBroadcastReceiver mBroadcastReceiver;
 
     protected List<ResolveInfo> mInstalledApps;
+
+    protected LinearLayout mTopBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,11 +57,13 @@ public class ListLauncherFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_list,container,false);
 
+        mTopBar = v.findViewById(R.id.top_recyclerview_menu);
         mDatabase = SingletonDatabase.getInstance(getActivity().getApplicationContext());
+
+        TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
+
         mRecyclerView = v.findViewById(R.id.list_recycler_view);
-
         mBroadcastReceiver = new AppBroadcastReceiver(getContext(),mRecyclerView);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         setupAdapter();
@@ -75,8 +81,8 @@ public class ListLauncherFragment extends Fragment {
         }
 
 
-        BackgroundManager.setupBackground(mRecyclerView,fullpath);
-        mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
+        BackgroundManager.setupBackground(v,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(v,fullpath);
 
 
 
@@ -86,6 +92,17 @@ public class ListLauncherFragment extends Fragment {
 
         filter.addDataScheme("package");
 
+        View leftBar = v.findViewById(R.id.left_vertical_viewpager_scroller);
+        leftBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.LEFT)));
+
+        View rightBar = v.findViewById(R.id.right_vertical_viewpager_scroller);
+        rightBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.RIGHT)));
+
+
         getContext().registerReceiver(mBroadcastReceiver, filter);
 
 
@@ -93,13 +110,11 @@ public class ListLauncherFragment extends Fragment {
     }
 
     private void setupAdapter() {
-
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         PackageManager pm = getActivity().getPackageManager();
         mInstalledApps = pm.queryIntentActivities(startupIntent, 0);
-
 
         int sortMethod = Integer.parseInt(
                 mSharedPreferences.getString(getString(R.string.preference_key_sort_method),"0"));
@@ -119,12 +134,14 @@ public class ListLauncherFragment extends Fragment {
             case 4:
                 Collections.sort(mInstalledApps, new LaunchCountComparator(mDatabase));
                 break;
-
             default:
                 break;
         }
-        LauncherAdapter launcherAdapter = new LauncherAdapter(mInstalledApps,mDatabase,false);
 
+        int popularLineSize = Integer.parseInt(
+                mSharedPreferences.getString(getString(R.string.preference_popular_apps_line_size_key),"1")
+        );
+        LauncherAdapter launcherAdapter = new LauncherAdapter(mInstalledApps,mDatabase,false,popularLineSize);
 
         boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
 

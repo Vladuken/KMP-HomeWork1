@@ -10,7 +10,6 @@ import android.arch.persistence.room.ForeignKey;
                                     childColumns = "screen_position"))
 public class DesktopItem {
 
-
     @ColumnInfo(name = "screen_position")
     public int screenPosition;
 

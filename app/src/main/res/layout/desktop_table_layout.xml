@@ -5,31 +5,52 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <include
+        android:id="@+id/top_recyclerview_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:layout_weight="@integer/top_bar_layout_weight"
+        android:visibility="visible"
+        layout="@layout/top_menu_bar" />
+
+
     <LinearLayout
-        android:id="@+id/desktop_top_remove_bar"
+        android:id="@+id/main_activity_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:visibility="gone"
-        android:background="?attr/colorPrimaryDark"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:visibility="visible"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/desktop_top_remove_text_view"
-            android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:weightSum="1">
+
+
+        <include
+            android:id="@+id/left_vertical_viewpager_scroller"
+            android:layout_width="@dimen/view_pager_bar_width"
+            android:layout_height="wrap_content"
+            layout="@layout/view_pager_bar" />
+
+        <GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/desktop_grid_layout"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/title_text"
+            android:layout_weight="1">
 
-            android:text="@string/desktop_item_remove"/>
+        </GridLayout>
+
+
+        <include
+            android:id="@+id/right_vertical_viewpager_scroller"
+            android:layout_width="@dimen/view_pager_bar_width"
+            android:layout_height="wrap_content"
+            layout="@layout/view_pager_bar" />
+
+
     </LinearLayout>
-    <GridLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/desktop_grid_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
 
-    </GridLayout>
+
+
 </LinearLayout>

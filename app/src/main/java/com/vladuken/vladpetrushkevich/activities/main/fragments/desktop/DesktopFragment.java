@@ -13,16 +13,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerListener;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
+import com.vladuken.vladpetrushkevich.activities.main.fragments.TopBarDragUtil;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
 import com.vladuken.vladpetrushkevich.db.entity.DesktopItem;
@@ -60,6 +61,8 @@ public class DesktopFragment extends Fragment {
 
     private BackgroundReceiver mBackgroundReceiver;
 
+    protected LinearLayout mTopBar;
+
 
     private  int mLongClickedScreen;
     private int mLongClickedRow;
@@ -78,34 +81,13 @@ public class DesktopFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.desktop_table_layout,container,false);
 
-        mTopRemoveBar = v.findViewById(R.id.desktop_top_remove_bar);
-        TextView textView = v.findViewById(R.id.desktop_top_remove_text_view);
-        v.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                switch (event.getAction()){
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        mTopRemoveBar.setVisibility(View.VISIBLE);
-                        textView.setTextSize(20);
-                        break;
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        textView.setTextSize(40);
-                        break;
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        textView.setTextSize(20);
-                        break;
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        mTopRemoveBar.setVisibility(View.GONE);
-                        break;
-                    case DragEvent.ACTION_DROP:
-                        break;
-                    default:
-                        break;
-                }
 
-                return true;
-            }
-        });
+        mTopBar = v.findViewById(R.id.top_recyclerview_menu);
+
+        TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
+        mTopBar.findViewById(R.id.top_bar_settings).setVisibility(View.GONE);
+        mTopBar.findViewById(R.id.top_bar_launch_count).setVisibility(View.GONE);
+
         SharedPreferences preferences = v.getContext().getSharedPreferences(getString(R.string.preference_file),0);
         boolean isCompactLayout = preferences.getBoolean(getString(R.string.preference_key_layout),false);
 
@@ -118,7 +100,6 @@ public class DesktopFragment extends Fragment {
         }
 
         mTableLayout = v.findViewById(R.id.desktop_grid_layout);
-
 
         mDesktopScreen = mDatabase.desktopScreenDao().getByPosition(mViewPagerPosition);
         if(mDesktopScreen == null){
@@ -135,8 +116,8 @@ public class DesktopFragment extends Fragment {
             fullpath = mTableLayout.getContext().getFilesDir().toString()  + mDesktopScreen.viewPagerPosition+ ".png";
         }
 
-        BackgroundManager.setupBackground(mTableLayout,fullpath);
-        mBackgroundReceiver = new BackgroundReceiver(mTableLayout,fullpath);
+        BackgroundManager.setupBackground(v,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(v,fullpath);
 
 
 
@@ -152,6 +133,16 @@ public class DesktopFragment extends Fragment {
 
 
 
+        View leftBar = v.findViewById(R.id.left_vertical_viewpager_scroller);
+        leftBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.LEFT)));
+
+        View rightBar = v.findViewById(R.id.right_vertical_viewpager_scroller);
+        rightBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.RIGHT)));
+
         return v;
     }
 
@@ -160,15 +151,8 @@ public class DesktopFragment extends Fragment {
         Intent startupIntent = new Intent(Intent.ACTION_MAIN);
         startupIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-//        PackageManager pm = getActivity().getPackageManager();
-//        List<ResolveInfo> activities = pm.queryIntentActivities(startupIntent, 0);
-
-
-
-
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < colums; c++){
-
                 View myview =  View.inflate(getContext(),R.layout.desctop_icon_view,null);
 
                 DesktopItem desktopItem = mDatabase.desckopAppDao().getByIds(mDesktopScreen.viewPagerPosition,r,c);
@@ -185,8 +169,6 @@ public class DesktopFragment extends Fragment {
                         R.id.grid_app_icon,
                         R.id.grid_app_title
                 );
-
-
                 mViewHolder.bind(desktopItem);
 
                 //TODO add to lover api
@@ -221,10 +203,8 @@ public class DesktopFragment extends Fragment {
     }
 
     public static DesktopFragment newInstance(int viewPagerPosition){
-
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_VP_POSITION,viewPagerPosition);
-
 
         DesktopFragment fragment = new DesktopFragment();
         fragment.setArguments(bundle);

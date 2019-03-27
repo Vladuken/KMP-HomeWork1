@@ -16,11 +16,14 @@ import android.util.TimingLogger;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.main.AppBroadcastReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.BackgroundReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.LauncherItemDecoration;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerListener;
+import com.vladuken.vladpetrushkevich.activities.main.SwipeFramePagerReceiver;
 import com.vladuken.vladpetrushkevich.activities.main.fragments.gridlauncher.LauncherAdapter;
 import com.vladuken.vladpetrushkevich.db.AppDatabase;
 import com.vladuken.vladpetrushkevich.db.SingletonDatabase;
@@ -45,6 +48,9 @@ public class GridLauncherFragment extends Fragment {
     protected BackgroundReceiver mBackgroundReceiver;
     protected AppBroadcastReceiver mBroadcastReceiver;
 
+
+    protected LinearLayout mTopBar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file),0);
@@ -68,6 +74,9 @@ public class GridLauncherFragment extends Fragment {
         mRecyclerView.addItemDecoration(new LauncherItemDecoration(offset));
 
 
+        mTopBar = v.findViewById(R.id.top_recyclerview_menu);
+
+        TopBarDragUtil.setupTopBarDraggable(mTopBar,mDatabase);
 
         String fullpath = "";
 
@@ -77,18 +86,19 @@ public class GridLauncherFragment extends Fragment {
             fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
         }
 
-
-
-//        String fullpath = mRecyclerView.getContext().getFilesDir().toString()  + this.getClass().toString() + ".png";
-        BackgroundManager.setupBackground(mRecyclerView,fullpath);
-        mBackgroundReceiver = new BackgroundReceiver(mRecyclerView,fullpath);
-
+        BackgroundManager.setupBackground(v,fullpath);
+        mBackgroundReceiver = new BackgroundReceiver(v,fullpath);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
 
         filter.addDataScheme("package");
+
+        View rightBar = v.findViewById(R.id.right_vertical_viewpager_scroller);
+        rightBar.setOnDragListener(new SwipeFramePagerListener(
+                getContext(),
+                new Intent(SwipeFramePagerReceiver.RIGHT)));
 
         getContext().registerReceiver(mBroadcastReceiver, filter);
 
@@ -137,28 +147,6 @@ public class GridLauncherFragment extends Fragment {
                 break;
         }
 
-        timings.addSplit("Sorting");
-        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,true);
-        timings.addSplit("LauncherAdapter init");
-
-
-
-
-
-        boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
-        timings.addSplit("Get boolean Popular Apps from SharedPref");
-
-        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
-        timings.addSplit("Create new list of popular apps");
-        if(showPopApps){
-            Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
-            timings.addSplit("Sort popular apps");
-            launcherAdapter.setPopularAppInfo(popularActivities);
-            timings.addSplit("Set popular app info");
-        }
-
-
-
         boolean isCompactLayout =
                 mSharedPreferences.getBoolean(
                         getString(R.string.preference_key_layout),
@@ -185,6 +173,27 @@ public class GridLauncherFragment extends Fragment {
         }
 
 
+        timings.addSplit("Sorting");
+
+        int popularLineSize = Integer.parseInt(
+                mSharedPreferences.getString(getString(R.string.preference_popular_apps_line_size_key),"1")
+        );
+        LauncherAdapter launcherAdapter = new LauncherAdapter(activities,mDatabase,true,gridLayoutManager.getSpanCount()*popularLineSize);
+        timings.addSplit("LauncherAdapter init");
+
+        boolean showPopApps = mSharedPreferences.getBoolean(getString(R.string.preference_key_popular_apps),false);
+        timings.addSplit("Get boolean Popular Apps from SharedPref");
+
+        List<ResolveInfo> popularActivities = new ArrayList<>(activities);
+        timings.addSplit("Create new list of popular apps");
+        if(showPopApps){
+            Collections.sort(popularActivities, new LaunchCountComparator(mDatabase));
+            timings.addSplit("Sort popular apps");
+            launcherAdapter.setPopularAppInfo(popularActivities);
+            timings.addSplit("Set popular app info");
+        }
+
+
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int i) {
@@ -194,7 +203,6 @@ public class GridLauncherFragment extends Fragment {
 
 
         mRecyclerView.setLayoutManager(gridLayoutManager);
-
         mRecyclerView.setAdapter(launcherAdapter);
 
         timings.dumpToLog();

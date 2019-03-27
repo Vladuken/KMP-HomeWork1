@@ -30,18 +30,17 @@ public class LoadImageJobService extends JobService {
             @Override
             public void run() {
                 try {
-//                    sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
-
                     File file = new File(mPath);
                     URL url = new URL(mLink);
                     FileOutputStream oFile = new FileOutputStream(file);
                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, oFile);
 
-
                     sendBroadcast(new Intent(BackgroundReceiver.UPDATE_BACKGROUND));
                     Log.d(TAG,"update background broadcast sent");
-//                    File file = File.createTempFile(mPath);
+                }
+                catch (NullPointerException e){
+                    return;
                 }
                 catch (IOException e){
                     return;

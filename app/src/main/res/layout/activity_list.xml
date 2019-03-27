@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/list_recycler_view"
+
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include
+        android:id="@+id/top_recyclerview_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        
-        xmlns:android="http://schemas.android.com/apk/res/android">
-    </android.support.v7.widget.RecyclerView>
+        android:animateLayoutChanges="true"
+        android:layout_weight="@integer/top_bar_layout_weight"
+        android:visibility="visible"
+        layout="@layout/top_menu_bar" />
 
-</android.support.design.widget.CoordinatorLayout>
+
+        <LinearLayout android:id="@+id/main_activity_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:weightSum="1"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+                <include
+                    android:id="@+id/left_vertical_viewpager_scroller"
+                    android:layout_width="@dimen/view_pager_bar_width"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_pager_bar" />
+                <android.support.v7.widget.RecyclerView android:id="@+id/list_recycler_view"
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </android.support.v7.widget.RecyclerView>
+                <include
+
+
+                    android:id="@+id/right_vertical_viewpager_scroller"
+                    android:layout_width="@dimen/view_pager_bar_width"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    layout="@layout/view_pager_bar" />
+        </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
+
+
+
 
 

@@ -23,27 +23,45 @@
             android:gravity="center"
             android:weightSum="1">
 
-
-
             <View
                 android:id="@+id/left_vertical_viewpager_scroller"
-                android:layout_width="40dp"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:background="?attr/colorAccent"/>
-            <android.support.v4.view.ViewPager
-                android:id="@+id/launcher_fragment_viewpager"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                tools:background="@color/primaryLightColor">
-            </android.support.v4.view.ViewPager>
+                android:layout_height="match_parent">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/launcher_fragment_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    tools:background="@color/primaryLightColor">
+                </android.support.v4.view.ViewPager>
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:clickable="false"
+                    app:layout_constraintVertical_bias="0.99"
+                    app:layout_constraintTop_toTopOf="@id/launcher_fragment_viewpager"
+                    app:layout_constraintStart_toStartOf="@id/launcher_fragment_viewpager"
+                    app:layout_constraintBottom_toBottomOf="@id/launcher_fragment_viewpager"
+                    app:layout_constraintEnd_toEndOf="@id/launcher_fragment_viewpager"
+                    />
+            </android.support.constraint.ConstraintLayout>
 
 
 
             <View
                 android:id="@+id/right_vertical_viewpager_scroller"
-                android:layout_width="40dp"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:background="?attr/colorAccent" />
@@ -57,21 +75,21 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+       <!--&gt;-->
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
 
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="enterAlways|scroll|snap"
-            />
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:layout_scrollFlags="enterAlways|scroll|snap"-->
+            <!--/>-->
 
-    </android.support.design.widget.AppBarLayout>
+    <!--</android.support.design.widget.AppBarLayout>-->
 
 
 </android.support.design.widget.CoordinatorLayout>

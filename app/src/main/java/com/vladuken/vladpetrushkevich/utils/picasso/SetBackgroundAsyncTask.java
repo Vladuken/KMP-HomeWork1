@@ -1,5 +1,6 @@
 package com.vladuken.vladpetrushkevich.utils.picasso;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,17 +9,15 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.view.View;
 
-public class SetBackgroundAsynkTask extends AsyncTask<Void,Void, Bitmap> {
+public class SetBackgroundAsyncTask extends AsyncTask<Void,Void, Bitmap> {
 
-//    private static final String TAG = "SetBackgroundAsynkTask";
-
-    private final View mView;
+    @SuppressLint("StaticFieldLeak")
+    private View mView;
     private final String mPath;
 
-    public SetBackgroundAsynkTask(View view, String path) {
+    public SetBackgroundAsyncTask(View view, String path) {
         mView = view;
         mPath = path;
-
     }
 
     @Override
@@ -30,19 +29,15 @@ public class SetBackgroundAsynkTask extends AsyncTask<Void,Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-
-
         Bitmap b = ThumbnailUtils.extractThumbnail(bitmap,mView.getWidth(),mView.getHeight());
-//        Drawable drawable = new BitmapDrawable(
-//                mView.getResources(),
-//                Bitmap.createScaledBitmap(
-//                        bitmap,
-//                        mView.getWidth(),
-//                        mView.getHeight(),
-//                        true));
-
         Drawable drawable = new BitmapDrawable(mView.getResources(),b);
 
-        mView.setBackground(drawable);
+        try{
+            mView.setBackground(drawable);
+        }finally {
+            mView = null;
+        }
     }
+
+
 }

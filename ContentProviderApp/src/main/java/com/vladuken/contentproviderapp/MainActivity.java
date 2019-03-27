@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.RemoteException;
 import android.preference.PreferenceCategory;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MAIN";
 
     TextView mTextView;
 
@@ -88,7 +91,11 @@ public class MainActivity extends AppCompatActivity {
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                App app = mAdapter.getItem(mSpinner.getSelectedItemPosition());
+                int position = mSpinner.getSelectedItemPosition();
+                if(position == -1){
+                    return;
+                }
+                App app = mAdapter.getItem(position);
                 int launchCount = Integer.decode(mEditText.getText().toString());
                 app.launches_count = launchCount;
                 ContentValues values = new ContentValues();
@@ -172,14 +179,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }catch (RemoteException e){
+                Log.d(TAG,"remote exeption");
             }catch (NullPointerException e) {
+                Log.d(TAG,"null pointer exeption");
             }catch (SecurityException e){
+                Log.d(TAG,"security exeption");
                 mUpdateButton.setEnabled(false);
                 mAppsButton.setEnabled(false);
                 mLastLaunchedButton.setEnabled(false);
                 mTextView.setText("No permissions");
             }finally {
-                yourCR.close();
+                Log.d(TAG,"Close cursor");
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    yourCR.close();
+                }else{
+                    yourCR.release();
+                }
             }
         }
 

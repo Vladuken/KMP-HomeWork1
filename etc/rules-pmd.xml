@@ -20,6 +20,7 @@
     <rule ref="rulesets/java/strings.xml"/>
     <rule ref="rulesets/java/basic.xml"/>
     <rule ref="rulesets/java/design.xml">
+        <exclude name="GodClass"/>
         <exclude name="ConfusingTernary"/>
     </rule>
     <rule ref="rulesets/java/typeresolution.xml"/>
