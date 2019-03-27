@@ -119,7 +119,7 @@ public class LauncherActivity extends AppCompatActivity {
         menu.getItem(i+1).setIcon(drawableRecource);
     }
 
-    private void uncheckAllMenuItems(NavigationView navigationView){
+    protected void uncheckAllMenuItems(NavigationView navigationView){
         int size = navigationView.getMenu().size();
         for (int i = 0; i < size; i++) {
             navigationView.getMenu().getItem(i).setChecked(false);
@@ -216,11 +216,6 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
 
@@ -234,6 +229,18 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         this.unregisterReceiver(mPagerReceiver);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mSharedPreferences = null;
+        mNavigationView = null;
+        mNestedScrollView = null;
+        mFramePager = null;
+        mPagerReceiver = null;
     }
 
     public void restartActivity() {

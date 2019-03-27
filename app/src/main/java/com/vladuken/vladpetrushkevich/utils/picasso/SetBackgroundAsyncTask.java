@@ -38,4 +38,6 @@ public class SetBackgroundAsyncTask extends AsyncTask<Void,Void, Bitmap> {
             mView = null;
         }
     }
+
+
 }

@@ -90,6 +90,8 @@ public class LauncherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+
+
     private View inflateView(ViewGroup parent, int id){
         return LayoutInflater.from(parent.getContext())
                 .inflate(id,parent,false);
