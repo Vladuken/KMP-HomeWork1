@@ -120,5 +120,10 @@
     <string name="dialog_link_cancel">Отмена</string>
     <string name="app_group_title">Приложения</string>
     <string name="pref_desktop_screen_count">Количество рабочих столов</string>
+    <string name="notification">Уведомление</string>
+    <string name="notification_to_launcher">Перейти к лаунчеру</string>
+    <string name="notification_to_profile">Перейти к странице профиля</string>
+    <string name="notification_1">Отправить уведомление 1</string>
+    <string name="notification_2">Отправить уведомление 2</string>
 
 </resources>

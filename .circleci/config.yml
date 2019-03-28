@@ -15,7 +15,6 @@ jobs:
 #      - run:
 #          name: Download Dependencies
 #          command: ./gradlew androidDependencies
-
       - run:
            name: Run CheckStyle Tests
            command: ./gradlew checkstyle

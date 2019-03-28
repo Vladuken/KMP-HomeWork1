@@ -146,5 +146,13 @@
     <string name="dialog_link_add">Add</string>
     <string name="dialog_link_cancel">Cancel</string>
 
+    <!--NOTIFICAATIONS-->
+    <string name="notification">Notification</string>
+    <string name="notification_to_launcher">Go to launcher page</string>
+    <string name="notification_to_profile">Go to profile page</string>
+    <string name="notification_1">Send notification 1</string>
+    <string name="notification_2">Send notification 2</string>
+
+
 
 </resources>
