@@ -1,11 +1,18 @@
 package com.vladuken.vladpetrushkevich.activities.main;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +22,7 @@ import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.crashlytics.android.Crashlytics;
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
@@ -64,6 +72,37 @@ public class LauncherActivity extends AppCompatActivity {
         mNavigationView = findViewById(R.id.nav_view);
         setupMenu(mNavigationView,mDesktopCount);
 
+        Button notification1 = mNavigationView.findViewById(R.id.notification_button1);
+        notification1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendNotification(v.getContext(),
+                        LauncherActivity.class,
+                        R.drawable.ic_action_name,
+                        1,
+                        "launcher_page",
+                        v.getResources().getString(R.string.notification) + " " + 1,
+                        v.getResources().getString(R.string.notification_to_launcher),
+                        Color.BLUE);
+            }
+        });
+
+
+        Button notification2 = mNavigationView.findViewById(R.id.notification_button2);
+        notification2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendNotification(v.getContext(),
+                        ProfilePageActivity.class,
+                        R.drawable.ic_list_launcher,
+                        2,
+                        "profile_page",
+                        v.getResources().getString(R.string.notification) + " " + 2,
+                        v.getResources().getString(R.string.notification_to_profile),
+                        Color.RED);
+            }
+        });
         mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         View headerView = mNavigationView.getHeaderView(0);
@@ -92,6 +131,39 @@ public class LauncherActivity extends AppCompatActivity {
             onNavigationItemSelected(menuItem);
         }
     }
+
+    private void sendNotification(Context context,
+                                  Class<?> className,
+                                  int drawableResID,
+                                  int id,
+                                  String channelTitle,
+                                  String title,
+                                  String text,
+                                  int color){
+        Intent notificationIntent2 = new Intent(context, className);
+        PendingIntent contentIntent2 = PendingIntent.getActivity(context,
+                0, notificationIntent2,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        NotificationCompat.Builder notif2;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelTitle,channelTitle, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+            notif2 = new NotificationCompat.Builder(context,channelTitle);
+        } else {
+            notif2 = new NotificationCompat.Builder(context);
+        }
+        notif2.setContentIntent(contentIntent2)
+                .setChannelId(channelTitle)
+                .setSmallIcon(drawableResID)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setColor(color);
+        NotificationManagerCompat.from(context).notify(id,notif2.build());
+    }
+
 
     private void setupMenu(NavigationView navigationView,int desktopCount){
         Menu menu = navigationView.getMenu();
