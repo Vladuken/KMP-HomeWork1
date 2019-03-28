@@ -21,6 +21,35 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_nav_drawer"
-        app:menu="@menu/activity_nav_drawer_drawer" />
+        app:menu="@menu/activity_nav_drawer_drawer" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true">
+
+                <Button
+                    android:id="@+id/notification_button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification_1"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/notification_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification_2"
+                    android:layout_weight="1"/>
+                <!--Here is a container at the bottom of navigation drawer. Place your images here-->
+            </LinearLayout>
+
+        </RelativeLayout>
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
