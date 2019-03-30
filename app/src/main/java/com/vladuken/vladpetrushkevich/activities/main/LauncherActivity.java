@@ -142,7 +142,7 @@ public class LauncherActivity extends AppCompatActivity {
         }
     }
 
-    private void sendNotification(Context context,
+    protected void sendNotification(Context context,
                                   Class<?> className,
                                   int drawableResID,
                                   int id,
