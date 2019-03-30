@@ -23,9 +23,9 @@ jobs:
            name: Run PMD Tests
            command: ./gradlew pmd
 
-      - run:
-           name: Run Findbug Tests
-           command: ./gradlew findbug
+#      - run:
+#           name: Run Findbug Tests
+#           command: ./gradlew findbug
 #      - run:
 #          name: Run Tests
 #          command: ./gradlew lint test
