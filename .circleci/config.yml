@@ -12,9 +12,9 @@ jobs:
 #      - run:
 #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
 #         command: sudo chmod +x ./gradlew
-#      - run:
-#          name: Download Dependencies
-#          command: ./gradlew androidDependencies
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
       - run:
            name: Run CheckStyle Tests
            command: ./gradlew checkstyle
@@ -23,9 +23,9 @@ jobs:
            name: Run PMD Tests
            command: ./gradlew pmd
 
-#      - run:
-#           name: Run Findbug Tests
-#           command: ./gradlew findbug
+      - run:
+           name: Run Findbug Tests
+           command: ./gradlew findbug
 #      - run:
 #          name: Run Tests
 #          command: ./gradlew lint test

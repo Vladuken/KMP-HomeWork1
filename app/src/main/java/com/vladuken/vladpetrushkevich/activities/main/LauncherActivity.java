@@ -28,6 +28,10 @@ import com.crashlytics.android.Crashlytics;
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
 import com.eftimoff.viewpagertransformers.RotateDownTransformer;
 import com.eftimoff.viewpagertransformers.RotateUpTransformer;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.distribute.Distribute;
 import com.vladuken.vladpetrushkevich.R;
 import com.vladuken.vladpetrushkevich.activities.profile.ProfilePageActivity;
 import com.vladuken.vladpetrushkevich.utils.AnimateUtils;
@@ -66,6 +70,12 @@ public class LauncherActivity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         Fabric.with(this, new Crashlytics());
+        AppCenter.start(getApplication(),
+                "77770b97-7fc5-4620-b874-95c26bb3e37c",
+                Analytics.class,
+                Crashes.class,
+                Distribute.class);
+
 
         setContentView(R.layout.activity_nav_drawer);
 
